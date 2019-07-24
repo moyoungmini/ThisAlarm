@@ -10,9 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MissionSet.MissionSetActivity"></activity>
-        <activity android:name=".AlarmSet.AlarmSetActivity" />
-        <activity android:name=".Main.MainActivity">
+        <activity android:name=".Activity.MissionSetActivity"></activity>
+        <activity android:name=".Activity.AlarmSetActivity" />
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

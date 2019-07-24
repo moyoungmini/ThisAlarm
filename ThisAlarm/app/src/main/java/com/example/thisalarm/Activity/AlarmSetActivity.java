@@ -1,11 +1,10 @@
-package com.example.thisalarm.AlarmSet;
+package com.example.thisalarm.Activity;
 
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,11 +12,9 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import com.example.thisalarm.AlarmDB;
-import com.example.thisalarm.Main.AlarmData;
-import com.example.thisalarm.Main.ItemTouchHelperCallback;
-import com.example.thisalarm.Main.MainActivity;
-import com.example.thisalarm.Main.MainAdapter;
+
+import com.example.thisalarm.Model.AlarmData;
+import com.example.thisalarm.Adapter.MainAdapter;
 import com.example.thisalarm.R;
 
 public class AlarmSetActivity extends AppCompatActivity {

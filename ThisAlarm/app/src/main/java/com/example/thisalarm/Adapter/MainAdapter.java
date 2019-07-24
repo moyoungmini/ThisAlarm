@@ -1,4 +1,4 @@
-package com.example.thisalarm.Main;
+package com.example.thisalarm.Adapter;
 
 import android.app.Activity;
 
@@ -13,14 +13,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.thisalarm.AlarmSet.AlarmSetActivity;
+import com.example.thisalarm.Activity.AlarmSetActivity;
+import com.example.thisalarm.Activity.MainActivity;
+import com.example.thisalarm.Listener.ItemTouchHelperListener;
+import com.example.thisalarm.Model.AlarmData;
 import com.example.thisalarm.R;
 
 import java.util.ArrayList;
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>  implements ItemTouchHelperListener  {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>  implements ItemTouchHelperListener {
 
     private Activity mActivity;
     private ArrayList<AlarmData> mData;

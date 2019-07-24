@@ -1,4 +1,4 @@
-package com.example.thisalarm.Main;
+package com.example.thisalarm.Model;
 
 public class AlarmData {
     private int id;

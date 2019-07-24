@@ -1,4 +1,4 @@
-package com.example.thisalarm.Main;
+package com.example.thisalarm;
 
 import android.content.Context;
 import android.graphics.Canvas;

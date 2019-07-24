@@ -4,10 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import com.example.thisalarm.Main.AlarmData;
-import com.example.thisalarm.Main.MainActivity;
+import com.example.thisalarm.Model.AlarmData;
+import com.example.thisalarm.Activity.MainActivity;
 
 import java.util.ArrayList;
 

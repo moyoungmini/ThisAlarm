@@ -1,4 +1,4 @@
-package com.example.thisalarm.MissionSet;
+package com.example.thisalarm.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

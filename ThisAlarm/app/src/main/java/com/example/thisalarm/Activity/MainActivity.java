@@ -1,4 +1,4 @@
-package com.example.thisalarm.Main;
+package com.example.thisalarm.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,12 +9,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 import com.example.thisalarm.AlarmDB;
-import com.example.thisalarm.AlarmSet.AlarmSetActivity;
+import com.example.thisalarm.Model.AlarmData;
+import com.example.thisalarm.DividerItemDecoration;
+import com.example.thisalarm.Listener.ItemTouchHelperCallback;
+import com.example.thisalarm.Adapter.MainAdapter;
 import com.example.thisalarm.R;
 import java.util.ArrayList;
 

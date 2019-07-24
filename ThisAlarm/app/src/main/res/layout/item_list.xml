@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/main_item_list_layout"
     android:orientation="horizontal"
-    tools:context=".Main.MainActivity">
+    tools:context=".Activity.MainActivity">
 
     <ImageView
         android:id="@+id/main_item_list_eye_iv"
