@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -46,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerViewAdapter = new MainAdapter(this, mData);
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(mRecyclerViewAdapter));
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         //Recyclerview set
 
 

@@ -20,11 +20,34 @@ import com.example.thisalarm.R;
 
 import java.util.ArrayList;
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>  implements ItemTouchHelperListener  {
 
     private Activity mActivity;
     private ArrayList<AlarmData> mData;
     private AlarmData data;
+
+//    @Override
+//    public boolean onItemMove(int fromPosition, int toPosition) {
+//        if(fromPosition < 0 || fromPosition >= mData.size() || toPosition < 0 || toPosition >= mData.size()){
+//            return false;
+//        }
+//
+//        int fromItem = mData.get(fromPosition);
+//        items.remove(fromPosition);
+//        items.add(toPosition, fromItem);
+//
+//        notifyItemMoved(fromPosition, toPosition);
+//        return true;
+//    }
+
+    @Override
+    public void onItemRemove(int position) {
+        Log.i("fdsafdf", String.valueOf(position));
+        MainActivity.db.delete(MainActivity.mData.get(position).getId());
+        MainActivity.mData.remove(position);
+        MainActivity.mRecyclerViewAdapter.notifyItemRemoved(position);
+        MainActivity.mRecyclerViewAdapter.notifyItemRangeChanged(position, MainActivity.mData.size());
+    }
 
     public MainAdapter(Activity activity, ArrayList<AlarmData> data) {
         this.mActivity = activity;
@@ -105,9 +128,19 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 mActivity.overridePendingTransition(R.anim.amin_slide_in_right, R.anim.amin_slide_out_left);
             }
         });
-        // item data listener
+        // item data click listener
 
-        holder.mTvClock.setText(String.valueOf(data.getHour() + " : " + String.valueOf(data.getMinute())));
+        String hour = String.valueOf(data.getHour());
+        String minute = String.valueOf(data.getMinute());
+
+        if(hour.length() == 1){
+            hour = "0" + hour;
+        }
+        if(minute.length() == 1){
+            minute = "0" + minute;
+        }
+
+        holder.mTvClock.setText(hour + " : " + minute);
         boolean tmp = false;
         if(data.getState() == 1){
             tmp = true;
@@ -120,7 +153,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     }
     //Data Binding
 
-    private void removeItemView(int position) {
+    public void removeItemView(int position) {
         mData.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mData.size());

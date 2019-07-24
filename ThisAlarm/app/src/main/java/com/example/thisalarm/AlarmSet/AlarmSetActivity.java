@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import com.example.thisalarm.AlarmDB;
 import com.example.thisalarm.Main.AlarmData;
+import com.example.thisalarm.Main.ItemTouchHelperCallback;
 import com.example.thisalarm.Main.MainActivity;
 import com.example.thisalarm.Main.MainAdapter;
 import com.example.thisalarm.R;
@@ -65,71 +67,71 @@ public class AlarmSetActivity extends AppCompatActivity {
             case R.id.alarm_set_mon_tv:
                 if(mData.getMon() == 0){
                     mData.setMon(1);
-                    mTvMon.setTextColor(R.color.yellow);
+                    mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 else {
                     mData.setMon(0);
-                    mTvMon.setTextColor(R.color.fontColor);
+                    mTvMon.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                 }
                 break;
             case R.id.alarm_set_tue_tv:
                 if(mData.getTue() == 0){
                     mData.setTue(1);
-                    mTvTue.setTextColor(R.color.yellow);
+                    mTvTue.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 else {
                     mData.setTue(0);
-                    mTvTue.setTextColor(R.color.fontColor);
+                    mTvTue.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                 }
                 break;
             case R.id.alarm_set_wen_tv:
                 if(mData.getWen() == 0){
                     mData.setWen(1);
-                    mTvWen.setTextColor(R.color.yellow);
+                    mTvWen.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 else {
                     mData.setWen(0);
-                    mTvWen.setTextColor(R.color.fontColor);
+                    mTvWen.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                 }
                 break;
             case R.id.alarm_set_thu_tv:
                 if(mData.getThu() == 0){
                     mData.setThu(1);
-                    mTvThu.setTextColor(R.color.yellow);
+                    mTvThu.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 else {
                     mData.setThu(0);
-                    mTvThu.setTextColor(R.color.fontColor);
+                    mTvThu.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                 }
                 break;
             case R.id.alarm_set_fri_tv:
                 if(mData.getFri() == 0){
                     mData.setFri(1);
-                    mTvFri.setTextColor(R.color.yellow);
+                    mTvFri.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 else {
                     mData.setFri(0);
-                    mTvFri.setTextColor(R.color.fontColor);
+                    mTvFri.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                 }
                 break;
             case R.id.alarm_set_sat_tv:
                 if(mData.getSat() == 0){
                     mData.setSat(1);
-                    mTvSat.setTextColor(R.color.yellow);
+                    mTvSat.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 else {
                     mData.setSat(0);
-                    mTvSat.setTextColor(R.color.fontColor);
+                    mTvSat.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                 }
                 break;
             case R.id.alarm_set_sun_tv:
                 if(mData.getSun() == 0){
                     mData.setSun(1);
-                    mTvSun.setTextColor(R.color.yellow);
+                    mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 else {
                     mData.setSun(0);
-                    mTvSun.setTextColor(R.color.fontColor);
+                    mTvSun.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                 }
                 break;
                 //Day Listener
@@ -156,6 +158,15 @@ public class AlarmSetActivity extends AppCompatActivity {
                 MainActivity.mRecyclerView.setLayoutManager(MainActivity.linearLayoutManager);
                 MainActivity.mRecyclerViewAdapter = new MainAdapter(this, MainActivity.mData);
                 MainActivity.mRecyclerView.setAdapter(MainActivity.mRecyclerViewAdapter);
+
+//                linearLayoutManager = new LinearLayoutManager(this);
+//                mRecyclerView.setLayoutManager(linearLayoutManager);
+//                mRecyclerViewAdapter = new MainAdapter(this, mData);
+//                mRecyclerView.setAdapter(mRecyclerViewAdapter);
+//
+//                ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(mRecyclerViewAdapter));
+//                itemTouchHelper.attachToRecyclerView(mRecyclerView);
+//                mRecyclerView.setLayoutManager(linearLayoutManager);
 
                 finish();
                 overridePendingTransition(R.anim.amin_slide_in_left, R.anim.amin_slide_out_right);
@@ -220,25 +231,25 @@ public class AlarmSetActivity extends AppCompatActivity {
                 }
 
                 if(mon ==1){
-                    mTvMon.setTextColor(R.color.yellow);
+                    mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 if(tue ==1){
-                    mTvTue.setTextColor(R.color.yellow);
+                    mTvTue.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 if(wen ==1){
-                    mTvWen.setTextColor(R.color.yellow);
+                    mTvWen.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 if(thu ==1){
-                    mTvThu.setTextColor(R.color.yellow);
+                    mTvThu.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 if(fri ==1){
-                    mTvFri.setTextColor(R.color.yellow);
+                    mTvFri.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 if(sat ==1){
-                    mTvSat.setTextColor(R.color.yellow);
+                    mTvSat.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
                 if(sun ==1){
-                    mTvSun.setTextColor(R.color.yellow);
+                    mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                 }
             }
         }
