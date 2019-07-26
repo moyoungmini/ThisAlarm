@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.MainActivity">
+
+    <com.example.alarmapp.view.EmptyRecyclerView
+        android:id="@+id/main_fragment_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"></com.example.alarmapp.view.EmptyRecyclerView>
+
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/empty_view_text"/>
+
+    <ImageView
+        android:id="@+id/main_fragment_plus_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom |center_horizontal"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginBottom="20dp"
+        android:onClick="onClick"         />
+</FrameLayout>
