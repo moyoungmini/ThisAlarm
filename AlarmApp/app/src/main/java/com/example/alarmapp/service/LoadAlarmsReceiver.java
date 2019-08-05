@@ -3,10 +3,7 @@ package com.example.alarmapp.service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
-
 import com.example.alarmapp.model.Alarm;
-
 import java.util.ArrayList;
 
 public final class LoadAlarmsReceiver extends BroadcastReceiver {

@@ -1,7 +1,6 @@
 package com.example.alarmapp.service;
 
 import android.app.AlarmManager;
-import android.app.AlarmManager.AlarmClockInfo;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,24 +9,21 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.SparseBooleanArray;
-
 import com.example.alarmapp.R;
 import com.example.alarmapp.model.Alarm;
+import com.example.alarmapp.ui.AlarmLandingPageActivity;
 import com.example.alarmapp.util.AlarmUtils;
-
 import java.util.Calendar;
-
 import static android.app.NotificationManager.IMPORTANCE_HIGH;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.KITKAT;
-import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static android.os.Build.VERSION_CODES.O;
 import static com.example.alarmapp.ui.AlarmLandingPageActivity.launchIntent;
 
@@ -38,6 +34,9 @@ public final class AlarmReceiver extends BroadcastReceiver {
 
     private static final String BUNDLE_EXTRA = "bundle_extra";
     private static final String ALARM_KEY = "alarm_key";
+
+    public static Intent mIntent;
+    public static PendingIntent pIntent;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -60,6 +59,9 @@ public final class AlarmReceiver extends BroadcastReceiver {
 
         createNotificationChannel(context);
 
+        mIntent = new Intent(context, AlarmLandingPageActivity.class);
+        pIntent = PendingIntent.getActivity(context, 0,mIntent, FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
         builder.setSmallIcon(R.drawable.ic_alarm_white_24dp);
         builder.setColor(ContextCompat.getColor(context, R.color.accent));
@@ -68,14 +70,20 @@ public final class AlarmReceiver extends BroadcastReceiver {
         builder.setTicker(alarm.getLabel());
         builder.setVibrate(newVibration);
         builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        builder.setContentIntent(launchAlarmLandingPage(context, alarm));
-        builder.setAutoCancel(true);
+        builder.setContentIntent(AlarmReceiver.pIntent);
+        builder.setOngoing(true);
         builder.setPriority(Notification.PRIORITY_HIGH);
 
-        manager.notify(id, builder.build());
+        manager.notify(0, builder.build());
 
         //Reset Alarm manually
         setReminderAlarm(context, alarm);
+
+        try {
+            AlarmReceiver.pIntent.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
     }
 
     //Convenience method for setting a notification
@@ -90,7 +98,6 @@ public final class AlarmReceiver extends BroadcastReceiver {
 
         final Calendar nextAlarmTime = getTimeForNextAlarm(alarm);
         alarm.setTime(nextAlarmTime.getTimeInMillis());
-
         final Intent intent = new Intent(context, AlarmReceiver.class);
         final Bundle bundle = new Bundle();
         bundle.putParcelable(ALARM_KEY, alarm);
@@ -235,15 +242,27 @@ public final class AlarmReceiver extends BroadcastReceiver {
         }
 
         void schedule(Alarm alarm, PendingIntent pi) {
-            if(SDK_INT > LOLLIPOP) {
-                am.setAlarmClock(new AlarmClockInfo(alarm.getTime(), launchAlarmLandingPage(ctx, alarm)), pi);
-            } else if(SDK_INT > KITKAT) {
-                am.setExact(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
-            } else {
-                am.set(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
-            }
+//            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+//                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                    //API 19 이상 API 23미만
+//                    am.setExact(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi) ;
+//                } else {
+//                    //API 19미만
+//                    am.set(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
+//                }
+//            } else {
+//                //API 23 이상
+//                am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
+//            }
+            am.setRepeating(AlarmManager.RTC_WAKEUP, alarm.getTime(), 10 * 1000, pi);
+
+//            if(SDK_INT > LOLLIPOP) {
+//                am.setAlarmClock(new AlarmClockInfo(alarm.getTime(), launchAlarmLandingPage(ctx, alarm)), pi);
+//            } else if(SDK_INT > KITKAT) {
+//                am.setExact(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
+//            } else {
+//                am.set(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
+//            }
         }
-
     }
-
 }
