@@ -21,7 +21,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:gravity="fill">
 
@@ -30,8 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/launch_main_activity"
-            tools:text="Load Main Activity"
+            android:text="미션 시작"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored" />
 
         <Button
@@ -39,8 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/dismiss"
-            tools:text="Dismiss"
+            android:text="알람 종료"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored" />
 
     </LinearLayout>

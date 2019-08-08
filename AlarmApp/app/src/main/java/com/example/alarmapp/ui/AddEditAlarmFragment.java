@@ -1,6 +1,7 @@
 package com.example.alarmapp.ui;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,7 +35,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
     //private EditText mLabel;
     private CheckBox mMon, mTues, mWed, mThurs, mFri, mSat, mSun;
     private Button mBtnSaved;
-    private TextView mTvMon, mTvTue, mTvWen, mTvThu, mTvFri, mTvSat, mTvSun;
+    private TextView mTvMon, mTvTue, mTvWen, mTvThu, mTvFri, mTvSat, mTvSun,mTvMission;
 
     private ArrayList<Boolean> dayList;
 
@@ -64,6 +65,8 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         ViewUtils.setTimePickerTime(mTimePicker, alarm.getTime());
 
         mBtnSaved = v.findViewById(R.id.alarm_edit_fragment_saved_btn);
+        mTvMission = v.findViewById(R.id.alarm_set_mission_tv);
+
         mTvMon = v.findViewById(R.id.alarm_edit_fragment_mon_tv);
         mTvTue = v.findViewById(R.id.alarm_edit_fragment_tue_tv);
         mTvWen = v.findViewById(R.id.alarm_edit_fragment_wen_tv);
@@ -72,7 +75,9 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         mTvSat = v.findViewById(R.id.alarm_edit_fragment_sat_tv);
         mTvSun = v.findViewById(R.id.alarm_edit_fragment_sun_tv);
 
+
         mBtnSaved.setOnClickListener(this);
+        mTvMission.setOnClickListener(this);
         mTvMon.setOnClickListener(this);
         mTvTue.setOnClickListener(this);
         mTvWen.setOnClickListener(this);
@@ -114,6 +119,9 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
             case R.id.alarm_edit_fragment_saved_btn:
                 save();
                 break;
+            case R.id.alarm_set_mission_tv:
+                selectMission();
+                break;
             case R.id.alarm_edit_fragment_mon_tv:
                 if(!dayList.get(0)){
                     mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
@@ -147,7 +155,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
             case R.id.alarm_edit_fragment_thu_tv:
                 if(!dayList.get(3)){
                     mTvThu.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-                    dayList.set(0,true);
+                    dayList.set(3,true);
                 }
                 else {
                     mTvThu.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
@@ -260,7 +268,10 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         getActivity().finish();
 
     }
-
+    private void selectMission() {
+        final Intent i = new Intent(getActivity(),MissionSelectActivity.class);
+        startActivity(i);
+    }
     private void delete() {
 
         final Alarm alarm = getAlarm();

@@ -39,5 +39,8 @@
 
     <!-- Notification -->
     <string name="channel_name">Simple Alarms</string>
+    <string name="permission_camera_rationale" />
+    <string name="ok" />
+    <string name="no_camera_permission" />
 
 </resources>

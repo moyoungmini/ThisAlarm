@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    tools:context=".ui.MissionSelectActivity">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:gravity="center"
+        android:lineSpacingExtra="6sp"
+        android:textColor="#000000"
+        android:textSize="25sp"
+        android:text="미션선택" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/colorPrimary"
+        ></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="12dp"
+            android:tint="@color/accent"
+            android:src="@drawable/ic_alarm_white_24dp"/>
+
+        <TextView
+            android:id="@+id/text_weather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@color/fontColor"
+            android:lineSpacingExtra="6sp"
+            android:gravity="center"
+            android:text="눈으로 날씨 읽기"
+
+            />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/colorPrimary"
+        ></View>
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="12dp"
+        android:tint="@color/accent"
+        android:src="@drawable/ic_alarm_white_24dp"/>
+
+    <TextView
+        android:id="@+id/text_speech"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="@color/fontColor"
+        android:lineSpacingExtra="6sp"
+        android:gravity="center"
+        android:text="영단어 읽기"
+        />
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/colorPrimary"
+        ></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="12dp"
+            android:tint="@color/accent"
+            android:src="@drawable/ic_alarm_white_24dp"/>
+
+        <TextView
+            android:id="@+id/text_emotion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:lineSpacingExtra="6sp"
+            android:gravity="center"
+            android:textColor="@color/fontColor"
+            android:text="감정 표현"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

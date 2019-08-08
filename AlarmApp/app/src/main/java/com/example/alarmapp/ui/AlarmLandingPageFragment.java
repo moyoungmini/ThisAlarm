@@ -18,7 +18,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.alarmapp.FaceTrackerActivity;
 import com.example.alarmapp.R;
+import com.example.alarmapp.SpeechActivity;
 
 public final class AlarmLandingPageFragment extends Fragment implements View.OnClickListener {
     private Vibrator vibrator;
@@ -53,13 +55,16 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
 
     @Override
     public void onClick(View view) {
+        NotificationManager nm = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
         switch (view.getId()) {
             case R.id.load_main_activity_btn:
-                startActivity(new Intent(getContext(), MainActivity.class));
+                startActivity(new Intent(getContext(), FaceTrackerActivity.class));
+                nm.cancel(0);
+                vibrator.cancel();
+                mMediaPlayer.stop();
                 getActivity().finish();
                 break;
             case R.id.dismiss_btn:
-                NotificationManager nm = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
                 nm.cancel(0);
                 mMediaPlayer.stop();
                 getActivity().finish();

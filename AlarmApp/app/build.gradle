@@ -26,9 +26,12 @@ dependencies {
     })
 
     def support = "28.0.0"
-    implementation "com.android.support:appcompat-v7:$support"
-    implementation "com.android.support:recyclerview-v7:$support"
+   //noinspection GradleCompatible
+   implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:design:$support"
     implementation "com.android.support:gridlayout-v7:$support"
     implementation 'junit:junit:4.12'
+    implementation 'com.google.android.gms:play-services-vision:17.0.2'
+
+
 }
