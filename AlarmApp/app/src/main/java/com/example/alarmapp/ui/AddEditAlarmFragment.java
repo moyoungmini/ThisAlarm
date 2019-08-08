@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,7 +36,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
     //private EditText mLabel;
     private CheckBox mMon, mTues, mWed, mThurs, mFri, mSat, mSun;
     private Button mBtnSaved;
-    private TextView mTvMon, mTvTue, mTvWen, mTvThu, mTvFri, mTvSat, mTvSun,mTvMission;
+    private TextView mTvMon, mTvTue, mTvWen, mTvThu, mTvFri, mTvSat, mTvSun, mTvMission;
 
     private ArrayList<Boolean> dayList;
 
@@ -46,7 +47,6 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
 
         AddEditAlarmFragment fragment = new AddEditAlarmFragment();
         fragment.setArguments(args);
-
 
         return fragment;
     }
@@ -61,12 +61,10 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
 
         final Alarm alarm = getAlarm();
 
-        mTimePicker = (TimePicker) v.findViewById(R.id.alarm_edit_fragment_timepicker);
+        mTimePicker = v.findViewById(R.id.alarm_edit_fragment_timepicker);
         ViewUtils.setTimePickerTime(mTimePicker, alarm.getTime());
 
         mBtnSaved = v.findViewById(R.id.alarm_edit_fragment_saved_btn);
-        mTvMission = v.findViewById(R.id.alarm_set_mission_tv);
-
         mTvMon = v.findViewById(R.id.alarm_edit_fragment_mon_tv);
         mTvTue = v.findViewById(R.id.alarm_edit_fragment_tue_tv);
         mTvWen = v.findViewById(R.id.alarm_edit_fragment_wen_tv);
@@ -74,6 +72,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         mTvFri = v.findViewById(R.id.alarm_edit_fragment_fri_tv);
         mTvSat = v.findViewById(R.id.alarm_edit_fragment_sat_tv);
         mTvSun = v.findViewById(R.id.alarm_edit_fragment_sun_tv);
+        mTvMission = v.findViewById(R.id.alarm_set_mission_tv);
 
 
         mBtnSaved.setOnClickListener(this);
@@ -85,18 +84,6 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         mTvFri.setOnClickListener(this);
         mTvSat.setOnClickListener(this);
         mTvSun.setOnClickListener(this);
-
-//        mLabel = (EditText) v.findViewById(R.id.edit_alarm_label);
-//        mLabel.setText(alarm.getLabel());
-//
-//        mMon = (CheckBox) v.findViewById(R.id.edit_alarm_mon);
-//        mTues = (CheckBox) v.findViewById(R.id.edit_alarm_tues);
-//        mWed = (CheckBox) v.findViewById(R.id.edit_alarm_wed);
-//        mThurs = (CheckBox) v.findViewById(R.id.edit_alarm_thurs);
-//        mFri = (CheckBox) v.findViewById(R.id.edit_alarm_fri);
-//        mSat = (CheckBox) v.findViewById(R.id.edit_alarm_sat);
-//        mSun = (CheckBox) v.findViewById(R.id.edit_alarm_sun);
-//
 
         dayList = new ArrayList<>();
         for(int i=0;i<7;i++){
@@ -247,7 +234,9 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         time.set(Calendar.MINUTE, ViewUtils.getTimePickerMinute(mTimePicker));
         time.set(Calendar.HOUR_OF_DAY, ViewUtils.getTimePickerHour(mTimePicker));
         alarm.setTime(time.getTimeInMillis());
-
+        Log.i("CurafbdfbfbfbfbsTime", String.valueOf(Calendar.MINUTE));
+        Log.i("CurafbfbfbdfbsTime", String.valueOf(Calendar.HOUR_OF_DAY));
+        Log.i("CurafbdfbsTime", String.valueOf(time.getTimeInMillis()));
 //        alarm.setLabel(mLabel.getText().toString());
 
         alarm.setDay(Alarm.MON, dayList.get(0));
@@ -257,6 +246,9 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         alarm.setDay(Alarm.FRI, dayList.get(4));
         alarm.setDay(Alarm.SAT, dayList.get(5));
         alarm.setDay(Alarm.SUN, dayList.get(6));
+
+        Log.i("CurrentvsdvdsTime", String.valueOf(alarm.getTime()));
+
 
         final int rowsUpdated = DatabaseHelper.getInstance(getContext()).updateAlarm(alarm);
         final int messageId = (rowsUpdated == 1) ? R.string.update_complete : R.string.update_failed;
@@ -268,14 +260,9 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         getActivity().finish();
 
     }
-    private void selectMission() {
-        final Intent i = new Intent(getActivity(),MissionSelectActivity.class);
-        startActivity(i);
-    }
+
     private void delete() {
-
         final Alarm alarm = getAlarm();
-
         final AlertDialog.Builder builder =
                 new AlertDialog.Builder(getContext(), R.style.DeleteAlarmDialogTheme);
         builder.setTitle(R.string.delete_dialog_title);
@@ -304,4 +291,8 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         builder.show();
     }
 
+    private void selectMission() {
+        final Intent i = new Intent(getActivity(),MissionSelectActivity.class);
+        startActivity(i);
+    }
 }

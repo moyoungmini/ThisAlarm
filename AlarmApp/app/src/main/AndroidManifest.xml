@@ -4,6 +4,8 @@
     android:installLocation="auto">
 
     <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -42,12 +44,6 @@
         <service android:name=".service.LoadAlarmsService" android:stopWithTask="false" />
         <receiver android:name=".service.LoadAlarmsReceiver" android:exported="true"/>
         <receiver android:name=".service.AlarmReceiver"  android:exported="true"/>
-
-        <receiver android:name=".PhoneStateBroadcastReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE">
-                </action></intent-filter>
-        </receiver>
 
     </application>
 

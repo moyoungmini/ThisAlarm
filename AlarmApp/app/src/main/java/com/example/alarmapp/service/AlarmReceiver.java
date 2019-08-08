@@ -113,6 +113,32 @@ public final class AlarmReceiver extends BroadcastReceiver {
         ScheduleAlarm.with(context).schedule(alarm, pIntent);
     }
 
+    public static void resetReminderAlarm(Context context, Alarm alarm) {
+
+        //Check whether the alarm is set to run on any days
+        if(!AlarmUtils.isAlarmActive(alarm)) {
+            //If alarm not set to run on any days, cancel any existing notifications for this alarm
+            cancelReminderAlarm(context, alarm);
+            return;
+        }
+
+        final Calendar nextAlarmTime = getTimeForNextAlarm(alarm);
+        alarm.setTime(nextAlarmTime.getTimeInMillis());
+        final Intent intent = new Intent(context, AlarmReceiver.class);
+        final Bundle bundle = new Bundle();
+        bundle.putParcelable(ALARM_KEY, alarm);
+        intent.putExtra(BUNDLE_EXTRA, bundle);
+
+        final PendingIntent pIntent = PendingIntent.getBroadcast(
+                context,
+                1,
+                intent,
+                FLAG_UPDATE_CURRENT
+        );
+
+        ScheduleAlarm.with(context).resetSchedule(alarm, pIntent);
+    }
+
     /**
      * Calculates the actual time of the next alarm/notification based on the user-set time the
      * alarm should sound each day, the days the alarm is set to run, and the current time.
@@ -242,27 +268,44 @@ public final class AlarmReceiver extends BroadcastReceiver {
         }
 
         void schedule(Alarm alarm, PendingIntent pi) {
-//            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
-//                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                    //API 19 이상 API 23미만
-//                    am.setExact(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi) ;
-//                } else {
-//                    //API 19미만
-//                    am.set(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
-//                }
-//            } else {
-//                //API 23 이상
-//                am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
-//            }
-            am.setRepeating(AlarmManager.RTC_WAKEUP, alarm.getTime(), 10 * 1000, pi);
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    //API 19 이상 API 23미만
+                    am.setExact(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi) ;
+                } else {
+                    //API 19미만
+                    am.set(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
+                }
+            } else {
+                //API 23 이상
+                am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
+            }
 
-//            if(SDK_INT > LOLLIPOP) {
-//                am.setAlarmClock(new AlarmClockInfo(alarm.getTime(), launchAlarmLandingPage(ctx, alarm)), pi);
-//            } else if(SDK_INT > KITKAT) {
-//                am.setExact(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
-//            } else {
-//                am.set(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
-//            }
+//            am.setRepeating(AlarmManager.RTC_WAKEUP, alarm.getTime(), 10 * 1000, pi);
+//
+////            if(SDK_INT > LOLLIPOP) {
+////                am.setAlarmClock(new AlarmClockInfo(alarm.getTime(), launchAlarmLandingPage(ctx, alarm)), pi);
+////            } else if(SDK_INT > KITKAT) {
+////                am.setExact(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
+////            } else {
+////                am.set(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
+////            }
+        }
+
+        void resetSchedule(Alarm alarm, PendingIntent pi) {
+            long delay = 1 * 10 * 1000;
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    //API 19 이상 API 23미만
+                    am.setExact(AlarmManager.RTC_WAKEUP, alarm.getTime()+delay, pi) ;
+                } else {
+                    //API 19미만
+                    am.set(AlarmManager.RTC_WAKEUP, alarm.getTime() +delay, pi);
+                }
+            } else {
+                //API 23 이상
+                am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarm.getTime() + delay, pi);
+            }
         }
     }
 }
