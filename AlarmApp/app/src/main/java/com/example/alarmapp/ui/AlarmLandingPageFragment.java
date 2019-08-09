@@ -44,6 +44,8 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
     private PendingIntent pIntent;
     private @SuppressLint("ServiceCast") AlarmManager am;
 
+    private int mission;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,6 +74,13 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
             dayList.add(false);
         }
 
+        Bundle extras = getActivity().getIntent().getExtras();
+        if(extras != null) {
+            if (extras.containsKey("mission")) {
+                mission = extras.getInt("mission");
+            }
+        }
+
         return v;
     }
 
@@ -80,6 +89,17 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.load_main_activity_btn:
+                if(mission == 0){
+
+                }else if(mission ==1){
+
+                }
+                else if(mission ==2){
+                    startActivity(new Intent(getContext(), SpeechActivity.class));
+                }
+                else if(mission ==3){
+                    startActivity(new Intent(getContext(), FaceTrackerActivity.class));
+                }
                 // 5분 후 RECALL
                 AlarmLandingPageActivity.isAlarmFinish = false;
                 nm = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
@@ -88,27 +108,6 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                 getActivity().finish();
                 vibrator.cancel();
 
-//                        am = (AlarmManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
-//                        mIntent = new Intent(getContext(), AlarmLandingPageActivity.class);
-//                        pIntent = PendingIntent.getActivity(getContext(), 1,mIntent, 0);
-//                        am.cancel(pIntent);
-
-                long now = System.currentTimeMillis();
-                Log.i("CurrentTime", String.valueOf(now));
-
-                Alarm alarm = new Alarm();
-                alarm.setTime(now);
-                alarm.setDay(Alarm.MON, dayList.get(0));
-                alarm.setDay(Alarm.TUES, dayList.get(1));
-                alarm.setDay(Alarm.WED, dayList.get(2));
-                alarm.setDay(Alarm.THURS, dayList.get(3));
-                alarm.setDay(Alarm.FRI, dayList.get(4));
-                alarm.setDay(Alarm.SAT, dayList.get(5));
-                alarm.setDay(Alarm.SUN, dayList.get(6));
-                AlarmReceiver.resetReminderAlarm(getContext(), alarm);
-                Log.i("dsfsdf","sdfsd");
-
-                startActivity(new Intent(getContext(), SpeechActivity.class));
                 break;
             case R.id.dismiss_btn:
                 AlarmLandingPageActivity.isAlarmFinish = false;

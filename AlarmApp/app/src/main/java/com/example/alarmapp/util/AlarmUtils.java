@@ -57,6 +57,7 @@ public final class AlarmUtils {
 
         cv.put(COL_TIME, alarm.getTime());
         cv.put(COL_LABEL, alarm.getLabel());
+        cv.put(COL_MISSION,alarm.getMission());
 
         final SparseBooleanArray days = alarm.getDays();
         cv.put(COL_MON, days.get(Alarm.MON) ? 1 : 0);

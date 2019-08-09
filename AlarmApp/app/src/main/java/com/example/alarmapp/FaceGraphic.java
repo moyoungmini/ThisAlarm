@@ -46,6 +46,7 @@ class FaceGraphic extends GraphicOverlay.Graphic {
     };
     private static int mCurrentColorIndex = 0;
 
+
     private Paint mFacePositionPaint;
     private Paint mIdPaint;
     private Paint mBoxPaint;
@@ -53,7 +54,8 @@ class FaceGraphic extends GraphicOverlay.Graphic {
     private volatile Face mFace;
     private int mFaceId;
     private float mFaceHappiness;
-
+    public float righteye;
+    public float lefteye;
     FaceGraphic(GraphicOverlay overlay) {
         super(overlay);
         mCurrentColorIndex = (mCurrentColorIndex + 1) % COLOR_CHOICES.length;
@@ -101,7 +103,7 @@ class FaceGraphic extends GraphicOverlay.Graphic {
         float y = translateY(face.getPosition().y + face.getHeight() / 2);
         canvas.drawCircle(x, y, FACE_POSITION_RADIUS, mFacePositionPaint);
         canvas.drawText("id: " + mFaceId, x + ID_X_OFFSET, y + ID_Y_OFFSET, mIdPaint);
-        canvas.drawText("happiness: " + String.format("%.2f", face.getIsSmilingProbability()), x - ID_X_OFFSET, y - ID_Y_OFFSET, mIdPaint);
+        canvas.drawText("happiness: " + String.format("%.2f", face.getIsSmilingProbability()), x - ID_X_OFFSET, y - ID_Y_OFFSET, mIdPaint);//웃음
         canvas.drawText("right eye: " + String.format("%.2f", face.getIsRightEyeOpenProbability()), x - ID_X_OFFSET * 2, y - ID_Y_OFFSET * 2, mIdPaint);
         canvas.drawText("left eye: " + String.format("%.2f", face.getIsLeftEyeOpenProbability()), x + ID_X_OFFSET*8, y - ID_Y_OFFSET*2, mIdPaint);
 
@@ -114,11 +116,8 @@ class FaceGraphic extends GraphicOverlay.Graphic {
         float bottom = y + yOffset;
         canvas.drawRect(left, top, right, bottom, mBoxPaint);
         this.happiness = face.getIsSmilingProbability();
-
-
-        if(this.happiness>0.9){
-            System.out.println("UP 0.9");
-        }
+        this.lefteye = face.getIsLeftEyeOpenProbability();
+        this.righteye = face.getIsRightEyeOpenProbability();
 
     }
 

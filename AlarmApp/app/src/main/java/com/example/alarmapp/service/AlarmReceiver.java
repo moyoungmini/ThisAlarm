@@ -60,6 +60,7 @@ public final class AlarmReceiver extends BroadcastReceiver {
         createNotificationChannel(context);
 
         mIntent = new Intent(context, AlarmLandingPageActivity.class);
+        mIntent.putExtra("mission", alarm.getMission());
         pIntent = PendingIntent.getActivity(context, 0,mIntent, FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);

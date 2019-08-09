@@ -28,6 +28,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.alarmapp.camera.CameraSourcePreview;
 import com.example.alarmapp.camera.GraphicOverlay;
@@ -282,6 +283,9 @@ public final class FaceTrackerActivity extends AppCompatActivity {
     private class GraphicFaceTracker extends Tracker<Face> {
         private GraphicOverlay mOverlay;
         private FaceGraphic mFaceGraphic;
+        private int randomnumber = (int) (Math.random()*10); // 0< ran<1 사이의 실수 ;
+
+
 
         GraphicFaceTracker(GraphicOverlay overlay) {
             mOverlay = overlay;
@@ -305,13 +309,27 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             mFaceGraphic.updateFace(face);
 
 
-            if(mFaceGraphic.happiness>0.9){
-                System.out.println("UP 0.9");
-//                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
-                finish();
+            if( this.randomnumber >= 0 && this.randomnumber<3) {
+                    Log.i("Dvddsv","vfdv");
+                if (mFaceGraphic.happiness > 0.9 && mFaceGraphic.lefteye >0.9 ) {
+                    Log.i("Smile~","DFsvds");
+                    finish();
+                }
+            }else if(this.randomnumber >= 3 && this.randomnumber<6){
+                Log.i("Smivdvdvle~","DFsvds");
+                if (mFaceGraphic.happiness > 0.9 && mFaceGraphic.lefteye >0.9) {
+                    finish();
+                }
+            }else if(this.randomnumber >= 6 && this.randomnumber<=10){
+                Log.i("Smivdvfdle~","DFsvds");
+                if (mFaceGraphic.happiness <0.2 && mFaceGraphic.lefteye >0.9) {
+                    finish();
+                }
+            }else {
+                Log.i("S00bfbfbmile~","DFsvds");
+                if (mFaceGraphic.happiness > 0.9) {
+                    finish();
+                }
             }
         }
 

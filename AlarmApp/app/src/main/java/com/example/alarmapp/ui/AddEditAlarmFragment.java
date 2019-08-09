@@ -40,6 +40,8 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
 
     private ArrayList<Boolean> dayList;
 
+    public static int mission =0;
+
     public static AddEditAlarmFragment newInstance(Alarm alarm) {
 
         Bundle args = new Bundle();
@@ -75,6 +77,9 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         mTvMission = v.findViewById(R.id.alarm_set_mission_tv);
 
 
+
+
+
         mBtnSaved.setOnClickListener(this);
         mTvMission.setOnClickListener(this);
         mTvMon.setOnClickListener(this);
@@ -89,6 +94,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         for(int i=0;i<7;i++){
             dayList.add(false);
         }
+
         setDayCheckboxes(alarm);
 
         return v;
@@ -179,6 +185,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     dayList.set(6,false);
                 }
                 break;
+
             //Day Listener
 //            case R.id.action_delete:
 //                delete();
@@ -205,6 +212,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
     }
 
     private void setDayCheckboxes(Alarm alarm) {
+
         mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
         mTvTue.setTextColor(this.getResources().getColorStateList(R.color.yellow));
         mTvWen.setTextColor(this.getResources().getColorStateList(R.color.yellow));
@@ -213,9 +221,14 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         mTvSat.setTextColor(this.getResources().getColorStateList(R.color.yellow));
         mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
 
+
+
+
         for(int i=0;i<7;i++){
-            dayList.set(i, true);
+            dayList.set(i,  true);
         }
+
+
 
 //        mMon.setChecked(alarm.getDay(Alarm.MON));
 //        mTues.setChecked(alarm.getDay(Alarm.TUES));
@@ -246,6 +259,11 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         alarm.setDay(Alarm.FRI, dayList.get(4));
         alarm.setDay(Alarm.SAT, dayList.get(5));
         alarm.setDay(Alarm.SUN, dayList.get(6));
+
+        alarm.setMission(mission);
+
+
+        //alatm.set
 
         Log.i("CurrentvsdvdsTime", String.valueOf(alarm.getTime()));
 

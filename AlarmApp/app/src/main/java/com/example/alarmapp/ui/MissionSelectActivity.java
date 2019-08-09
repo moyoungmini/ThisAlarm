@@ -10,7 +10,6 @@ import com.example.alarmapp.R;
 public class MissionSelectActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView mWeather,mSpeech,mEmotion;
-    private  int mission = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,39 +29,39 @@ public class MissionSelectActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.text_weather:
-                if(mission != 1){
-                    mission =1;
+                if(AddEditAlarmFragment.mission != 1){
+                    AddEditAlarmFragment.mission =1;
                     mWeather.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     mSpeech.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                     mEmotion.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                 }
                 else {
                     mWeather.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-                    mission = 0;
+                    AddEditAlarmFragment.mission = 0;
                 }
                 break;
             case R.id.text_speech:
-                if(mission != 2){
-                    mission =2;
+                if(AddEditAlarmFragment.mission != 2){
+                    AddEditAlarmFragment.mission =2;
                     mSpeech.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     mWeather.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                     mEmotion.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                 }
                 else {
                     mSpeech.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-                    mission = 0;
+                    AddEditAlarmFragment.mission = 0;
                 }
                 break;
             case R.id.text_emotion:
-                if(mission != 3){
-                    mission =3;
+                if(AddEditAlarmFragment.mission != 3){
+                    AddEditAlarmFragment.mission =3;
                     mEmotion.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     mWeather.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                     mSpeech.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
                 }
                 else {
                     mEmotion.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-                    mission = 0;
+                    AddEditAlarmFragment.mission = 0;
                 }
                 break;
         }

@@ -10,10 +10,14 @@ import java.lang.annotation.RetentionPolicy;
 
 public final class Alarm implements Parcelable{
 
+
+
     private Alarm(Parcel in) {
+
         id = in.readLong();
         time = in.readLong();
         label = in.readString();
+        mission = in.readInt();
         allDays = in.readSparseBooleanArray();
         isEnabled = in.readByte() != 0;
     }
@@ -40,8 +44,17 @@ public final class Alarm implements Parcelable{
         parcel.writeLong(id);
         parcel.writeLong(time);
         parcel.writeString(label);
+        parcel.writeInt(mission);
         parcel.writeSparseBooleanArray(allDays);
         parcel.writeByte((byte) (isEnabled ? 1 : 0));
+    }
+
+    public void setMission(int mission) {
+        this.mission = mission;
+    }
+
+    public int getMission() {
+        return this.mission;
     }
 
     @Retention(RetentionPolicy.SOURCE)
@@ -62,6 +75,7 @@ public final class Alarm implements Parcelable{
     private String label;
     private SparseBooleanArray allDays;
     private boolean isEnabled;
+    private  int mission;
 
     public Alarm() {
         this(NO_ID);
