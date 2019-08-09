@@ -41,6 +41,7 @@
             android:text="알람 종료"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored" />
 
+
     </LinearLayout>
 
 </LinearLayout>

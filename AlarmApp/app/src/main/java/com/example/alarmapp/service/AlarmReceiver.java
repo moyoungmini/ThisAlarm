@@ -282,7 +282,6 @@ public final class AlarmReceiver extends BroadcastReceiver {
                 am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
             }
 
-//            am.setRepeating(AlarmManager.RTC_WAKEUP, alarm.getTime(), 10 * 1000, pi);
 //
 ////            if(SDK_INT > LOLLIPOP) {
 ////                am.setAlarmClock(new AlarmClockInfo(alarm.getTime(), launchAlarmLandingPage(ctx, alarm)), pi);
@@ -294,7 +293,7 @@ public final class AlarmReceiver extends BroadcastReceiver {
         }
 
         void resetSchedule(Alarm alarm, PendingIntent pi) {
-            long delay = 1 * 10 * 1000;
+            long delay = 5 * 60 * 1000;
             if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     //API 19 이상 API 23미만

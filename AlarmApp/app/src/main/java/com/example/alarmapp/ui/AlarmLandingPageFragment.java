@@ -46,6 +46,7 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
 
     private int mission;
 
+    @SuppressLint("ServiceCast")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,6 +81,11 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                 mission = extras.getInt("mission");
             }
         }
+
+        //am = (AlarmManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        //mIntent = new Intent(getContext(), AlarmLandingPageActivity.class);
+        //pIntent = PendingIntent.getActivity(getContext(), 1,mIntent, 0);
+        //am.cancel(pIntent);
 
         return v;
     }
@@ -117,10 +123,10 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                 getActivity().finish();
                 vibrator.cancel();
 
-                am = (AlarmManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
-                mIntent = new Intent(getContext(), AlarmLandingPageActivity.class);
-                pIntent = PendingIntent.getActivity(getContext(), 1,mIntent, 0);
-                am.cancel(pIntent);
+                //am = (AlarmManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
+                //mIntent = new Intent(getContext(), AlarmLandingPageActivity.class);
+                //pIntent = PendingIntent.getActivity(getContext(), 0,mIntent, 0);
+                //am.cancel(pIntent);
                 break;
         }
     }

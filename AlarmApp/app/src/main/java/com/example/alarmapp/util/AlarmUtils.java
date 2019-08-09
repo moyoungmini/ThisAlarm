@@ -117,6 +117,43 @@ public final class AlarmUtils {
 
     }
 
+    public static Alarm oneAlarmList(Cursor c) {
+
+        if (c == null) return new Alarm();
+        Alarm alarm = null;
+        final int size = c.getCount();
+
+        if (c.moveToFirst()){
+            do {
+
+                final long id = c.getLong(c.getColumnIndex(_ID));
+                final long time = c.getLong(c.getColumnIndex(COL_TIME));
+                final String label = c.getString(c.getColumnIndex(COL_LABEL));
+                final boolean mon = c.getInt(c.getColumnIndex(COL_MON)) == 1;
+                final boolean tues = c.getInt(c.getColumnIndex(COL_TUES)) == 1;
+                final boolean wed = c.getInt(c.getColumnIndex(COL_WED)) == 1;
+                final boolean thurs = c.getInt(c.getColumnIndex(COL_THURS)) == 1;
+                final boolean fri = c.getInt(c.getColumnIndex(COL_FRI)) == 1;
+                final boolean sat = c.getInt(c.getColumnIndex(COL_SAT)) == 1;
+                final boolean sun = c.getInt(c.getColumnIndex(COL_SUN)) == 1;
+                final boolean isEnabled = c.getInt(c.getColumnIndex(COL_IS_ENABLED)) == 1;
+
+                alarm = new Alarm(id, time, label);
+                alarm.setDay(Alarm.MON, mon);
+                alarm.setDay(Alarm.TUES, tues);
+                alarm.setDay(Alarm.WED, wed);
+                alarm.setDay(Alarm.THURS, thurs);
+                alarm.setDay(Alarm.FRI, fri);
+                alarm.setDay(Alarm.SAT, sat);
+                alarm.setDay(Alarm.SUN, sun);
+
+                alarm.setIsEnabled(isEnabled);
+
+            } while (c.moveToNext());
+        }
+        return alarm;
+    }
+
     public static String getReadableTime(long time) {
         return TIME_FORMAT.format(time);
     }

@@ -105,16 +105,26 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Alarm> getAlarms() {
-
         Cursor c = null;
-
         try{
             c = getReadableDatabase().query(TABLE_NAME, null, null, null, null, null, null);
             return AlarmUtils.buildAlarmList(c);
         } finally {
             if (c != null && !c.isClosed()) c.close();
         }
-
     }
+
+    public Alarm readAlarm(int id){
+        Alarm returnAlarm =new Alarm();
+        Cursor c = null;
+        String[] args = {String.valueOf(id)};
+        try{
+            c = getReadableDatabase().query(TABLE_NAME, null, "id = ?", args, null, null, null);
+            return AlarmUtils.oneAlarmList(c);
+        } finally {
+            if (c != null && !c.isClosed()) c.close();
+        }
+    }
+
 
 }

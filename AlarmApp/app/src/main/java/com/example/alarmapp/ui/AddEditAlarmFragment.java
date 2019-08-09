@@ -213,20 +213,94 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
 
     private void setDayCheckboxes(Alarm alarm) {
 
-        mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-        mTvTue.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-        mTvWen.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-        mTvThu.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-        mTvFri.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-        mTvSat.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-        mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+        if(alarm.getDay(Alarm.MON)) {
+            mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            dayList.set(0,true);
+        }
+        else {
+            mTvMon.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            dayList.set(0,false);
+        }
 
+        if(alarm.getDay(Alarm.TUES)) {
+            mTvTue.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            dayList.set(1,true);
+        }
+        else {
+            mTvTue.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            dayList.set(1,false);
+        }
 
+        if(alarm.getDay(Alarm.WED)) {
+            mTvWen.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            dayList.set(2,true);
+        }
+        else {
+            mTvWen.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            dayList.set(2,false);
+        }
 
+        if(alarm.getDay(Alarm.THURS)) {
+            mTvThu.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            dayList.set(3,true);
+        }
+        else {
+            mTvThu.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            dayList.set(3,false);
+        }
+
+        if(alarm.getDay(Alarm.FRI)) {
+            mTvFri.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            dayList.set(4,true);
+        }
+        else {
+            mTvFri.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            dayList.set(4,false);
+        }
+
+        if(alarm.getDay(Alarm.SAT)) {
+            mTvSat.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            dayList.set(5,true);
+        }
+        else {
+            mTvSat.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            dayList.set(5,false);
+        }
+
+        if(alarm.getDay(Alarm.SUN)) {
+            mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            dayList.set(6,true);
+        }
+        else {
+            mTvSun.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            dayList.set(6,false);
+        }
+
+        boolean select = true;
 
         for(int i=0;i<7;i++){
-            dayList.set(i,  true);
+            if(dayList.get(i)) {
+                select = false;
+            }
         }
+
+        if(select) {
+            for(int i=0;i<7;i++){
+                dayList.set(i,  true);
+            }
+
+            mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            mTvTue.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            mTvWen.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            mTvThu.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            mTvFri.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            mTvSat.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+            mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
+        }
+
+//        for(int i=0;i<7;i++){
+//            dayList.set(i,  true);
+//        }
 
 
 
