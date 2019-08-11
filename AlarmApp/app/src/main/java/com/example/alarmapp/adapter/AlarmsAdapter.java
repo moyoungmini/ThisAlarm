@@ -62,6 +62,9 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
         if(mAccentColor == -1) {
             mAccentColor = ContextCompat.getColor(c, R.color.accent);
         }
+//        else {
+//            mAccentColor = ContextCompat.getColor(c, R.color.dayMissColor);
+//        }
 
         if(mDays == null){
             mDays = c.getResources().getStringArray(R.array.days_abbreviated);
@@ -90,22 +93,22 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
         holder.enabledSwitch.setOnCheckedChangeListener(null);
         holder.enabledSwitch.setChecked(alarm.isEnabled());
         if(alarm.isEnabled()) {
-            //holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
-            //holder.time.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
+            holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
+            holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
             holder.layout.setBackgroundResource(R.color.colorPrimary);
             holder.allLayout.setBackgroundResource(R.drawable.recycler_item_background);
         }
         else {
-            //holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
-            //holder.time.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
+            holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
+            holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
             holder.layout.setBackgroundResource(R.color.grayColor);
             holder.allLayout.setBackgroundResource(R.drawable.recycler_item_empty_background);
         }
         holder.enabledSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    //holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
-                    //holder.time.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
+                    holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
+                    holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
                     holder.layout.setBackgroundResource(R.color.colorPrimary);
                     holder.allLayout.setBackgroundResource(R.drawable.recycler_item_background);
                     Log.i("sdavasvsdv", "TRUE");
@@ -123,8 +126,8 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
                     // DB 변경 enabled가 false로 변경
                     Log.i("sdavbfbfbfasvsdv", "FALSE");
 
-                    //holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
-                    //holder.time.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
+                    holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
+                    holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
                     holder.layout.setBackgroundResource(R.color.grayColor);
                     holder.allLayout.setBackgroundResource(R.drawable.recycler_item_empty_background);
                     alarm.setIsEnabled(false);

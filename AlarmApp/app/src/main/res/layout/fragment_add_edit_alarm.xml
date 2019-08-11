@@ -16,11 +16,11 @@
         android:layout_marginRight="15dp"
         android:background="@drawable/recycler_item_background">
         <ImageView
+            android:id="@+id/alarm_edit_left_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/edit_left_img"/>
         <TextView
             android:id="@+id/alarm_set_mission_tv"
@@ -36,11 +36,11 @@
             />
 
         <ImageView
+            android:id="@+id/alarm_edit_right_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/edit_right_img"/>
     </LinearLayout>
 
@@ -53,6 +53,8 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@drawable/recycler_item_background"
         android:timePickerMode="spinner"></TimePicker>
 
@@ -234,7 +236,7 @@
             android:layout_marginBottom="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="21sp"
+            android:textSize="16sp"
             android:textColor="@color/fontColor"
             android:layout_marginLeft="15dp"
             android:lineSpacingExtra="4sp"
@@ -248,6 +250,7 @@
         <Switch
             android:id="@+id/alarm_edit_fragment_switch"
             android:layout_marginTop="15dp"
+            android:switchMinWidth="55dp"
             android:layout_marginBottom="15dp"
             android:layout_marginRight="15dp"
             android:theme="@style/SCBSwitch"

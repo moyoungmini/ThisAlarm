@@ -14,7 +14,9 @@
     <color name="colorAccent">#e2e2e2</color>
     <color name="white">#ffffff</color>
     <color name="yellow">#f7b500</color>
-    <color name="fontColor">#b2b2b2</color>
+    <color name="fontColor">#6d7278</color>
+    <color name="fontMissColor">#e2e2e2</color>
     <color name="grayColor">#e2e2e2</color>
     <color name="blackColor">#000000</color>
+    <color name="dayMissColor">#E0E6F6</color>
 </resources>
