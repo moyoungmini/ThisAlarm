@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //            startActivity(intent);
 //        }
-        // 무음 모드 일때 울리는 권한 설정
+//        // 무음 모드 일때 울리는 권한 설정
     }
 
     @Override

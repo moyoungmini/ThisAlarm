@@ -19,33 +19,41 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.SplashActivity"></activity>
         <activity android:name=".FaceTrackerActivity" />
         <activity android:name=".SpeechActivity" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="face" />
-        <activity android:name=".ui.MainActivity">
 
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.AddEditAlarmActivity" />
-        <activity android:name=".ui.MissionSelectActivity"></activity>
+        <activity android:name=".ui.MissionSelectActivity" />
         <activity
             android:name=".ui.AlarmLandingPageActivity"
-            android:theme="@style/AlertLandingPageTheme"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:theme="@style/AlertLandingPageTheme" />
 
-        <service android:name=".service.LoadAlarmsService" android:stopWithTask="false" />
-        <receiver android:name=".service.LoadAlarmsReceiver" android:exported="true"/>
-        <receiver android:name=".service.AlarmReceiver"  android:exported="true"/>
+        <service
+            android:name=".service.LoadAlarmsService"
+            android:stopWithTask="false" />
 
+        <receiver
+            android:name=".service.LoadAlarmsReceiver"
+            android:exported="true" />
+        <receiver
+            android:name=".service.AlarmReceiver"
+            android:exported="true" />
     </application>
 
 </manifest>

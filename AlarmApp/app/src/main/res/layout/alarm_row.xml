@@ -24,10 +24,9 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="@dimen/recyclerview_margin"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:textColor="#ffffff"
-            android:lineSpacingExtra="1sp"
-            tools:text="오늘아침도 일어나야한다니"
+            tools:text="오늘아침도 일어나"
             android:id="@+id/ar_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:textColor="#000000"
+            android:textColor="@color/fontColor"
             android:lineSpacingExtra="5sp"
             tools:text="AM"
             android:layout_marginRight="12dp"/>
@@ -68,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="36sp"
-            android:textColor="#000000"
+            android:textColor="@color/fontColor"
             android:lineSpacingExtra="5sp"
             tools:text="7:00"/>
 
@@ -81,6 +80,7 @@
             android:layout_marginRight="@dimen/recyclerview_margin"
             android:id="@+id/ar_switch"
             android:layout_width="wrap_content"
+            android:theme="@style/SCBSwitch"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             />

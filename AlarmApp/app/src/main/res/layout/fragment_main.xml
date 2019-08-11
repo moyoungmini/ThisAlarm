@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom |center_horizontal"
-        android:src="@mipmap/ic_launcher"
+        android:background="@drawable/main_saved_btn"
         android:layout_marginBottom="20dp"
         android:onClick="onClick"         />
 </FrameLayout>

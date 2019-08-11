@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.alarmapp.FaceTrackerActivity;
 import com.example.alarmapp.R;
@@ -61,7 +62,7 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
 
         final View v = inflater.inflate(R.layout.fragment_alarm_landing_page, container, false);
         final Button launchMainActivityBtn = (Button) v.findViewById(R.id.load_main_activity_btn);
-        final Button dismiss = (Button) v.findViewById(R.id.dismiss_btn);
+        final ImageView dismiss =  v.findViewById(R.id.dismiss_btn);
 
         long[] pattern = {100, 1000, 100, 500, 100, 500, 100, 1000};
         vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);

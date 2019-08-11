@@ -90,22 +90,22 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
         holder.enabledSwitch.setOnCheckedChangeListener(null);
         holder.enabledSwitch.setChecked(alarm.isEnabled());
         if(alarm.isEnabled()) {
-            holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
-            holder.time.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
+            //holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
+            //holder.time.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
             holder.layout.setBackgroundResource(R.color.colorPrimary);
             holder.allLayout.setBackgroundResource(R.drawable.recycler_item_background);
         }
         else {
-            holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
-            holder.time.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
+            //holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
+            //holder.time.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
             holder.layout.setBackgroundResource(R.color.grayColor);
             holder.allLayout.setBackgroundResource(R.drawable.recycler_item_empty_background);
         }
         holder.enabledSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
-                    holder.time.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
+                    //holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
+                    //holder.time.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
                     holder.layout.setBackgroundResource(R.color.colorPrimary);
                     holder.allLayout.setBackgroundResource(R.drawable.recycler_item_background);
                     Log.i("sdavasvsdv", "TRUE");
@@ -123,8 +123,8 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
                     // DB 변경 enabled가 false로 변경
                     Log.i("sdavbfbfbfasvsdv", "FALSE");
 
-                    holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
-                    holder.time.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
+                    //holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
+                    //holder.time.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
                     holder.layout.setBackgroundResource(R.color.grayColor);
                     holder.allLayout.setBackgroundResource(R.drawable.recycler_item_empty_background);
                     alarm.setIsEnabled(false);
@@ -219,8 +219,8 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
         final int rowsDeleted = DatabaseHelper.getInstance(MainActivity.mainActivity).deleteAlarm(alarm);
         int messageId;
         if(rowsDeleted == 1) {
-            messageId = R.string.delete_complete;
-            Toast.makeText(MainActivity.mainActivity, messageId, Toast.LENGTH_SHORT).show();
+            //messageId = R.string.delete_complete;
+            //Toast.makeText(MainActivity.mainActivity, messageId, Toast.LENGTH_SHORT).show();
             LoadAlarmsService.launchLoadAlarmsService(MainActivity.mainActivity);
         } else {
             messageId = R.string.delete_failed;
