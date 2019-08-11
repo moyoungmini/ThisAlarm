@@ -6,9 +6,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
@@ -26,12 +28,14 @@ import com.example.alarmapp.SpeechActivity;
 import com.example.alarmapp.model.Alarm;
 import com.example.alarmapp.service.AlarmReceiver;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public final class AlarmLandingPageFragment extends Fragment implements View.OnClickListener {
     private Vibrator vibrator;
     private MediaPlayer mMediaPlayer;
+    private AudioManager audioManager;
     private int mIntId;
 
     private boolean isPresentDay;
@@ -45,6 +49,7 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
     private @SuppressLint("ServiceCast") AlarmManager am;
 
     private int mission;
+    private boolean sound;
 
     @SuppressLint("ServiceCast")
     @Nullable
@@ -62,7 +67,25 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(pattern, 0);
         //vibrator.vibrate(5* 1000);
-        startRingtone();
+
+        Bundle extras = getActivity().getIntent().getExtras();
+        if(extras != null) {
+            if (extras.containsKey("mission")) {
+                mission = extras.getInt("mission");
+            }
+
+            if (extras.containsKey("sound")) {
+                sound = extras.getBoolean("sound");
+            }
+        }
+
+        if(sound) {
+            try {
+                startRingtone();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         launchMainActivityBtn.setOnClickListener(this);
         dismiss.setOnClickListener(this);
@@ -73,13 +96,6 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         dayList = new ArrayList<>();
         for(int i=0;i<7;i++){
             dayList.add(false);
-        }
-
-        Bundle extras = getActivity().getIntent().getExtras();
-        if(extras != null) {
-            if (extras.containsKey("mission")) {
-                mission = extras.getInt("mission");
-            }
         }
 
         //am = (AlarmManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
@@ -119,7 +135,10 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                 AlarmLandingPageActivity.isAlarmFinish = false;
                 nm = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
                 nm.cancel(0);
-                mMediaPlayer.stop();
+                if(sound) {
+                    mMediaPlayer.stop();
+                    mMediaPlayer.release();
+                }
                 getActivity().finish();
                 vibrator.cancel();
 
@@ -131,13 +150,57 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         }
     }
 
-    private void startRingtone() {
+    private void startRingtone() throws IOException {
         //play ringtone
         Uri ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        mMediaPlayer = MediaPlayer.create(getContext(), ringtone);
-        mMediaPlayer.setLooping(true);
+//        mMediaPlayer = MediaPlayer.create(getContext(), ringtone);
+//        mMediaPlayer.setLooping(true);
         //mMediaPlayer.createVolumeShaper();
+
+        audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
+        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, maxVolume, 0);
+
+        mMediaPlayer = new MediaPlayer();
+        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+        mMediaPlayer.setDataSource(getActivity(), ringtone);
+        mMediaPlayer.setLooping(true);
+        mMediaPlayer.prepare();
         mMediaPlayer.start();
+    }
+
+    public void MuteAudio(){
+        audioManager = (AudioManager) getActivity().getSystemService(getActivity().AUDIO_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            audioManager.adjustStreamVolume(AudioManager.STREAM_NOTIFICATION, AudioManager.ADJUST_MUTE, 0);
+            audioManager.adjustStreamVolume(AudioManager.STREAM_ALARM, AudioManager.ADJUST_MUTE, 0);
+            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
+            audioManager.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_MUTE, 0);
+            audioManager.adjustStreamVolume(AudioManager.STREAM_SYSTEM, AudioManager.ADJUST_MUTE, 0);
+        } else {
+            audioManager.setStreamMute(AudioManager.STREAM_NOTIFICATION, true);
+            audioManager.setStreamMute(AudioManager.STREAM_ALARM, true);
+            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+            audioManager.setStreamMute(AudioManager.STREAM_RING, true);
+            audioManager.setStreamMute(AudioManager.STREAM_SYSTEM, true);
+        }
+    }
+
+    public void UnMuteAudio(){
+        audioManager = (AudioManager) getActivity().getSystemService(getActivity().AUDIO_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            audioManager.adjustStreamVolume(AudioManager.STREAM_NOTIFICATION, AudioManager.ADJUST_UNMUTE, 0);
+            audioManager.adjustStreamVolume(AudioManager.STREAM_ALARM, AudioManager.ADJUST_UNMUTE, 0);
+            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE,0);
+            audioManager.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_UNMUTE, 0);
+            audioManager.adjustStreamVolume(AudioManager.STREAM_SYSTEM, AudioManager.ADJUST_UNMUTE, 0);
+        } else {
+            audioManager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
+            audioManager.setStreamMute(AudioManager.STREAM_ALARM, false);
+            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+            audioManager.setStreamMute(AudioManager.STREAM_RING, false);
+            audioManager.setStreamMute(AudioManager.STREAM_SYSTEM, false);
+        }
     }
 
 

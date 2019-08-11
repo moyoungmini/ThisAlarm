@@ -3,6 +3,8 @@ package com.example.alarmapp.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +12,14 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +32,9 @@ import com.example.alarmapp.service.LoadAlarmsService;
 import com.example.alarmapp.ui.AddEditAlarmActivity;
 import com.example.alarmapp.ui.MainActivity;
 import com.example.alarmapp.util.AlarmUtils;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import java.util.List;
 
@@ -46,7 +55,7 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final Context c = holder.itemView.getContext();
 
@@ -78,6 +87,60 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
             }
         });
 
+        holder.enabledSwitch.setOnCheckedChangeListener(null);
+        holder.enabledSwitch.setChecked(alarm.isEnabled());
+        if(alarm.isEnabled()) {
+            holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
+            holder.time.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
+            holder.layout.setBackgroundResource(R.color.colorPrimary);
+            holder.allLayout.setBackgroundResource(R.drawable.recycler_item_background);
+        }
+        else {
+            holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
+            holder.time.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
+            holder.layout.setBackgroundResource(R.color.grayColor);
+            holder.allLayout.setBackgroundResource(R.drawable.recycler_item_empty_background);
+        }
+        holder.enabledSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
+                    holder.time.setTextColor(c.getResources().getColorStateList(R.color.blackColor));
+                    holder.layout.setBackgroundResource(R.color.colorPrimary);
+                    holder.allLayout.setBackgroundResource(R.drawable.recycler_item_background);
+                    Log.i("sdavasvsdv", "TRUE");
+                    //->
+                    //Alarm 등록
+                    //DB변경 enabled가 true로 변경
+
+                    alarm.setIsEnabled(true);
+                    DatabaseHelper.getInstance(c).updateAlarm(alarm);
+                    AlarmReceiver.setReminderAlarm(c,alarm);
+                }
+                else {
+                    //<-
+                    //Alarm cancel
+                    // DB 변경 enabled가 false로 변경
+                    Log.i("sdavbfbfbfasvsdv", "FALSE");
+
+                    holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
+                    holder.time.setTextColor(c.getResources().getColorStateList(R.color.grayColor));
+                    holder.layout.setBackgroundResource(R.color.grayColor);
+                    holder.allLayout.setBackgroundResource(R.drawable.recycler_item_empty_background);
+                    alarm.setIsEnabled(false);
+                    DatabaseHelper.getInstance(c).updateAlarm(alarm);
+                    AlarmReceiver.cancelReminderAlarm(c,alarm);
+                    //MainActivity.db.updateState(mData.get(position).getId(), 0);
+                }
+                Handler handler = new Handler();
+                final Runnable r = new Runnable() {
+                    public void run() {
+                        notifyDataSetChanged();
+                    }
+                };
+                handler.post(r);
+            }
+        });
     }
 
     @Override
@@ -169,6 +232,8 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
     static final class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView time, amPm, label, days;
+        Switch enabledSwitch;
+        LinearLayout layout, allLayout;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -177,7 +242,9 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
             amPm = (TextView) itemView.findViewById(R.id.ar_am_pm);
             label = (TextView) itemView.findViewById(R.id.ar_label);
             days = (TextView) itemView.findViewById(R.id.ar_days);
-
+            enabledSwitch = itemView.findViewById(R.id.ar_switch);
+            layout = itemView.findViewById(R.id.item_layout);
+            allLayout = itemView.findViewById(R.id.item_all_layout);
         }
     }
 

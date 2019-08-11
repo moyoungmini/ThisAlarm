@@ -33,7 +33,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:timePickerMode="spinner"></TimePicker>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/colorPrimary"
+        ></View>
 
+    <EditText
+        android:id="@+id/alarm_set_label_et"
+        android:onClick="onClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:textColor="#a0a0a0"
+        android:lineSpacingExtra="4sp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@null"
+        android:hint="알람이름"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -212,37 +234,6 @@
         android:layout_marginRight="15dp"
         android:background="@color/colorPrimary"
         ></View>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="21sp"
-            android:textColor="@color/fontColor"
-            android:layout_marginLeft="30dp"
-            android:lineSpacingExtra="4sp"
-            android:text="반복알람"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"></View>
-
-        <Switch
-            android:id="@+id/alarm_edit_fragment_vibration_switch"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

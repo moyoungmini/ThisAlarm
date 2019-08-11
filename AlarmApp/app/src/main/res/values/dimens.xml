@@ -7,4 +7,5 @@
 
     <dimen name="fab_margin_default">16dp</dimen>
 
+    <dimen name="recyclerview_margin">10dp</dimen>
 </resources>

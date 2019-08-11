@@ -20,6 +20,7 @@ public final class Alarm implements Parcelable{
         mission = in.readInt();
         allDays = in.readSparseBooleanArray();
         isEnabled = in.readByte() != 0;
+        sound = in.readByte() != 0;
     }
 
     public static final Creator<Alarm> CREATOR = new Creator<Alarm>() {
@@ -46,7 +47,8 @@ public final class Alarm implements Parcelable{
         parcel.writeString(label);
         parcel.writeInt(mission);
         parcel.writeSparseBooleanArray(allDays);
-        parcel.writeByte((byte) (isEnabled ? 1 : 0));
+        parcel.writeInt(isEnabled ? 1 : 0);
+        parcel.writeInt(sound ? 1: 0);
     }
 
     public void setMission(int mission) {
@@ -56,6 +58,10 @@ public final class Alarm implements Parcelable{
     public int getMission() {
         return this.mission;
     }
+
+    public void setSound(boolean sound) {this.sound = sound;}
+
+    public boolean getSound() {return this.sound;}
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({MON,TUES,WED,THURS,FRI,SAT,SUN})
@@ -76,6 +82,7 @@ public final class Alarm implements Parcelable{
     private SparseBooleanArray allDays;
     private boolean isEnabled;
     private  int mission;
+    private boolean sound;
 
     public Alarm() {
         this(NO_ID);

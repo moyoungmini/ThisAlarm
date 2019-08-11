@@ -33,10 +33,6 @@ public final class AddEditAlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_alarm);
 
-        //noinspection ConstantConditions
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setTitle(getToolbarTitle());
-
         final Alarm alarm = getAlarm();
 
         if(getSupportFragmentManager().findFragmentById(R.id.edit_alarm_frag_container) == null) {
@@ -68,24 +64,6 @@ public final class AddEditAlarmActivity extends AppCompatActivity {
         return mode;
     }
 
-    private String getToolbarTitle() {
-        int titleResId;
-        switch (getMode()) {
-            case EDIT_ALARM:
-                titleResId = R.string.edit_alarm;
-                break;
-            case ADD_ALARM:
-                titleResId = R.string.add_alarm;
-                break;
-            case UNKNOWN:
-            default:
-                throw new IllegalStateException("Mode supplied as intent extra for " +
-                        AddEditAlarmActivity.class.getSimpleName() + " must match value in " +
-                        Mode.class.getSimpleName());
-        }
-        return getString(titleResId);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -103,5 +81,4 @@ public final class AddEditAlarmActivity extends AppCompatActivity {
         i.putExtra(MODE_EXTRA, mode);
         return i;
     }
-
 }

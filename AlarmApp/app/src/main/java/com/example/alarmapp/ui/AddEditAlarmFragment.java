@@ -1,46 +1,36 @@
 package com.example.alarmapp.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
-
 import com.example.alarmapp.R;
 import com.example.alarmapp.data.DatabaseHelper;
 import com.example.alarmapp.model.Alarm;
 import com.example.alarmapp.service.AlarmReceiver;
-import com.example.alarmapp.service.LoadAlarmsService;
 import com.example.alarmapp.util.ViewUtils;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public final class AddEditAlarmFragment extends Fragment implements View.OnClickListener {
 
     private TimePicker mTimePicker;
-    //private EditText mLabel;
-    private CheckBox mMon, mTues, mWed, mThurs, mFri, mSat, mSun;
     private Button mBtnSaved;
     private TextView mTvMon, mTvTue, mTvWen, mTvThu, mTvFri, mTvSat, mTvSun, mTvMission;
+    private EditText mLabel;
+    private Switch mSwitch;
 
     private ArrayList<Boolean> dayList;
 
-    public static int mission =0;
+    public static int mission = 0;
 
     public static AddEditAlarmFragment newInstance(Alarm alarm) {
 
@@ -74,11 +64,9 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         mTvFri = v.findViewById(R.id.alarm_edit_fragment_fri_tv);
         mTvSat = v.findViewById(R.id.alarm_edit_fragment_sat_tv);
         mTvSun = v.findViewById(R.id.alarm_edit_fragment_sun_tv);
+        mLabel = v.findViewById(R.id.alarm_set_label_et);
         mTvMission = v.findViewById(R.id.alarm_set_mission_tv);
-
-
-
-
+        mSwitch = v.findViewById(R.id.alarm_edit_fragment_switch);
 
         mBtnSaved.setOnClickListener(this);
         mTvMission.setOnClickListener(this);
@@ -91,19 +79,14 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         mTvSun.setOnClickListener(this);
 
         dayList = new ArrayList<>();
-        for(int i=0;i<7;i++){
+        for (int i = 0; i < 7; i++) {
             dayList.add(false);
         }
 
         setDayCheckboxes(alarm);
+        mSwitch.setChecked(alarm.getSound());
 
         return v;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.edit_alarm_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -116,96 +99,70 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                 selectMission();
                 break;
             case R.id.alarm_edit_fragment_mon_tv:
-                if(!dayList.get(0)){
+                if (!dayList.get(0)) {
                     mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-                    dayList.set(0,true);
-                }
-                else {
+                    dayList.set(0, true);
+                } else {
                     mTvMon.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-                    dayList.set(0,false);
+                    dayList.set(0, false);
                 }
                 break;
             case R.id.alarm_edit_fragment_tue_tv:
-                if(!dayList.get(1)){
+                if (!dayList.get(1)) {
                     mTvTue.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-                    dayList.set(1,true);
-                }
-                else {
+                    dayList.set(1, true);
+                } else {
                     mTvTue.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-                    dayList.set(1,false);
+                    dayList.set(1, false);
                 }
                 break;
             case R.id.alarm_edit_fragment_wen_tv:
-                if(!dayList.get(2)){
+                if (!dayList.get(2)) {
                     mTvWen.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-                    dayList.set(2,true);
-                }
-                else {
+                    dayList.set(2, true);
+                } else {
                     mTvWen.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-                    dayList.set(2,false);
+                    dayList.set(2, false);
                 }
                 break;
             case R.id.alarm_edit_fragment_thu_tv:
-                if(!dayList.get(3)){
+                if (!dayList.get(3)) {
                     mTvThu.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-                    dayList.set(3,true);
-                }
-                else {
+                    dayList.set(3, true);
+                } else {
                     mTvThu.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-                    dayList.set(3,false);
+                    dayList.set(3, false);
                 }
                 break;
             case R.id.alarm_edit_fragment_fri_tv:
-                if(!dayList.get(4)){
+                if (!dayList.get(4)) {
                     mTvFri.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-                    dayList.set(4,true);
-                }
-                else {
+                    dayList.set(4, true);
+                } else {
                     mTvFri.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-                    dayList.set(4,false);
+                    dayList.set(4, false);
                 }
                 break;
             case R.id.alarm_edit_fragment_sat_tv:
-                if(!dayList.get(5)){
+                if (!dayList.get(5)) {
                     mTvSat.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-                    dayList.set(5,true);
-                }
-                else {
+                    dayList.set(5, true);
+                } else {
                     mTvSat.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-                    dayList.set(5,false);
+                    dayList.set(5, false);
                 }
                 break;
             case R.id.alarm_edit_fragment_sun_tv:
-                if(!dayList.get(6)){
+                if (!dayList.get(6)) {
                     mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-                    dayList.set(6,true);
-                }
-                else {
+                    dayList.set(6, true);
+                } else {
                     mTvSun.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-                    dayList.set(6,false);
+                    dayList.set(6, false);
                 }
                 break;
-
-            //Day Listener
-//            case R.id.action_delete:
-//                delete();
-//                break;
         }
     }
-
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.alarm_edit_fragment_saved_btn:
-//                save();
-//                break;
-//            case R.id.action_delete:
-//                delete();
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     private Alarm getAlarm() {
         return getArguments().getParcelable(AddEditAlarmActivity.ALARM_EXTRA);
@@ -213,80 +170,73 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
 
     private void setDayCheckboxes(Alarm alarm) {
 
-        if(alarm.getDay(Alarm.MON)) {
+        if (alarm.getDay(Alarm.MON)) {
             mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-            dayList.set(0,true);
-        }
-        else {
+            dayList.set(0, true);
+        } else {
             mTvMon.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-            dayList.set(0,false);
+            dayList.set(0, false);
         }
 
-        if(alarm.getDay(Alarm.TUES)) {
+        if (alarm.getDay(Alarm.TUES)) {
             mTvTue.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-            dayList.set(1,true);
-        }
-        else {
+            dayList.set(1, true);
+        } else {
             mTvTue.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-            dayList.set(1,false);
+            dayList.set(1, false);
         }
 
-        if(alarm.getDay(Alarm.WED)) {
+        if (alarm.getDay(Alarm.WED)) {
             mTvWen.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-            dayList.set(2,true);
-        }
-        else {
+            dayList.set(2, true);
+        } else {
             mTvWen.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-            dayList.set(2,false);
+            dayList.set(2, false);
         }
 
-        if(alarm.getDay(Alarm.THURS)) {
+        if (alarm.getDay(Alarm.THURS)) {
             mTvThu.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-            dayList.set(3,true);
-        }
-        else {
+            dayList.set(3, true);
+        } else {
             mTvThu.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-            dayList.set(3,false);
+            dayList.set(3, false);
         }
 
-        if(alarm.getDay(Alarm.FRI)) {
+        if (alarm.getDay(Alarm.FRI)) {
             mTvFri.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-            dayList.set(4,true);
-        }
-        else {
+            dayList.set(4, true);
+        } else {
             mTvFri.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-            dayList.set(4,false);
+            dayList.set(4, false);
         }
 
-        if(alarm.getDay(Alarm.SAT)) {
+        if (alarm.getDay(Alarm.SAT)) {
             mTvSat.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-            dayList.set(5,true);
-        }
-        else {
+            dayList.set(5, true);
+        } else {
             mTvSat.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-            dayList.set(5,false);
+            dayList.set(5, false);
         }
 
-        if(alarm.getDay(Alarm.SUN)) {
+        if (alarm.getDay(Alarm.SUN)) {
             mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
-            dayList.set(6,true);
-        }
-        else {
+            dayList.set(6, true);
+        } else {
             mTvSun.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
-            dayList.set(6,false);
+            dayList.set(6, false);
         }
 
         boolean select = true;
 
-        for(int i=0;i<7;i++){
-            if(dayList.get(i)) {
+        for (int i = 0; i < 7; i++) {
+            if (dayList.get(i)) {
                 select = false;
             }
         }
 
-        if(select) {
-            for(int i=0;i<7;i++){
-                dayList.set(i,  true);
+        if (select) {
+            for (int i = 0; i < 7; i++) {
+                dayList.set(i, true);
             }
 
             mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
@@ -297,35 +247,17 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
             mTvSat.setTextColor(this.getResources().getColorStateList(R.color.yellow));
             mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
         }
-
-//        for(int i=0;i<7;i++){
-//            dayList.set(i,  true);
-//        }
-
-
-
-//        mMon.setChecked(alarm.getDay(Alarm.MON));
-//        mTues.setChecked(alarm.getDay(Alarm.TUES));
-//        mWed.setChecked(alarm.getDay(Alarm.WED));
-//        mThurs.setChecked(alarm.getDay(Alarm.THURS));
-//        mFri.setChecked(alarm.getDay(Alarm.FRI));
-//        mSat.setChecked(alarm.getDay(Alarm.SAT));
-//        mSun.setChecked(alarm.getDay(Alarm.SUN));
     }
 
     private void save() {
-
         final Alarm alarm = getAlarm();
 
         final Calendar time = Calendar.getInstance();
         time.set(Calendar.MINUTE, ViewUtils.getTimePickerMinute(mTimePicker));
         time.set(Calendar.HOUR_OF_DAY, ViewUtils.getTimePickerHour(mTimePicker));
-        alarm.setTime(time.getTimeInMillis());
-        Log.i("CurafbdfbfbfbfbsTime", String.valueOf(Calendar.MINUTE));
-        Log.i("CurafbfbfbdfbsTime", String.valueOf(Calendar.HOUR_OF_DAY));
-        Log.i("CurafbdfbsTime", String.valueOf(time.getTimeInMillis()));
-//        alarm.setLabel(mLabel.getText().toString());
 
+        alarm.setTime(time.getTimeInMillis());
+        alarm.setLabel(mLabel.getText().toString());
         alarm.setDay(Alarm.MON, dayList.get(0));
         alarm.setDay(Alarm.TUES, dayList.get(1));
         alarm.setDay(Alarm.WED, dayList.get(2));
@@ -333,58 +265,17 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         alarm.setDay(Alarm.FRI, dayList.get(4));
         alarm.setDay(Alarm.SAT, dayList.get(5));
         alarm.setDay(Alarm.SUN, dayList.get(6));
-
         alarm.setMission(mission);
+        alarm.setSound(mSwitch.isChecked());
+        alarm.setIsEnabled(true);
 
-
-        //alatm.set
-
-        Log.i("CurrentvsdvdsTime", String.valueOf(alarm.getTime()));
-
-
-        final int rowsUpdated = DatabaseHelper.getInstance(getContext()).updateAlarm(alarm);
-        final int messageId = (rowsUpdated == 1) ? R.string.update_complete : R.string.update_failed;
-
-        Toast.makeText(getContext(), messageId, Toast.LENGTH_SHORT).show();
-
+        DatabaseHelper.getInstance(getContext()).updateAlarm(alarm);
         AlarmReceiver.setReminderAlarm(getContext(), alarm);
-
         getActivity().finish();
-
-    }
-
-    private void delete() {
-        final Alarm alarm = getAlarm();
-        final AlertDialog.Builder builder =
-                new AlertDialog.Builder(getContext(), R.style.DeleteAlarmDialogTheme);
-        builder.setTitle(R.string.delete_dialog_title);
-        builder.setMessage(R.string.delete_dialog_content);
-        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                //Cancel any pending notifications for this alarm
-                AlarmReceiver.cancelReminderAlarm(getContext(), alarm);
-
-                final int rowsDeleted = DatabaseHelper.getInstance(getContext()).deleteAlarm(alarm);
-                int messageId;
-                if(rowsDeleted == 1) {
-                    messageId = R.string.delete_complete;
-                    Toast.makeText(getContext(), messageId, Toast.LENGTH_SHORT).show();
-                    LoadAlarmsService.launchLoadAlarmsService(getContext());
-                    getActivity().finish();
-                } else {
-                    messageId = R.string.delete_failed;
-                    Toast.makeText(getContext(), messageId, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        builder.setNegativeButton(R.string.no, null);
-        builder.show();
     }
 
     private void selectMission() {
-        final Intent i = new Intent(getActivity(),MissionSelectActivity.class);
+        final Intent i = new Intent(getActivity(), MissionSelectActivity.class);
         startActivity(i);
     }
 }

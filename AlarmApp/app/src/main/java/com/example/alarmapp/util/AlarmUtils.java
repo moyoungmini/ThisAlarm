@@ -20,7 +20,7 @@ import static com.example.alarmapp.data.DatabaseHelper.*;
 public final class AlarmUtils {
 
     private static final SimpleDateFormat TIME_FORMAT =
-            new SimpleDateFormat("h:mm", Locale.getDefault());
+            new SimpleDateFormat("hh:mm", Locale.getDefault());
     private static final SimpleDateFormat AM_PM_FORMAT =
             new SimpleDateFormat("a", Locale.getDefault());
 
@@ -69,6 +69,7 @@ public final class AlarmUtils {
         cv.put(COL_SUN, days.get(Alarm.SUN) ? 1 : 0);
 
         cv.put(DatabaseHelper.COL_IS_ENABLED, alarm.isEnabled());
+        cv.put(DatabaseHelper.COL_SOUND, alarm.getSound());
 
         return cv;
 
@@ -96,6 +97,7 @@ public final class AlarmUtils {
                 final boolean sat = c.getInt(c.getColumnIndex(COL_SAT)) == 1;
                 final boolean sun = c.getInt(c.getColumnIndex(COL_SUN)) == 1;
                 final boolean isEnabled = c.getInt(c.getColumnIndex(COL_IS_ENABLED)) == 1;
+                final boolean sound = c.getInt(c.getColumnIndex(COL_SOUND)) ==1;
 
                 final Alarm alarm = new Alarm(id, time, label);
                 alarm.setDay(Alarm.MON, mon);
@@ -105,7 +107,7 @@ public final class AlarmUtils {
                 alarm.setDay(Alarm.FRI, fri);
                 alarm.setDay(Alarm.SAT, sat);
                 alarm.setDay(Alarm.SUN, sun);
-
+                alarm.setSound(sound);
                 alarm.setIsEnabled(isEnabled);
 
                 alarms.add(alarm);
@@ -137,6 +139,7 @@ public final class AlarmUtils {
                 final boolean sat = c.getInt(c.getColumnIndex(COL_SAT)) == 1;
                 final boolean sun = c.getInt(c.getColumnIndex(COL_SUN)) == 1;
                 final boolean isEnabled = c.getInt(c.getColumnIndex(COL_IS_ENABLED)) == 1;
+                final boolean sound = c.getInt(c.getColumnIndex(COL_SOUND)) ==1;
 
                 alarm = new Alarm(id, time, label);
                 alarm.setDay(Alarm.MON, mon);
@@ -146,7 +149,7 @@ public final class AlarmUtils {
                 alarm.setDay(Alarm.FRI, fri);
                 alarm.setDay(Alarm.SAT, sat);
                 alarm.setDay(Alarm.SUN, sun);
-
+                alarm.setSound(sound);
                 alarm.setIsEnabled(isEnabled);
 
             } while (c.moveToNext());
