@@ -2,6 +2,7 @@ package com.example.alarmapp;
 
 import android.Manifest;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,10 +11,14 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.alarmapp.data.DatabaseHelper;
+import com.example.alarmapp.model.Alarm;
 
 import java.util.ArrayList;
 
@@ -21,10 +26,11 @@ public class SpeechActivity extends AppCompatActivity {
     Intent intent;
     SpeechRecognizer mRecognizer;
     Button sttBtn;
-    TextView textView;
-    TextView textMatch;
+    TextView textView,textMatch,textEngWord,textEngMean;
     final int PERMISSION = 1;
 
+    String[][] engWord;
+    int sw =0;
     @Override
     protected void
     onCreate(Bundle savedInstanceState) {
@@ -38,17 +44,22 @@ public class SpeechActivity extends AppCompatActivity {
                             RECORD_AUDIO},PERMISSION);
         }
 
+        textEngWord= (TextView)findViewById(R.id.sttEngWord);
+        textEngMean=(TextView)findViewById(R.id.sttEngMean);
         textView = (TextView)findViewById(R.id.sttResult);
         textMatch = (TextView)findViewById(R.id.maching);
 
-
+        engWord = new String[5][2];
+        engWord =  DatabaseHelper.getInstance(this).getEngWord().clone();
+        textEngWord.setText(engWord[sw][0]);
+        textEngMean.setText(engWord[sw][1]);
         sttBtn = (Button) findViewById(R.id.sttStart);
 
         intent=new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,getPackageName());
 
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"ko-KR");
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"en-US");
 
         sttBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,15 +151,29 @@ public class SpeechActivity extends AppCompatActivity {
 
             for(int i = 0; i < matches.size() ; i++){
                 textView.setText(matches.get(i));
-                System.out.println(matches.get(i));
+
             }
 
 
-            int sw = 0;
+            String result = engWord[sw][0];
+            StringBuilder myName = new StringBuilder(result);
+            myName.setCharAt(0, (char)(result.charAt(0)-32));
+            Log.i("Testdsafsdv",engWord[sw][0]);
+            Log.i("Testdsafsdv", String.valueOf(myName));
+
             for(int i = 0; i < matches.size() ; i++) {
-                if (matches.get(i).equals("좋은 하루")) {
+                Log.i("Testdsafsdv",matches.get(i));
+
+                if (matches.get(i).equals(engWord[sw][0]) || matches.get(i).equals(String.valueOf(myName))) {
+
                     textMatch.setText("성공");
-                    sw = 1;
+                    sw++;
+                    if(sw == 5){
+                        finish();
+                    }
+                    textEngWord.setText(engWord[sw][0]);
+                    textEngMean.setText(engWord[sw][1]);
+
                     break;
 
                 } else {
@@ -164,7 +189,7 @@ public class SpeechActivity extends AppCompatActivity {
                     //여기에 딜레이 후 시작할 작업들을 입력
                 }
             }, 2000);// 2초 정도 딜레이를 준 후 시작
-            if(sw==1){
+            if(sw==5){
                 /*Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

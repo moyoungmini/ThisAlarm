@@ -17,6 +17,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     private static final int SCHEMA = 1;
 
     private static final String TABLE_NAME = "alarms";
+    private static final String ENGLISH_TABLE_NAME = "englishWord_TB";
+
+
 
     public static final String _ID = "_id";
     public static final String COL_TIME = "time";
@@ -31,6 +34,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_IS_ENABLED = "is_enabled";
     public static final String COL_MISSION = "mission";
     public static final String COL_SOUND ="sound";
+
+    String[][] engWord;
+
 
     private static DatabaseHelper sInstance = null;
 
@@ -126,5 +132,28 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public String[][] getEngWord() {
+        Cursor iCursor = null;
+        int engWordnum = 0;
+        try{
+            iCursor = getReadableDatabase().query(ENGLISH_TABLE_NAME, null, null, null, null, null, null);
+            engWord = new String[5][2];
+            if(iCursor.moveToFirst()) {
+                do {
+                    int word_group = iCursor.getInt(iCursor.getColumnIndex("Word_Group"));
+                    String word_content = iCursor.getString(iCursor.getColumnIndex("Word_Content"));
+                    String word_mean = iCursor.getString(iCursor.getColumnIndex("Word_Mean"));
+                    if (word_group==1) {
+                        engWord[engWordnum][0] = word_content;
+                        engWord[engWordnum][1] = word_mean;
+                        engWordnum++;
+                    }
+                }while (iCursor.moveToNext());
+            }
+            return engWord;
+        } finally {
+            if (iCursor != null && !iCursor.isClosed()) iCursor.close();
+        }
+    }
 
 }
