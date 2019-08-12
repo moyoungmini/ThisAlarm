@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.alarmapp.R;
+import com.example.alarmapp.SpeechActivity;
 import com.example.alarmapp.adapter.AlarmsAdapter;
 import com.example.alarmapp.listener.ItemTouchHelperCallback;
 import com.example.alarmapp.model.Alarm;
@@ -62,6 +63,7 @@ public final class MainFragment extends Fragment
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 AlarmUtils.checkAlarmPermissions(getActivity());
                 final Intent i =
                         AddEditAlarmActivity.buildAddEditAlarmActivityIntent(

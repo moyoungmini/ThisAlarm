@@ -115,7 +115,6 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                 if(mission == 0){
 
                 }else if(mission ==1){
-
                 }
                 else if(mission ==2){
                     startActivity(new Intent(getContext(), SpeechActivity.class));

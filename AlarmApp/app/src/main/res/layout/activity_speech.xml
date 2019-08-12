@@ -1,46 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_gravity="center"
-    tools:context=".SpeechActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/landing_page_background_img"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/sttEngWord"
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/exit_img"
+        android:layout_alignParentTop="true"
+        android:id="@+id/dismiss_btn"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="25dp"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" 말해야할 음성" />
-    <TextView
-        android:id="@+id/sttEngMean"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" 영어 뜻" />
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/mTextToSpeech_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/speaker_img"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            >
+            <TextView
+                android:id="@+id/mText_Eng_Word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="41sp"
+                android:textColor="#ffffff"
+                android:letterSpacing="0.43"
+                android:text="apple"
+                />
+            <TextView
+                android:id="@+id/mText_Eng_Mean"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:letterSpacing="0.25"
+                android:text=":사과"
+                />
+            <TextView
+                android:id="@+id/mText_Eng_Result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:letterSpacing="0.25"
+                android:text=":결과"
+                />
 
-    <TextView
-        android:id="@+id/sttResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="음성인식 결과가 여기에 표시됩니다."/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/start_speech_btn"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_speak"/>
+        <Button
+            android:id="@+id/load_main_activity_btn"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_pass"/>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/maching"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="결과창 입니다"/>
-
-    <Button
-        android:id="@+id/sttStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="음성인식 시작" />
-
-
-
-
-</LinearLayout>
+</RelativeLayout>

@@ -9,11 +9,13 @@ import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,57 +23,122 @@ import com.example.alarmapp.data.DatabaseHelper;
 import com.example.alarmapp.model.Alarm;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class SpeechActivity extends AppCompatActivity {
     Intent intent;
     SpeechRecognizer mRecognizer;
-    Button sttBtn;
+    Button sttBtn,passBtn;
+    ImageView dismissBtn,TextToSpeechBtn;
     TextView textView,textMatch,textEngWord,textEngMean;
     final int PERMISSION = 1;
 
+    private TextToSpeech mTTS;
+
     String[][] engWord;
     int sw =0;
+
     @Override
     protected void
     onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech);
         if ( Build.VERSION.SDK_INT >= 23 ){
-// 퍼미션 체크
+        // 퍼미션 체크
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET,
                     Manifest.permission.
                             RECORD_AUDIO},PERMISSION);
         }
 
-        textEngWord= (TextView)findViewById(R.id.sttEngWord);
-        textEngMean=(TextView)findViewById(R.id.sttEngMean);
-        textView = (TextView)findViewById(R.id.sttResult);
-        textMatch = (TextView)findViewById(R.id.maching);
+        textEngWord= (TextView)findViewById(R.id.mText_Eng_Word);
+        textEngMean=(TextView)findViewById(R.id.mText_Eng_Mean);
+        //textView = (TextView)findViewById(R.id.sttResult);
+        textMatch = (TextView)findViewById(R.id.mText_Eng_Result);
+
+        sttBtn = (Button) findViewById(R.id.start_speech_btn);
+        passBtn = (Button) findViewById(R.id.load_main_activity_btn);
+        dismissBtn = (ImageView) findViewById(R.id.dismiss_btn);
+        TextToSpeechBtn = (ImageView) findViewById(R.id.mTextToSpeech_btn);
+
+
+
+        mTTS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status==TextToSpeech.SUCCESS){
+                    int result = mTTS.setLanguage(Locale.US);
+                    if(result == TextToSpeech.LANG_MISSING_DATA ||
+                    result == TextToSpeech.LANG_NOT_SUPPORTED){
+                        Log.i("TTS","Language not supported");
+                    }else{
+                        TextToSpeechBtn.setEnabled(true);
+                    }
+                }else{
+                    Log.i("TTS","Initialization failed");
+                }
+            }
+        });
+
+
 
         engWord = new String[5][2];
         engWord =  DatabaseHelper.getInstance(this).getEngWord().clone();
         textEngWord.setText(engWord[sw][0]);
         textEngMean.setText(engWord[sw][1]);
-        sttBtn = (Button) findViewById(R.id.sttStart);
+
 
         intent=new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,getPackageName());
-
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"en-US");
-
         sttBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mRecognizer = SpeechRecognizer.createSpeechRecognizer(SpeechActivity.this);
-
                 mRecognizer.setRecognitionListener(listener);
-
                 mRecognizer.startListening(intent);
             }
         });
+
+        dismissBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        passBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sw++;
+                if(sw == 5) {
+                    finish();
+                }else {
+                    textEngWord.setText(engWord[sw][0]);
+                    textEngMean.setText(engWord[sw][1]);
+                }
+            }
+        });
+        TextToSpeechBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { 
+                speak();
+            }
+        });
+        
+        
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(mTTS != null){
+            mTTS.stop();
+            mTTS.shutdown();
+        }
+        super.onDestroy();
+    }
+
+    private void speak() {
+        String text =  engWord[sw][0];
+        mTTS.speak(text,TextToSpeech.QUEUE_FLUSH,null);
     }
 
     private RecognitionListener listener = new RecognitionListener() {
@@ -79,6 +146,7 @@ public class SpeechActivity extends AppCompatActivity {
         @Override
         public void
         onReadyForSpeech(Bundle params) {
+            TextToSpeechBtn.setEnabled(false);
             Toast.
                     makeText(getApplicationContext(),"음성인식을 시작합니다.", Toast.LENGTH_SHORT).show();
         }
@@ -138,28 +206,26 @@ public class SpeechActivity extends AppCompatActivity {
                     message ="알 수 없는 오류임";
                     break;
             }
+            TextToSpeechBtn.setEnabled(true);
             Toast.makeText(getApplicationContext(), "에러가 발생하였습니다. : " + message, Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void
         onResults(Bundle results) {
+            TextToSpeechBtn.setEnabled(true);
             // 말을 하면 ArrayList에 단어를 넣고 textView에 단어를 이어줍니다.
             ArrayList<String> matches =
                     results.getStringArrayList(SpeechRecognizer.
                             RESULTS_RECOGNITION);
 
-            for(int i = 0; i < matches.size() ; i++){
-                textView.setText(matches.get(i));
-
-            }
-
-
             String result = engWord[sw][0];
             StringBuilder myName = new StringBuilder(result);
-            myName.setCharAt(0, (char)(result.charAt(0)-32));
+            myName.setCharAt(0, (char)(result.charAt(0)-32));//앞글자 대분자로 바꾸기
             Log.i("Testdsafsdv",engWord[sw][0]);
             Log.i("Testdsafsdv", String.valueOf(myName));
+            Log.i("Testdsafsdv", String.valueOf(sw));
+
 
             for(int i = 0; i < matches.size() ; i++) {
                 Log.i("Testdsafsdv",matches.get(i));
@@ -170,9 +236,11 @@ public class SpeechActivity extends AppCompatActivity {
                     sw++;
                     if(sw == 5){
                         finish();
+                    }else{
+
+                        textEngWord.setText(engWord[sw][0]);
+                        textEngMean.setText(engWord[sw][1]);
                     }
-                    textEngWord.setText(engWord[sw][0]);
-                    textEngMean.setText(engWord[sw][1]);
 
                     break;
 
@@ -181,24 +249,6 @@ public class SpeechActivity extends AppCompatActivity {
 
                 }
             }
-            new Handler().postDelayed(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    //여기에 딜레이 후 시작할 작업들을 입력
-                }
-            }, 2000);// 2초 정도 딜레이를 준 후 시작
-            if(sw==5){
-                /*Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);*/
-                finish();
-            }else{
-
-            }
-
         }
 
         @Override
@@ -209,4 +259,5 @@ public class SpeechActivity extends AppCompatActivity {
         public void
         onEvent(int eventType, Bundle params) {}
     };
+
 }

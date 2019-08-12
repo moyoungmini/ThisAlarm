@@ -22,10 +22,10 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginLeft="@dimen/recyclerview_margin"
-            android:textSize="22sp"
+            android:textSize="17sp"
             android:textColor="#ffffff"
             tools:text="오늘아침도 일어나"
             android:id="@+id/ar_label"
@@ -42,7 +42,7 @@
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:letterSpacing="0.12"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:textColor="@color/dayMissColor"
             android:layout_height="wrap_content"
             tools:text="월 화 수 목 금 토 일"/>
@@ -51,7 +51,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:orientation="horizontal">
         <TextView
@@ -69,7 +69,7 @@
             android:id="@+id/ar_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="36sp"
+            android:textSize="35sp"
             android:textColor="@color/fontColor"
             android:lineSpacingExtra="5sp"
             tools:text="7:00"/>
