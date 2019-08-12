@@ -110,7 +110,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(0, true);
                 } else {
-                    mTvMon.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+                    mTvMon.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
                     dayList.set(0, false);
                 }
                 break;
@@ -119,7 +119,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvTue.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(1, true);
                 } else {
-                    mTvTue.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+                    mTvTue.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
                     dayList.set(1, false);
                 }
                 break;
@@ -128,7 +128,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvWen.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(2, true);
                 } else {
-                    mTvWen.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+                    mTvWen.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
                     dayList.set(2, false);
                 }
                 break;
@@ -137,7 +137,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvThu.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(3, true);
                 } else {
-                    mTvThu.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+                    mTvThu.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
                     dayList.set(3, false);
                 }
                 break;
@@ -146,7 +146,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvFri.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(4, true);
                 } else {
-                    mTvFri.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+                    mTvFri.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
                     dayList.set(4, false);
                 }
                 break;
@@ -155,7 +155,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvSat.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(5, true);
                 } else {
-                    mTvSat.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+                    mTvSat.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
                     dayList.set(5, false);
                 }
                 break;
@@ -164,7 +164,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(6, true);
                 } else {
-                    mTvSun.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+                    mTvSun.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
                     dayList.set(6, false);
                 }
                 break;
@@ -186,7 +186,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
             mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
             dayList.set(0, true);
         } else {
-            mTvMon.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            mTvMon.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
             dayList.set(0, false);
         }
 
@@ -194,7 +194,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
             mTvTue.setTextColor(this.getResources().getColorStateList(R.color.yellow));
             dayList.set(1, true);
         } else {
-            mTvTue.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            mTvTue.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
             dayList.set(1, false);
         }
 
@@ -202,7 +202,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
             mTvWen.setTextColor(this.getResources().getColorStateList(R.color.yellow));
             dayList.set(2, true);
         } else {
-            mTvWen.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            mTvWen.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
             dayList.set(2, false);
         }
 
@@ -210,7 +210,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
             mTvThu.setTextColor(this.getResources().getColorStateList(R.color.yellow));
             dayList.set(3, true);
         } else {
-            mTvThu.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            mTvThu.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
             dayList.set(3, false);
         }
 
@@ -218,7 +218,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
             mTvFri.setTextColor(this.getResources().getColorStateList(R.color.yellow));
             dayList.set(4, true);
         } else {
-            mTvFri.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            mTvFri.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
             dayList.set(4, false);
         }
 
@@ -226,7 +226,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
             mTvSat.setTextColor(this.getResources().getColorStateList(R.color.yellow));
             dayList.set(5, true);
         } else {
-            mTvSat.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            mTvSat.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
             dayList.set(5, false);
         }
 
@@ -234,7 +234,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
             mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
             dayList.set(6, true);
         } else {
-            mTvSun.setTextColor(this.getResources().getColorStateList(R.color.fontColor));
+            mTvSun.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
             dayList.set(6, false);
         }
 
@@ -267,6 +267,8 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         final Calendar time = Calendar.getInstance();
         time.set(Calendar.MINUTE, ViewUtils.getTimePickerMinute(mTimePicker));
         time.set(Calendar.HOUR_OF_DAY, ViewUtils.getTimePickerHour(mTimePicker));
+        time.set(Calendar.SECOND, 0);
+        //SECOND설정
 
         alarm.setTime(time.getTimeInMillis());
         alarm.setLabel(mLabel.getText().toString());

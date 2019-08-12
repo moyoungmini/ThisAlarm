@@ -7,12 +7,17 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 
 import com.example.alarmapp.data.DatabaseHelper;
 import com.example.alarmapp.model.Alarm;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 import static com.example.alarmapp.data.DatabaseHelper.*;
@@ -115,6 +120,27 @@ public final class AlarmUtils {
             } while (c.moveToNext());
         }
 
+        final Calendar calendar = Calendar.getInstance();
+       Collections.sort(alarms, new Comparator<Alarm>() {
+           @Override
+           public int compare(Alarm left, Alarm right) {
+               calendar.setTimeInMillis(left.getTime());
+               long leftHour = calendar.get(Calendar.HOUR_OF_DAY);
+               long leftMinute = calendar.get(Calendar.MINUTE) + (60 * leftHour);
+
+               calendar.setTimeInMillis(right.getTime());
+               long rightHour = calendar.get(Calendar.HOUR_OF_DAY);
+               long rightMinute = calendar.get(Calendar.MINUTE) + (60 * rightHour);
+
+               return (int) (leftMinute - rightMinute);
+           }
+       });
+//
+//        for(int i=0;i<alarms.size();i++){
+//            calendar.setTimeInMillis(alarms.get(i).getTime());
+//            Log.i("sdnaovisvs", alarms.get(i).getLabel()+" "+tring.valueOf(calendar.get(Calendar.DAY_OF_MONTH))+" "+String.valueOf(calendar.get(Calendar.HOUR_OF_DAY))+" "+String.valueOf(calendar.get(Calendar.MINUTE)));
+//        }
+//        //dsbvbaddddddddddd
         return alarms;
 
     }
