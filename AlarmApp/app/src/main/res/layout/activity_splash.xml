@@ -5,12 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.SplashActivity"
-    android:background="@drawable/landing_page_background_img"
+    android:background="@drawable/splash_background_img"
     >
-    <ImageView
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/splash_logo_img"
-        android:layout_centerInParent="true"/>
 </FrameLayout>

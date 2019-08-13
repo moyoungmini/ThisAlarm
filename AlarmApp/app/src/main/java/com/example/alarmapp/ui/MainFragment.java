@@ -51,7 +51,6 @@ public final class MainFragment extends Fragment
         mAdapter = new AlarmsAdapter();
         rv.setEmptyView(v.findViewById(R.id.empty_view));
         rv.setAdapter(mAdapter);
-        //rv.addItemDecoration(new DividerItemDecoration(getContext()));
         rv.setItemAnimator(new DefaultItemAnimator());
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(mAdapter));

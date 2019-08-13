@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import com.example.alarmapp.R;
 import com.example.alarmapp.data.DatabaseHelper;
+import com.example.alarmapp.dialog.MissionDialog;
 import com.example.alarmapp.model.Alarm;
 import com.example.alarmapp.service.AlarmReceiver;
 import com.example.alarmapp.util.ViewUtils;
@@ -28,12 +30,10 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
     private TextView mTvMon, mTvTue, mTvWen, mTvThu, mTvFri, mTvSat, mTvSun, mTvMission;
     private EditText mLabel;
     private Switch mSwitch;
-    private ImageView mIvLeft, mIvRight;
 
     private ArrayList<Boolean> dayList;
 
     public static int mission = 0;
-    private int missionId;
 
     public static AddEditAlarmFragment newInstance(Alarm alarm) {
 
@@ -70,8 +70,6 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         mLabel = v.findViewById(R.id.alarm_set_label_et);
         mTvMission = v.findViewById(R.id.alarm_set_mission_tv);
         mSwitch = v.findViewById(R.id.alarm_edit_fragment_switch);
-        mIvLeft = v.findViewById(R.id.alarm_edit_left_iv);
-        mIvRight = v.findViewById(R.id.alarm_edit_right_iv);
 
         mBtnSaved.setOnClickListener(this);
         mTvMission.setOnClickListener(this);
@@ -82,17 +80,18 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         mTvFri.setOnClickListener(this);
         mTvSat.setOnClickListener(this);
         mTvSun.setOnClickListener(this);
-        mIvLeft.setOnClickListener(this);
-        mIvRight.setOnClickListener(this);
 
         dayList = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             dayList.add(false);
         }
 
+
+        AddEditAlarmFragment.mission = alarm.getMission();
         setDayCheckboxes(alarm);
         mSwitch.setChecked(alarm.getSound());
         mLabel.setText(alarm.getLabel());
+
         return v;
     }
 
@@ -103,7 +102,9 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                 save();
                 break;
             case R.id.alarm_set_mission_tv:
-                selectMission();
+                MissionDialog missionDialog = new MissionDialog(getContext());
+
+                //selectMission();
                 break;
             case R.id.alarm_edit_fragment_mon_tv:
                 if (!dayList.get(0)) {
@@ -167,11 +168,6 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvSun.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
                     dayList.set(6, false);
                 }
-                break;
-            case R.id.alarm_edit_left_iv:
-
-                break;
-            case R.id.alarm_edit_right_iv:
                 break;
         }
     }
@@ -286,10 +282,6 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         DatabaseHelper.getInstance(getContext()).updateAlarm(alarm);
         AlarmReceiver.setReminderAlarm(getContext(), alarm);
         getActivity().finish();
-    }
 
-    private void selectMission() {
-        final Intent i = new Intent(getActivity(), MissionSelectActivity.class);
-        startActivity(i);
     }
 }

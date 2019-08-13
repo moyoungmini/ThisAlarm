@@ -53,7 +53,6 @@ public final class AlarmUtils {
                     REQUEST_ALARM
             );
         }
-
     }
 
     public static ContentValues toContentValues(Alarm alarm) {
@@ -63,6 +62,8 @@ public final class AlarmUtils {
         cv.put(COL_TIME, alarm.getTime());
         cv.put(COL_LABEL, alarm.getLabel());
         cv.put(COL_MISSION,alarm.getMission());
+
+        Log.i("vdsbvdsf", String.valueOf(alarm.getMission()));
 
         final SparseBooleanArray days = alarm.getDays();
         cv.put(COL_MON, days.get(Alarm.MON) ? 1 : 0);
@@ -103,6 +104,7 @@ public final class AlarmUtils {
                 final boolean sun = c.getInt(c.getColumnIndex(COL_SUN)) == 1;
                 final boolean isEnabled = c.getInt(c.getColumnIndex(COL_IS_ENABLED)) == 1;
                 final boolean sound = c.getInt(c.getColumnIndex(COL_SOUND)) ==1;
+                final int mission = c.getInt(c.getColumnIndex(COL_MISSION));
 
                 final Alarm alarm = new Alarm(id, time, label);
                 alarm.setDay(Alarm.MON, mon);
@@ -114,6 +116,7 @@ public final class AlarmUtils {
                 alarm.setDay(Alarm.SUN, sun);
                 alarm.setSound(sound);
                 alarm.setIsEnabled(isEnabled);
+                alarm.setMission(mission);
 
                 alarms.add(alarm);
 

@@ -8,8 +8,8 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
-    android:layout_marginTop="7dp"
-    android:layout_marginBottom="7dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="15dp"
     android:foreground="?selectableItemBackground"
     android:background="@drawable/recycler_item_background"
     android:clickable="true">
@@ -17,18 +17,19 @@
     <LinearLayout
         android:id="@+id/item_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:layout_height="50dp"
+        android:background="@drawable/gradation_img"
         android:orientation="horizontal">
 
         <TextView
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
             android:layout_marginLeft="@dimen/recyclerview_margin"
-            android:textSize="17sp"
+            android:textSize="22sp"
             android:textColor="#ffffff"
             tools:text="오늘아침도 일어나"
             android:id="@+id/ar_label"
+            android:letterSpacing="0.04"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical" />
@@ -42,7 +43,7 @@
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:letterSpacing="0.12"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:textColor="@color/dayMissColor"
             android:layout_height="wrap_content"
             tools:text="월 화 수 목 금 토 일"/>
@@ -61,6 +62,7 @@
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:textColor="@color/fontColor"
+            android:letterSpacing="0.04"
             android:lineSpacingExtra="0.88sp"
             tools:text="AM"
             android:layout_marginRight="12dp"/>
@@ -69,8 +71,9 @@
             android:id="@+id/ar_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="35sp"
+            android:textSize="50sp"
             android:textColor="@color/fontColor"
+            android:letterSpacing="0.04"
             android:lineSpacingExtra="5sp"
             tools:text="7:00"/>
 

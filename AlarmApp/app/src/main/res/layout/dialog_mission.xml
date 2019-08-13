@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="250dp"
+    android:background="@drawable/recycler_item_background"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:letterSpacing="0.12"
+        android:text="CHOOSE MISSION"
+        android:background="@drawable/gradation_img"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/mission_dialog_none_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#6d7278"
+            android:letterSpacing="0.12"
+            android:text="NONE"
+            android:gravity="center"
+            android:layout_weight="1"
+
+            />
+        <TextView
+            android:id="@+id/mission_dialog_word_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#6d7278"
+            android:gravity="center"
+            android:letterSpacing="0.12"
+            android:text="READ THE WORD"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/mission_dialog_emotion_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#6d7278"
+            android:gravity="center"
+            android:letterSpacing="0.12"
+            android:text="EMOTION"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

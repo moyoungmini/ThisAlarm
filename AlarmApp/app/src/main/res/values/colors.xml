@@ -19,4 +19,5 @@
     <color name="grayColor">#e2e2e2</color>
     <color name="blackColor">#000000</color>
     <color name="dayMissColor">#E0E6F6</color>
+    <color name="fontBlueColor">#7693ff</color>
 </resources>

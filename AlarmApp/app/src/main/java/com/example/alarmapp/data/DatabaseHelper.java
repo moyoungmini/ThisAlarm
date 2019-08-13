@@ -69,7 +69,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 COL_SUN + " INTEGER NOT NULL, " +
                 COL_IS_ENABLED + " INTEGER NOT NULL," +
                 COL_SOUND + " TEXT, " +
-                COL_MISSION + " TEXT " +
+                COL_MISSION + " INTEGER " +
                 ");";
 
         sqLiteDatabase.execSQL(CREATE_ALARMS_TABLE);
@@ -115,18 +115,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         try{
             c = getReadableDatabase().query(TABLE_NAME, null, null, null, null, null, null);
             return AlarmUtils.buildAlarmList(c);
-        } finally {
-            if (c != null && !c.isClosed()) c.close();
-        }
-    }
-
-    public Alarm readAlarm(int id){
-        Alarm returnAlarm =new Alarm();
-        Cursor c = null;
-        String[] args = {String.valueOf(id)};
-        try{
-            c = getReadableDatabase().query(TABLE_NAME, null, "id = ?", args, null, null, null);
-            return AlarmUtils.oneAlarmList(c);
         } finally {
             if (c != null && !c.isClosed()) c.close();
         }
