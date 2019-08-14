@@ -1,11 +1,10 @@
 package com.example.alarmapp;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -14,13 +13,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alarmapp.data.DatabaseHelper;
-import com.example.alarmapp.model.Alarm;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -30,13 +30,14 @@ public class SpeechActivity extends AppCompatActivity {
     SpeechRecognizer mRecognizer;
     Button sttBtn,passBtn;
     ImageView dismissBtn,TextToSpeechBtn;
-    TextView textView,textMatch,textEngWord,textEngMean;
+    TextView textView,textEngWord,textEngMean;
     final int PERMISSION = 1;
+    final int MAX = 3;
 
     private TextToSpeech mTTS;
 
     String[][] engWord;
-    int sw =0;
+    int sw,resultcheck =0;
 
     @Override
     protected void
@@ -53,7 +54,6 @@ public class SpeechActivity extends AppCompatActivity {
         textEngWord= (TextView)findViewById(R.id.mText_Eng_Word);
         textEngMean=(TextView)findViewById(R.id.mText_Eng_Mean);
         //textView = (TextView)findViewById(R.id.sttResult);
-        textMatch = (TextView)findViewById(R.id.mText_Eng_Result);
 
         sttBtn = (Button) findViewById(R.id.start_speech_btn);
         passBtn = (Button) findViewById(R.id.load_main_activity_btn);
@@ -80,8 +80,7 @@ public class SpeechActivity extends AppCompatActivity {
         });
 
 
-
-        engWord = new String[5][2];
+        engWord = new String[MAX][2];
         engWord =  DatabaseHelper.getInstance(this).getEngWord().clone();
         textEngWord.setText(engWord[sw][0]);
         textEngMean.setText(engWord[sw][1]);
@@ -109,7 +108,7 @@ public class SpeechActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sw++;
-                if(sw == 5) {
+                if(sw == MAX) {
                     finish();
                 }else {
                     textEngWord.setText(engWord[sw][0]);
@@ -226,28 +225,26 @@ public class SpeechActivity extends AppCompatActivity {
             Log.i("Testdsafsdv", String.valueOf(myName));
             Log.i("Testdsafsdv", String.valueOf(sw));
 
-
+            resultcheck=0;
             for(int i = 0; i < matches.size() ; i++) {
                 Log.i("Testdsafsdv",matches.get(i));
-
                 if (matches.get(i).equals(engWord[sw][0]) || matches.get(i).equals(String.valueOf(myName))) {
-
-                    textMatch.setText("성공");
+                    resultcheck++;
                     sw++;
-                    if(sw == 5){
+                    if(sw == MAX){
                         finish();
                     }else{
-
                         textEngWord.setText(engWord[sw][0]);
                         textEngMean.setText(engWord[sw][1]);
                     }
-
                     break;
-
                 } else {
-                    textMatch.setText("실패! 다시 시도해 보세요!");
-
                 }
+            }
+            if(resultcheck>0){
+
+            }else{
+                showResultDialog();
             }
         }
 
@@ -259,5 +256,28 @@ public class SpeechActivity extends AppCompatActivity {
         public void
         onEvent(int eventType, Bundle params) {}
     };
+
+    private void showResultDialog() {
+        showDialogThird(SpeechActivity.this,"Third Custom Dialog");
+    }
+    public void showDialogThird(SpeechActivity activity, String msg){
+
+        final Dialog dialog = new Dialog(activity, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog_speech);
+
+        TextView text = (TextView) dialog.findViewById(R.id.text_dialog_1);
+        RelativeLayout relativeLayout = (RelativeLayout) dialog.findViewById(R.id.relative_rayout);
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
 
 }
