@@ -20,8 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.MainActivity"></activity>
-        <activity android:name=".FaceTrackerActivity" />
-        <activity android:name=".SpeechActivity" />
+        <activity android:name=".ui.FaceTrackerActivity" />
+        <activity android:name=".ui.SpeechActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"

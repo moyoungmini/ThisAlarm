@@ -1,4 +1,4 @@
-package com.example.alarmapp;
+package com.example.alarmapp.ui;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alarmapp.R;
 import com.example.alarmapp.data.DatabaseHelper;
 
 import java.util.ArrayList;

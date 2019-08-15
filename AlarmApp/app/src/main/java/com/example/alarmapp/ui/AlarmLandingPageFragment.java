@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +22,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.alarmapp.FaceTrackerActivity;
 import com.example.alarmapp.R;
-import com.example.alarmapp.SpeechActivity;
 import com.example.alarmapp.data.DatabaseHelper;
 import com.example.alarmapp.model.Alarm;
 import com.example.alarmapp.service.AlarmReceiver;
-import com.example.alarmapp.util.ViewUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,9 +56,6 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        AlarmLandingPageActivity.AlarmLandingPageActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         final View v = inflater.inflate(R.layout.fragment_alarm_landing_page, container, false);
         final ImageView dismiss =  v.findViewById(R.id.dismiss_btn);

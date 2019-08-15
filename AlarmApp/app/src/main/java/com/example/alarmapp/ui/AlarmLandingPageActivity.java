@@ -19,7 +19,12 @@ public final class AlarmLandingPageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        AlarmLandingPageActivity = this;
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_alarm_landing_page);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().setFlags(
@@ -28,9 +33,7 @@ public final class AlarmLandingPageActivity extends AppCompatActivity {
             );
         }
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alarm_landing_page);
-
+        AlarmLandingPageActivity = this;
     }
 
     public static Intent launchIntent(Context context) {

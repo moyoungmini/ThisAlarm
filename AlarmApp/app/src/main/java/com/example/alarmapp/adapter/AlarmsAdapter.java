@@ -92,7 +92,7 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
         if(alarm.isEnabled()) {
             holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
             holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
-            holder.layout.setBackgroundResource(R.color.colorPrimary);
+            holder.layout.setBackgroundResource(R.drawable.gradation_img);
             holder.allLayout.setBackgroundResource(R.drawable.recycler_item_background);
         }
         else {
@@ -106,7 +106,7 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
                 if(isChecked) {
                     holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
                     holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
-                    holder.layout.setBackgroundResource(R.color.colorPrimary);
+                    holder.layout.setBackgroundResource(R.drawable.gradation_img);
                     holder.allLayout.setBackgroundResource(R.drawable.recycler_item_background);
                     //->
                     //Alarm 등록

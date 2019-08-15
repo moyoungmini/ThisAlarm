@@ -31,7 +31,6 @@
             android:text="NONE"
             android:gravity="center"
             android:layout_weight="1"
-
             />
         <TextView
             android:id="@+id/mission_dialog_word_tv"

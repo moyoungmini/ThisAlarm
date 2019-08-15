@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.alarmapp;
+package com.example.alarmapp.ui;
 
 import android.Manifest;
 import android.app.Activity;
@@ -28,8 +28,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
+import com.example.alarmapp.R;
 import com.example.alarmapp.camera.CameraSourcePreview;
 import com.example.alarmapp.camera.GraphicOverlay;
 import com.google.android.gms.common.ConnectionResult;
