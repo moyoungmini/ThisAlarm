@@ -6,11 +6,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import com.example.alarmapp.model.Alarm;
 import com.example.alarmapp.util.AlarmUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 
 public final class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -18,12 +25,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     private static final int SCHEMA = 1;
 
     private static final String TABLE_NAME = "alarms";
-    private static final String ENGLISH_TABLE_NAME = "englishWord_TB";
-    public static final String ENG_ID = "Word_Id";
-    public static final String ENG_COL_GROUP = "Word_Group";
-    public static final String ENG_COL_WORD = "Word_Content";
-    public static final String ENG_COL_MEAN = "Word_Mean";
-
 
     public static final String _ID = "_id";
     public static final String COL_TIME = "time";
@@ -40,7 +41,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_SOUND ="sound";
 
     String[][] engWord;
-
 
     private static DatabaseHelper sInstance = null;
 
@@ -77,33 +77,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 ");";
 
         sqLiteDatabase.execSQL(CREATE_ALARMS_TABLE);
-
-        final String CREATE_ENG_TABLE = "CREATE TABLE " + ENGLISH_TABLE_NAME + " (" +
-                ENG_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ENG_COL_GROUP + " INTEGER NOT NULL, " +
-                ENG_COL_WORD + " TEXT, " +
-                ENG_COL_MEAN + " TEXT " +
-                ");";
-        sqLiteDatabase.execSQL(CREATE_ENG_TABLE);
-        setmakeWord(sqLiteDatabase);
     }
 
-    private void setmakeWord(SQLiteDatabase sqLiteDatabase) {
-        makeWord(sqLiteDatabase,1,"red","빨간색,빨강");
-        makeWord(sqLiteDatabase,1,"red","빨간색,빨강");
-        makeWord(sqLiteDatabase,1,"red","빨간색,빨강");
-        makeWord(sqLiteDatabase,2,"blue","파란색,파랑");
-        makeWord(sqLiteDatabase,2,"blue","파란색,파랑");
-        makeWord(sqLiteDatabase,2,"blue","파란색,파랑");
-    }
 
-    private void makeWord(SQLiteDatabase sqLiteDatabase,int group,String content, String Mean) {
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.ENG_COL_GROUP,group);
-        values.put(DatabaseHelper.ENG_COL_WORD,content);
-        values.put(DatabaseHelper.ENG_COL_MEAN,Mean);
-        sqLiteDatabase.insert(ENGLISH_TABLE_NAME,null,values);
-    }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
@@ -148,30 +124,4 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             if (c != null && !c.isClosed()) c.close();
         }
     }
-
-    public String[][] getEngWord() {
-        Cursor iCursor = null;
-        int engWordnum = 0;
-        try{
-            iCursor = getReadableDatabase().query(ENGLISH_TABLE_NAME, null, null, null, null, null, null);
-            engWord = new String[5][2];
-            if(iCursor.moveToFirst()) {
-                do {
-                    int word_group = iCursor.getInt(iCursor.getColumnIndex("Word_Group"));
-                    String word_content = iCursor.getString(iCursor.getColumnIndex("Word_Content"));
-                    String word_mean = iCursor.getString(iCursor.getColumnIndex("Word_Mean"));
-                    if (word_group==1) {//난수가 들어갈 부분
-                        engWord[engWordnum][0] = word_content;
-                        engWord[engWordnum][1] = word_mean;
-                        engWordnum++;
-                    }
-                }while (iCursor.moveToNext());
-            }
-            return engWord;
-        } finally {
-            if (iCursor != null && !iCursor.isClosed()) iCursor.close();
-            return engWord;
-        }
-    }
-
 }
