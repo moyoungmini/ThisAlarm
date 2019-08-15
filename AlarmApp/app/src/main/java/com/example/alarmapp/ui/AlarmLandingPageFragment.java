@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,7 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         Bundle extras = getActivity().getIntent().getExtras();
         if(extras != null) {
             if (extras.containsKey("mission")) {
+                Log.i("vdvds",String.valueOf(mission));
                 mission = extras.getInt("mission");
             }
 
@@ -175,10 +177,11 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
 
         final int minutes = c.get(Calendar.MINUTE);
         final int hours = c.get(Calendar.HOUR_OF_DAY);
+        final int second = c.get(Calendar.SECOND);
 
-        c.set(Calendar.MINUTE, minutes);
+        c.set(Calendar.MINUTE, minutes + 5);
         c.set(Calendar.HOUR_OF_DAY, hours);
-        c.set(Calendar.SECOND, 20);
+        c.set(Calendar.SECOND, second);
         //SECOND설정
 
         alarm.setTime(c.getTimeInMillis());
@@ -244,7 +247,21 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                 }else if(mission ==1){
                 }
                 else if(mission ==2){
-                    startActivity(new Intent(getContext(), SpeechActivity.class));
+                    mIntent = new Intent(AlarmLandingPageActivity.AlarmLandingPageActivity, SpeechActivity.class);
+                    mIntent.putExtra("mission", mission);
+                    mIntent.putExtra("sound",sound);
+                    mIntent.putExtra("enable",enable);
+                    mIntent.putExtra("label",label);
+                    mIntent.putExtra("time",time);
+
+                    mIntent.putExtra("mon",dayList.get(0));
+                    mIntent.putExtra("tue",dayList.get(1));
+                    mIntent.putExtra("wen",dayList.get(2));
+                    mIntent.putExtra("thu",dayList.get(3));
+                    mIntent.putExtra("fri",dayList.get(4));
+                    mIntent.putExtra("sat",dayList.get(5));
+                    mIntent.putExtra("sun",dayList.get(6));
+                    startActivity(mIntent);
                 }
                 else if(mission ==3){
                     startActivity(new Intent(getContext(), FaceTrackerActivity.class));

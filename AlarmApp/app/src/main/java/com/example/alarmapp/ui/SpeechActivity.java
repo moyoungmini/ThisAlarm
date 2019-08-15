@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -18,16 +19,20 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alarmapp.R;
 import com.example.alarmapp.data.DatabaseHelper;
+import com.example.alarmapp.model.Alarm;
+import com.example.alarmapp.service.AlarmReceiver;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 import jxl.Sheet;
@@ -40,6 +45,7 @@ public class SpeechActivity extends AppCompatActivity {
     Button sttBtn,passBtn;
     ImageView dismissBtn,TextToSpeechBtn;
     TextView textRest,textEngWord,textEngMean;
+    ProgressBar mProgressBar;
     final int PERMISSION = 1;
     final int MAX = 3;
 
@@ -49,11 +55,80 @@ public class SpeechActivity extends AppCompatActivity {
     int sw,resultcheck =0;
 
     ArrayAdapter<String> arrayAdapter;
+
+    private ArrayList<Boolean> dayList;
+    private int mission;
+    private boolean sound;
+    private  long time;
+    private String label;
+    private boolean enable;
+
+    public static int value = 100;
+
+    Handler handler;
     @Override
     protected void
     onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech);
+
+        value =100;
+        dayList = new ArrayList<>();
+        for(int i=0;i<7;i++){
+            dayList.add(false);
+        }
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            if (extras.containsKey("mission")) {
+                mission = extras.getInt("mission");
+            }
+
+            if (extras.containsKey("sound")) {
+                sound = extras.getBoolean("sound");
+            }
+
+            if (extras.containsKey("enable")) {
+                enable = extras.getBoolean("enable");
+            }
+
+            if (extras.containsKey("label")) {
+                label = extras.getString("label");
+            }
+
+            if (extras.containsKey("time")) {
+                time = extras.getLong("time");
+            }
+
+            if (extras.containsKey("mon")) {
+                dayList.set(0,extras.getBoolean("mon"));
+            }
+
+            if (extras.containsKey("tue")) {
+                dayList.set(1,extras.getBoolean("tue"));
+            }
+
+            if (extras.containsKey("wen")) {
+                dayList.set(2,extras.getBoolean("wen"));
+            }
+
+            if (extras.containsKey("thu")) {
+                dayList.set(3,extras.getBoolean("thu"));
+            }
+
+            if (extras.containsKey("fri")) {
+                dayList.set(4,extras.getBoolean("fri"));
+            }
+
+            if (extras.containsKey("sat")) {
+                dayList.set(5,extras.getBoolean("sat"));
+            }
+
+            if (extras.containsKey("sun")) {
+                dayList.set(6,extras.getBoolean("sun"));
+            }
+        }
+
         if ( Build.VERSION.SDK_INT >= 23 ){
         // 퍼미션 체크
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET,
@@ -64,6 +139,7 @@ public class SpeechActivity extends AppCompatActivity {
         textEngWord= (TextView)findViewById(R.id.speech_word_tv);
         textEngMean=(TextView)findViewById(R.id.speech_mean_tv);
         textRest=(TextView)findViewById(R.id.speech_rest_tv);
+        mProgressBar = findViewById(R.id.speech_pb);
         textRest.setText(sw+"/"+MAX);
         //textView = (TextView)findViewById(R.id.sttResult);
 
@@ -122,8 +198,34 @@ public class SpeechActivity extends AppCompatActivity {
                 textToSpeak();
             }
         });
-        
-        
+
+        handler = new Handler();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() { // Thread 로 작업할 내용을 구현
+                while(true) {
+                    if(value<=0){
+                        Log.i("vadsfvds","vdsvds");
+                        reCallAlarm();
+                        finish();
+                        break;
+                    }
+                    value = value - 1;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() { // 화면에 변경하는 작업을 구현
+                            mProgressBar.setProgress(value);
+                            Log.i("vadsfvbfbfds","vdsvdbfbfs");
+                        }
+                    });
+
+                    try {
+                        Thread.sleep(600); // 시간지연
+                    } catch (InterruptedException e) {    }
+                } // end of while
+            }
+        });
+        t.start(); // 쓰레드 시작
     }
 
     @Override
@@ -301,6 +403,38 @@ public class SpeechActivity extends AppCompatActivity {
             workbook.close();
         }
 
+    }
+
+    public void reCallAlarm() {
+        final Alarm alarm = new Alarm();
+        final Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(time);
+
+        final int minutes = c.get(Calendar.MINUTE);
+        final int hours = c.get(Calendar.HOUR_OF_DAY);
+        final int second = c.get(Calendar.SECOND);
+
+        c.set(Calendar.MINUTE, minutes + 5);
+        c.set(Calendar.HOUR_OF_DAY, hours);
+        c.set(Calendar.SECOND, second);
+        //SECOND설정
+
+        alarm.setTime(c.getTimeInMillis());
+        alarm.setLabel(label);
+        alarm.setDay(Alarm.MON, dayList.get(0));
+        alarm.setDay(Alarm.TUES, dayList.get(1));
+        alarm.setDay(Alarm.WED, dayList.get(2));
+        alarm.setDay(Alarm.THURS, dayList.get(3));
+        alarm.setDay(Alarm.FRI, dayList.get(4));
+        alarm.setDay(Alarm.SAT, dayList.get(5));
+        alarm.setDay(Alarm.SUN, dayList.get(6));
+        alarm.setMission(mission);
+        Log.i("vdsvdssdvsd",String.valueOf(mission));
+        alarm.setSound(sound);
+        alarm.setIsEnabled(enable);
+
+        DatabaseHelper.getInstance(this).updateAlarm(alarm);
+        AlarmReceiver.setReminderAlarm(this, alarm);
     }
 
 }
