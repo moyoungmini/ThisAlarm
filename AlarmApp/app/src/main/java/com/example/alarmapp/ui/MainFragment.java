@@ -2,6 +2,7 @@ package com.example.alarmapp.ui;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -44,6 +45,7 @@ public final class MainFragment extends Fragment
         final View v = inflater.inflate(R.layout.fragment_main, container, false);
 
         final EmptyRecyclerView rv = (EmptyRecyclerView) v.findViewById(R.id.main_fragment_rv);
+        final ImageView btnUser = (ImageView) v.findViewById(R.id.main_fragment_user_iv);
         mAdapter = new AlarmsAdapter();
         rv.setEmptyView(v.findViewById(R.id.empty_view));
         rv.setAdapter(mAdapter);
@@ -68,6 +70,14 @@ public final class MainFragment extends Fragment
                 getActivity().overridePendingTransition(R.anim.amin_slide_in_right, R.anim.amin_slide_out_left);
             }
         });
+        btnUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent (Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSeG0wDmvFG5qX9WEeviMiEzKJeFPd9VAvOc-f2JDvcrqoydLg/viewform"));
+                startActivity(intent);
+            }
+        });
+
 
         return v;
     }

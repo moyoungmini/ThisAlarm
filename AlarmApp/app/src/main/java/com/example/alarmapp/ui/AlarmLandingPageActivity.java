@@ -23,8 +23,7 @@ public final class AlarmLandingPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alarm_landing_page);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().setFlags(

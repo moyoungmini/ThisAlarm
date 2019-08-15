@@ -28,6 +28,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.example.alarmapp.R;
 import com.example.alarmapp.camera.CameraSourcePreview;
@@ -67,6 +68,8 @@ public final class FaceTrackerActivity extends AppCompatActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emotion);
 

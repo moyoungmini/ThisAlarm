@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -69,6 +70,8 @@ public class SpeechActivity extends AppCompatActivity {
     @Override
     protected void
     onCreate(Bundle savedInstanceState) {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech);
 
@@ -320,15 +323,22 @@ public class SpeechActivity extends AppCompatActivity {
                     results.getStringArrayList(SpeechRecognizer.
                             RESULTS_RECOGNITION);
             String result = excelload;
-            StringBuilder myName = new StringBuilder(result);
-            myName.setCharAt(0, (char)(result.charAt(0)-32));//앞글자 대분자로 바꾸기
+            StringBuilder result_first_UPPER = new StringBuilder(result);
+            StringBuilder result_first_ROW = new StringBuilder(result);
+            StringBuilder result_all_ROW = new StringBuilder(result);
+            result_first_UPPER.setCharAt(0, (char)(result.charAt(0)-32));//앞글자 대문자로 바꾸기
+            result_first_ROW.setCharAt(0, (char)(result.charAt(0)+32));//앞글자 대문자를 소문자로 바꾸기
+            for(int i = 0; i<result.length();i++){//모든 대문자를 소문자로
+                result_all_ROW.setCharAt(i, (char)(result.charAt(i)-32));
+            }
             Log.i("Testdsafsdv",excelload);
-            Log.i("Testdsafsdv", String.valueOf(myName));
+            Log.i("Testdsafsdv", String.valueOf(result_first_UPPER));
             Log.i("Testdsafsdv", String.valueOf(sw));
             resultcheck=0;
             for(int i = 0; i < matches.size() ; i++) {
                 Log.i("Testdsafsdv",matches.get(i));
-                if (matches.get(i).equals(excelload) || matches.get(i).equals(String.valueOf(myName))) {
+                if (matches.get(i).equals(excelload) || matches.get(i).equals(String.valueOf(result_first_UPPER))
+                        ||matches.get(i).equals(String.valueOf(result_first_ROW))||matches.get(i).equals(String.valueOf(result_all_ROW))) {
                     resultcheck++;
                     sw++;
                     if(sw == MAX){
