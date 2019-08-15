@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SimpleAlarms</string>
+    <string name="app_name">이런알람</string>
 
     <!-- Main Activity/Fragment -->
     <string name="empty_view_text">아래 알림 버튼을 눌러주세요!</string>

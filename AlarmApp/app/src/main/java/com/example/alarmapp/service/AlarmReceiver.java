@@ -80,7 +80,6 @@ public final class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
         builder.setSmallIcon(R.drawable.ic_alarm_white_24dp);
         builder.setColor(ContextCompat.getColor(context, R.color.accent));
-        builder.setContentTitle(context.getString(R.string.app_name));
         builder.setContentText(alarm.getLabel());
         builder.setTicker(alarm.getLabel());
         builder.setVibrate(newVibration);
