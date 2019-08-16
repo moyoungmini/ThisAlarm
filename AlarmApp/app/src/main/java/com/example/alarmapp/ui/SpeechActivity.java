@@ -1,6 +1,7 @@
 package com.example.alarmapp.ui;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -65,6 +66,7 @@ public class SpeechActivity extends AppCompatActivity {
     private boolean enable;
 
     public static int value = 100;
+    private boolean select;
 
     Handler handler;
     @Override
@@ -75,6 +77,7 @@ public class SpeechActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech);
 
+        select = true;
         value =100;
         dayList = new ArrayList<>();
         for(int i=0;i<7;i++){
@@ -186,6 +189,7 @@ public class SpeechActivity extends AppCompatActivity {
         dismissBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                select = false;
                 finish();
             }
         });
@@ -206,8 +210,9 @@ public class SpeechActivity extends AppCompatActivity {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() { // Thread 로 작업할 내용을 구현
-                while(true) {
+                while(select) {
                     if(value<=0){
+                        select = false;
                         Log.i("vadsfvds","vdsvds");
                         reCallAlarm();
                         finish();
@@ -342,6 +347,7 @@ public class SpeechActivity extends AppCompatActivity {
                     resultcheck++;
                     sw++;
                     if(sw == MAX){
+                        select = false;
                         finish();
                     }else{
                         ExcelRead();
@@ -424,7 +430,7 @@ public class SpeechActivity extends AppCompatActivity {
         final int hours = c.get(Calendar.HOUR_OF_DAY);
         final int second = c.get(Calendar.SECOND);
 
-        c.set(Calendar.MINUTE, minutes + 5);
+        c.set(Calendar.MINUTE, minutes+1);
         c.set(Calendar.HOUR_OF_DAY, hours);
         c.set(Calendar.SECOND, second);
         //SECOND설정
@@ -439,7 +445,6 @@ public class SpeechActivity extends AppCompatActivity {
         alarm.setDay(Alarm.SAT, dayList.get(5));
         alarm.setDay(Alarm.SUN, dayList.get(6));
         alarm.setMission(mission);
-        Log.i("vdsvdssdvsd",String.valueOf(mission));
         alarm.setSound(sound);
         alarm.setIsEnabled(enable);
 
