@@ -23,12 +23,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.alarmapp.R;
 import com.example.alarmapp.camera.CameraSourcePreview;
@@ -49,16 +52,18 @@ import java.io.IOException;
  */
 public final class FaceTrackerActivity extends AppCompatActivity {
     private static final String TAG = "FaceTracker";
-
+    private static final int  EMOTION_MAX = 50;
     private CameraSource mCameraSource = null;
-
+    private TextView mTextAction,mTextResult;
+    public static int randomnumber;
     private CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
+
+    int result;
 
     private static final int RC_HANDLE_GMS = 9001;
     // permission request codes need to be < 256
     private static final int RC_HANDLE_CAMERA_PERM = 2;
-
     //==============================================================================================
     // Activity Methods
     //==============================================================================================
@@ -72,10 +77,13 @@ public final class FaceTrackerActivity extends AppCompatActivity {
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emotion);
-
+        randomnumber = (int) (Math.random()*10); // 0< ran<1 사이의 실수 ;
         mPreview = (CameraSourcePreview) findViewById(R.id.preview);
         mGraphicOverlay = (GraphicOverlay) findViewById(R.id.faceOverlay);
-
+        mTextAction = (TextView) findViewById(R.id.emotion_action_tv);
+        mTextResult = (TextView) findViewById(R.id.emotion_result_tv);
+        result = 0;
+        mTextResult.setText(result+"/"+EMOTION_MAX);
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
         int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
@@ -84,6 +92,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         } else {
             requestCameraPermission();
         }
+
 
     }
 
@@ -286,7 +295,6 @@ public final class FaceTrackerActivity extends AppCompatActivity {
     private class GraphicFaceTracker extends Tracker<Face> {
         private GraphicOverlay mOverlay;
         private FaceGraphic mFaceGraphic;
-        private int randomnumber = (int) (Math.random()*10); // 0< ran<1 사이의 실수 ;
 
 
 
@@ -311,27 +319,25 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             mOverlay.add(mFaceGraphic);
             mFaceGraphic.updateFace(face);
 
-
-            if( this.randomnumber >= 0 && this.randomnumber<3) {
-                    Log.i("Dvddsv","vfdv");
+            if( randomnumber >= 0 && randomnumber<3) {
+                mTextAction.setText("웃으며 왼쪽 눈을 뜨세요");
                 if (mFaceGraphic.happiness > 0.9 && mFaceGraphic.lefteye >0.9 ) {
-                    Log.i("Smile~","DFsvds");
-                    finish();
+                    getEmotion();
                 }
-            }else if(this.randomnumber >= 3 && this.randomnumber<6){
-                Log.i("Smivdvdvle~","DFsvds");
-                if (mFaceGraphic.happiness > 0.9 && mFaceGraphic.lefteye >0.9) {
-                    finish();
+            }else if(randomnumber >= 3 &&randomnumber<6){
+                mTextAction.setText("웃지 않으면서 왼쪽 눈을 뜨세요");
+                if (mFaceGraphic.happiness < 0.2 && mFaceGraphic.lefteye >0.9) {
+                    getEmotion();
                 }
-            }else if(this.randomnumber >= 6 && this.randomnumber<=10){
-                Log.i("Smivdvfdle~","DFsvds");
-                if (mFaceGraphic.happiness <0.2 && mFaceGraphic.lefteye >0.9) {
-                    finish();
+            }else if(randomnumber >= 6 && randomnumber<=10){
+                mTextAction.setText("웃지 않으면서 왼쪽 눈을 감으세요");
+                if (mFaceGraphic.happiness <0.2 && mFaceGraphic.lefteye <0.2) {
+                    getEmotion();
                 }
             }else {
-                Log.i("S00bfbfbmile~","DFsvds");
-                if (mFaceGraphic.happiness > 0.9) {
-                    finish();
+                mTextAction.setText("양쪽 눈을 감으세요");
+                if (mFaceGraphic.lefteye < 0.2 &&mFaceGraphic.righteye < 0.2 ) {
+                    getEmotion();
                 }
             }
         }
@@ -356,5 +362,13 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         }
     }
 
+    private void getEmotion() {
+        result++;
+        mTextResult.setText(result+"/"+EMOTION_MAX);
+        if(result>=EMOTION_MAX){
+            finish();
+        }else{
 
+        }
+    }
 }
