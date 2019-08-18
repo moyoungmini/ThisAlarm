@@ -173,13 +173,21 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
     public void reCallAlarm() {
         final Alarm alarm = new Alarm();
         final Calendar c = Calendar.getInstance();
+        time = System.currentTimeMillis();
         c.setTimeInMillis(time);
 
-        final int minutes = c.get(Calendar.MINUTE);
+        int minutes = c.get(Calendar.MINUTE);
         final int hours = c.get(Calendar.HOUR_OF_DAY);
         final int second = c.get(Calendar.SECOND);
 
-        c.set(Calendar.MINUTE, minutes + 5);
+        if(minutes<55) {
+            minutes +=5;
+        }
+        else {
+            minutes = minutes - 55;
+        }
+
+        c.set(Calendar.MINUTE, minutes);
         c.set(Calendar.HOUR_OF_DAY, hours);
         c.set(Calendar.SECOND, second);
         //SECOND설정
@@ -264,7 +272,21 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                     startActivity(mIntent);
                 }
                 else if(mission ==3){
-                    startActivity(new Intent(getContext(), FaceTrackerActivity.class));
+                    mIntent = new Intent(AlarmLandingPageActivity.AlarmLandingPageActivity, FaceTrackerActivity.class);
+                    mIntent.putExtra("mission", mission);
+                    mIntent.putExtra("sound",sound);
+                    mIntent.putExtra("enable",enable);
+                    mIntent.putExtra("label",label);
+                    mIntent.putExtra("time",time);
+
+                    mIntent.putExtra("mon",dayList.get(0));
+                    mIntent.putExtra("tue",dayList.get(1));
+                    mIntent.putExtra("wen",dayList.get(2));
+                    mIntent.putExtra("thu",dayList.get(3));
+                    mIntent.putExtra("fri",dayList.get(4));
+                    mIntent.putExtra("sat",dayList.get(5));
+                    mIntent.putExtra("sun",dayList.get(6));
+                    startActivity(mIntent);
                 }
                 break;
             case R.id.recall_btn:
