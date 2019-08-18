@@ -430,7 +430,7 @@ public class SpeechActivity extends AppCompatActivity {
         final int hours = c.get(Calendar.HOUR_OF_DAY);
         final int second = c.get(Calendar.SECOND);
 
-        c.set(Calendar.MINUTE, minutes+1);
+        c.set(Calendar.MINUTE, minutes+5);
         c.set(Calendar.HOUR_OF_DAY, hours);
         c.set(Calendar.SECOND, second);
         //SECOND설정

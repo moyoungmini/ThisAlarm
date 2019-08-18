@@ -123,6 +123,58 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             dayList.add(false);
         }
         mProgressBar = findViewById(R.id.emotion_pb);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            if (extras.containsKey("mission")) {
+                mission = extras.getInt("mission");
+            }
+
+            if (extras.containsKey("sound")) {
+                sound = extras.getBoolean("sound");
+            }
+
+            if (extras.containsKey("enable")) {
+                enable = extras.getBoolean("enable");
+            }
+
+            if (extras.containsKey("label")) {
+                label = extras.getString("label");
+            }
+
+            if (extras.containsKey("time")) {
+                time = extras.getLong("time");
+            }
+
+            if (extras.containsKey("mon")) {
+                dayList.set(0,extras.getBoolean("mon"));
+            }
+
+            if (extras.containsKey("tue")) {
+                dayList.set(1,extras.getBoolean("tue"));
+            }
+
+            if (extras.containsKey("wen")) {
+                dayList.set(2,extras.getBoolean("wen"));
+            }
+
+            if (extras.containsKey("thu")) {
+                dayList.set(3,extras.getBoolean("thu"));
+            }
+
+            if (extras.containsKey("fri")) {
+                dayList.set(4,extras.getBoolean("fri"));
+            }
+
+            if (extras.containsKey("sat")) {
+                dayList.set(5,extras.getBoolean("sat"));
+            }
+
+            if (extras.containsKey("sun")) {
+                dayList.set(6,extras.getBoolean("sun"));
+            }
+        }
+
         handler = new Handler();
         Thread t = new Thread(new Runnable() {
             @Override
@@ -442,7 +494,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         final int hours = c.get(Calendar.HOUR_OF_DAY);
         final int second = c.get(Calendar.SECOND);
 
-        c.set(Calendar.MINUTE, minutes+1);
+        c.set(Calendar.MINUTE, minutes+5);
         c.set(Calendar.HOUR_OF_DAY, hours);
         c.set(Calendar.SECOND, second);
         //SECOND설정
