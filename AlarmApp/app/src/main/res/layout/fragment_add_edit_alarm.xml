@@ -21,7 +21,7 @@
         android:textColor="@drawable/misstion_text_set"
         android:background="@drawable/btn_mission"
         android:letterSpacing="0.12"
-        android:text="CHOOSE MISSION"
+        android:text="미션 선택"
         />
 
 
@@ -56,7 +56,7 @@
             android:textColor="#000000"
             android:fontFamily="@font/nanumsquaredrfont"
             android:letterSpacing="-0.01"
-            android:text="NAME"
+            android:text="알람 이름"
             />
         <EditText
             android:id="@+id/alarm_set_label_et"
@@ -65,8 +65,10 @@
             android:textSize="18sp"
             android:fontFamily="@font/nanumsquaredrfont"
             android:textColor="#000000"
+            android:hint="이곳에 제목을 입력하세요"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
+            android:inputType="text"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:background="@null"
@@ -222,7 +224,7 @@
             android:textColor="#000000"
             android:layout_marginLeft="15dp"
             android:lineSpacingExtra="4sp"
-            android:text="SOUND"
+            android:text="소리"
             android:fontFamily="@font/nanumsquaredrfont"
             android:letterSpacing="-0.01"
             />
@@ -256,7 +258,7 @@
         android:lineSpacingExtra="6sp"
         android:textSize="30sp"
         android:background="@drawable/btn_save"
-        android:text="SAVE"
+        android:text="저장"
         android:textColor="@drawable/save_text_set"
         />
 </LinearLayout>

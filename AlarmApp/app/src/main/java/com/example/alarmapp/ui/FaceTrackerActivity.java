@@ -30,12 +30,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.alarmapp.R;
 import com.example.alarmapp.camera.CameraSourcePreview;
 import com.example.alarmapp.camera.GraphicOverlay;
+import com.example.alarmapp.data.DatabaseHelper;
+import com.example.alarmapp.model.Alarm;
+import com.example.alarmapp.service.AlarmReceiver;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.vision.CameraSource;
@@ -45,6 +49,8 @@ import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Activity for the face tracker app.  This app detects faces with the rear facing camera, and draws
@@ -52,18 +58,33 @@ import java.io.IOException;
  */
 public final class FaceTrackerActivity extends AppCompatActivity {
     private static final String TAG = "FaceTracker";
-    private static final int  EMOTION_MAX = 50;
+    private static final int  EMOTION_MAX = 100;
     private CameraSource mCameraSource = null;
     private TextView mTextAction,mTextResult;
+    private ImageView mImageEmoticon;
     public static int randomnumber;
+    ProgressBar mProgressBar;
     private CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
 
     int result;
 
+    private ArrayList<Boolean> dayList;
+    private int mission;
+    private boolean sound;
+    private  long time;
+    private String label;
+    private boolean enable;
+
+    public static int value = 100;
+    private boolean select;
+
     private static final int RC_HANDLE_GMS = 9001;
     // permission request codes need to be < 256
     private static final int RC_HANDLE_CAMERA_PERM = 2;
+
+    Handler handler;
+
     //==============================================================================================
     // Activity Methods
     //==============================================================================================
@@ -82,6 +103,8 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         mGraphicOverlay = (GraphicOverlay) findViewById(R.id.faceOverlay);
         mTextAction = (TextView) findViewById(R.id.emotion_action_tv);
         mTextResult = (TextView) findViewById(R.id.emotion_result_tv);
+        mImageEmoticon =  (ImageView) findViewById(R.id.emotion_emoticon_iv);
+        //mImageEmoticon.setBackgroundResource(R.drawable.emotion_default);
         result = 0;
         mTextResult.setText(result+"/"+EMOTION_MAX);
         // Check for the camera permission before accessing the camera.  If the
@@ -93,7 +116,41 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             requestCameraPermission();
         }
 
+        select = true;
+        value =100;
+        dayList = new ArrayList<>();
+        for(int i=0;i<7;i++){
+            dayList.add(false);
+        }
+        mProgressBar = findViewById(R.id.emotion_pb);
+        handler = new Handler();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() { // Thread 로 작업할 내용을 구현
+                while(select) {
+                    if(value<=0){
+                        select = false;
+                        Log.i("vadsfvds","vdsvds");
+                        reCallAlarm();
+                        finish();
+                        break;
+                    }
+                    value = value - 1;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() { // 화면에 변경하는 작업을 구현
+                            mProgressBar.setProgress(value);
+                            Log.i("vadsfvbfbfds","vdsvdbfbfs");
+                        }
+                    });
 
+                    try {
+                        Thread.sleep(600); // 시간지연
+                    } catch (InterruptedException e) {    }
+                } // end of while
+            }
+        });
+        t.start(); // 쓰레드 시작
     }
 
     /**
@@ -320,23 +377,27 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             mFaceGraphic.updateFace(face);
 
             if( randomnumber >= 0 && randomnumber<3) {
-                mTextAction.setText("웃으며 왼쪽 눈을 뜨세요");
-                if (mFaceGraphic.happiness > 0.9 && mFaceGraphic.lefteye >0.9 ) {
+                mImageEmoticon.setBackgroundResource(R.drawable.emotion_left_normal_img);
+                mTextAction.setText("왼쪽눈을 감고 오른쪽눈을 뜨세요!");
+                if (mFaceGraphic.happiness < 0.2 && mFaceGraphic.lefteye >0.9 &&mFaceGraphic.righteye<0.2){
                     getEmotion();
                 }
             }else if(randomnumber >= 3 &&randomnumber<6){
-                mTextAction.setText("웃지 않으면서 왼쪽 눈을 뜨세요");
-                if (mFaceGraphic.happiness < 0.2 && mFaceGraphic.lefteye >0.9) {
+                mImageEmoticon.setBackgroundResource(R.drawable.emotion_smile_img);
+                mTextAction.setText("양 눈을 뜨고 웃으세요!");
+                if (mFaceGraphic.happiness > 0.9 && mFaceGraphic.lefteye <0.2 && mFaceGraphic.righteye <0.2) {
                     getEmotion();
                 }
             }else if(randomnumber >= 6 && randomnumber<=10){
-                mTextAction.setText("웃지 않으면서 왼쪽 눈을 감으세요");
-                if (mFaceGraphic.happiness <0.2 && mFaceGraphic.lefteye <0.2) {
+                mImageEmoticon.setBackgroundResource(R.drawable.emotion_left_right_normal_img);
+                mTextAction.setText("양쪽눈을 감으세요!");
+                if (mFaceGraphic.happiness <0.2 && mFaceGraphic.lefteye <0.2 && mFaceGraphic.righteye <0.2) {
                     getEmotion();
                 }
             }else {
-                mTextAction.setText("양쪽 눈을 감으세요");
-                if (mFaceGraphic.lefteye < 0.2 &&mFaceGraphic.righteye < 0.2 ) {
+                mImageEmoticon.setBackgroundResource(R.drawable.emotion_left_right_smile_img);
+                mTextAction.setText("양쪽 눈을 감고 웃으세요!");
+                if (mFaceGraphic.happiness >0.9 &&mFaceGraphic.lefteye < 0.2 &&mFaceGraphic.righteye < 0.2 ) {
                     getEmotion();
                 }
             }
@@ -365,9 +426,41 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         result++;
         mTextResult.setText(result+"/"+EMOTION_MAX);
         if(result>=EMOTION_MAX){
+            select = false;
             finish();
         }else{
 
         }
+    }
+
+    public void reCallAlarm() {
+        final Alarm alarm = new Alarm();
+        final Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(time);
+
+        final int minutes = c.get(Calendar.MINUTE);
+        final int hours = c.get(Calendar.HOUR_OF_DAY);
+        final int second = c.get(Calendar.SECOND);
+
+        c.set(Calendar.MINUTE, minutes+1);
+        c.set(Calendar.HOUR_OF_DAY, hours);
+        c.set(Calendar.SECOND, second);
+        //SECOND설정
+
+        alarm.setTime(c.getTimeInMillis());
+        alarm.setLabel(label);
+        alarm.setDay(Alarm.MON, dayList.get(0));
+        alarm.setDay(Alarm.TUES, dayList.get(1));
+        alarm.setDay(Alarm.WED, dayList.get(2));
+        alarm.setDay(Alarm.THURS, dayList.get(3));
+        alarm.setDay(Alarm.FRI, dayList.get(4));
+        alarm.setDay(Alarm.SAT, dayList.get(5));
+        alarm.setDay(Alarm.SUN, dayList.get(6));
+        alarm.setMission(mission);
+        alarm.setSound(sound);
+        alarm.setIsEnabled(enable);
+
+        DatabaseHelper.getInstance(this).updateAlarm(alarm);
+        AlarmReceiver.setReminderAlarm(this, alarm);
     }
 }

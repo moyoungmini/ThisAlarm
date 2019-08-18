@@ -30,8 +30,6 @@
         android:text="@string/empty_view_text"/>
 </FrameLayout>
     <RelativeLayout
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -50,8 +48,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
+            android:layout_centerInParent="true"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/speaker_img"
+            android:background="@drawable/main_opinion_img"
             android:onClick="onClick"/>
 
 
