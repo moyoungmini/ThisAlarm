@@ -29,13 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/emotion_action_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="동작을 보여주는 부분 입니다."
-            android:background="@color/colorPrimary"
-            android:textSize="30dp"/>
+
         <ProgressBar
             android:id="@+id/emotion_pb"
             android:layout_marginLeft="40dp"
@@ -47,6 +41,20 @@
             android:progressDrawable="@drawable/progressbar_drawable"
             android:layout_width="match_parent"
             android:layout_height="12dp" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/emotion_action_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="동작을 보여주는 부분 입니다."
+            android:background="@color/colorPrimary"
+            android:textSize="30dp"/>
         <TextView
             android:id="@+id/emotion_result_tv"
             android:layout_width="match_parent"
@@ -56,5 +64,14 @@
             android:text="0/20"
             android:background="@color/colorPrimary"
             android:textSize="30dp"/>
+
+
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/emotion_emoticon_iv"
+        android:layout_centerInParent="true"
+        android:background="@drawable/emotion_left_normal_img"/>
 </RelativeLayout>
