@@ -10,16 +10,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.example.alarmapp.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 
 public class MainActivity extends AppCompatActivity {
     private long time=0;
     public static Activity mainActivity;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mainActivity =this;
 

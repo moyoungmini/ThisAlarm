@@ -361,7 +361,6 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             mOverlay.remove(mFaceGraphic);
         }
     }
-
     private void getEmotion() {
         result++;
         mTextResult.setText(result+"/"+EMOTION_MAX);
