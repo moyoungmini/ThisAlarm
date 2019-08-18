@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:756614573623:android:4b37689b5feb33cd",
+        "mobilesdk_app_id": "1:756614573623:android:bccc6d41b761677d",
         "android_client_info": {
-          "package_name": "com.example.alarmapp"
+          "package_name": "com.makeus.android.thisalarm"
         }
       },
       "oauth_client": [
         {
-          "client_id": "756614573623-l6htantm4patuchemv0h7ifnk7htcddn.apps.googleusercontent.com",
+          "client_id": "756614573623-2jttasulap942koo7r8v4krr8no0m7i0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.alarmapp",
+            "package_name": "com.makeus.android.thisalarm",
             "certificate_hash": "1ca144c03232ceccfea226298f38832b1d92c2f7"
           }
         },

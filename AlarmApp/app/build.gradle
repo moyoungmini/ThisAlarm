@@ -5,7 +5,7 @@ apply plugin: 'io.fabric'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.alarmapp"
+        applicationId "com.makeus.android.thisalarm"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1

@@ -12,17 +12,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <com.example.alarmapp.camera.CameraSourcePreview
+        <com.makeus.android.thisalarm.camera.CameraSourcePreview
             android:id="@+id/preview"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.example.alarmapp.camera.GraphicOverlay
+            <com.makeus.android.thisalarm.camera.GraphicOverlay
                 android:id="@+id/faceOverlay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </com.example.alarmapp.camera.CameraSourcePreview>
+        </com.makeus.android.thisalarm.camera.CameraSourcePreview>
 
     </LinearLayout>
     <LinearLayout

@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.MainActivity">
+    tools:context="com.makeus.android.thisalarm.ui.MainActivity">
 
 <FrameLayout
     android:layout_width="match_parent"
@@ -16,11 +16,11 @@
     android:orientation="vertical"
     >
 
-    <com.example.alarmapp.view.EmptyRecyclerView
+    <com.makeus.android.thisalarm.view.EmptyRecyclerView
         android:id="@+id/main_fragment_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"></com.example.alarmapp.view.EmptyRecyclerView>
+        android:scrollbars="none"></com.makeus.android.thisalarm.view.EmptyRecyclerView>
 
     <TextView
         android:id="@+id/empty_view"

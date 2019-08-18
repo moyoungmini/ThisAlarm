@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
-    tools:context=".ui.MissionSelectActivity">
+    tools:context="com.makeus.android.thisalarm.ui.MissionSelectActivity">
 
 
     <TextView
