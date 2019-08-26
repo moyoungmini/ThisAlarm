@@ -3,11 +3,11 @@
 
     <item
         android:state_pressed="false"
-        android:color="#f7b500"
+        android:color="#000000"
         />
     <item
         android:state_pressed="true"
-        android:color="#ffffff"
+        android:color="#000000"
         />
 
 </selector>

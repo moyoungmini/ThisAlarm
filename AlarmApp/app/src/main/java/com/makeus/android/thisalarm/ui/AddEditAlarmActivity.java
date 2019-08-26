@@ -2,11 +2,13 @@ package com.makeus.android.thisalarm.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import com.makeus.android.thisalarm.R;
 import com.makeus.android.thisalarm.data.DatabaseHelper;
 import com.makeus.android.thisalarm.model.Alarm;
@@ -31,6 +33,12 @@ public final class AddEditAlarmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_alarm);
 
         final Alarm alarm = getAlarm();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
 
         if(getSupportFragmentManager().findFragmentById(R.id.edit_alarm_frag_container) == null) {
             getSupportFragmentManager()

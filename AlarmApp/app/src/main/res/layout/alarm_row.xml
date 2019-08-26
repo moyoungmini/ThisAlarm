@@ -19,13 +19,12 @@
     <ImageView
         android:id="@+id/ar_enabled_iv"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_gravity="center_vertical"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/oval_img"/>
+        android:layout_gravity="bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/oval_img"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

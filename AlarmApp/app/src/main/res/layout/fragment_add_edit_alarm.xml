@@ -5,21 +5,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/gradation_primary_non_radiuscolor"
     android:orientation="vertical">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
+    <Button
         android:id="@+id/alarm_set_mission_tv"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center"
-        android:fontFamily="@font/nanumsquaredebfont"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="@drawable/misstion_text_set"
-        android:background="@drawable/btn_mission"
+        android:background="@drawable/recycler_item_background"
         android:letterSpacing="0.12"
         android:text="미션 선택"
         />
@@ -33,8 +41,8 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:background="@drawable/recycler_item_background"
         android:timePickerMode="spinner"></TimePicker>
 
@@ -49,11 +57,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
-            android:textColor="#000000"
+            android:textColor="@color/fontBlueColor"
             android:fontFamily="@font/nanumsquaredrfont"
             android:letterSpacing="-0.01"
             android:text="알람 이름"
@@ -62,9 +70,9 @@
             android:id="@+id/alarm_set_label_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:fontFamily="@font/nanumsquaredrfont"
-            android:textColor="#000000"
+            android:textColor="@color/fontBlueColor"
             android:hint="이곳에 제목을 입력하세요"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
@@ -220,8 +228,8 @@
             android:layout_marginBottom="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textColor="@color/fontBlueColor"
             android:layout_marginLeft="15dp"
             android:lineSpacingExtra="4sp"
             android:text="소리"
@@ -251,14 +259,18 @@
     <Button
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:id="@+id/alarm_edit_fragment_saved_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="6sp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:textSize="30sp"
         android:background="@drawable/btn_save"
-        android:text="저장"
+        android:text="알람 저장"
         android:textColor="@drawable/save_text_set"
         />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

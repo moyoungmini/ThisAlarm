@@ -2,10 +2,13 @@ package com.makeus.android.thisalarm.ui;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,6 +27,8 @@ public final class AlarmLandingPageActivity extends AppCompatActivity {
     private boolean sound;
     private  long time;
     private String label;
+    Vibrator vibrator;
+    long[] pattern;
     private boolean enable;
 
     @Override
@@ -100,6 +105,22 @@ public final class AlarmLandingPageActivity extends AppCompatActivity {
         // Set received data from pending intent/
 
         AlarmLandingPageActivity = this;
+
+        pattern = new long[]{100, 1000, 100, 500, 100, 500, 100, 1000};
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(pattern, 0);
+
+        BroadcastReceiver mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if(intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                    vibrator.vibrate(pattern, 0);
+                }
+            }
+        };
+
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(mReceiver, filter);
     }
 
     public static Intent launchIntent(Context context) {

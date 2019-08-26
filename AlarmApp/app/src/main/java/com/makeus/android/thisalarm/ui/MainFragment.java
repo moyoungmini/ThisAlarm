@@ -9,10 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.makeus.android.thisalarm.R;
@@ -45,7 +48,7 @@ public final class MainFragment extends Fragment
         final View v = inflater.inflate(R.layout.fragment_main, container, false);
 
         final EmptyRecyclerView rv = (EmptyRecyclerView) v.findViewById(R.id.main_fragment_rv);
-        final ImageView btnUser = (ImageView) v.findViewById(R.id.main_fragment_user_iv);
+        final Button btnUser =  v.findViewById(R.id.main_fragment_user_iv);
         mAdapter = new AlarmsAdapter();
         rv.setEmptyView(v.findViewById(R.id.empty_view));
         rv.setAdapter(mAdapter);

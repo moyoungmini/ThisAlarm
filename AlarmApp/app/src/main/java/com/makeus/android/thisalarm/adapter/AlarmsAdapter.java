@@ -9,6 +9,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +60,16 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
         holder.time.setText(AlarmUtils.getReadableTime(alarm.getTime()));
         holder.amPm.setText(AlarmUtils.getAmPm(alarm.getTime()));
         holder.label.setText(alarm.getLabel());
+        if(alarm.getMission() ==0) {
+            holder.ivEnabled.setBackgroundResource(R.drawable.normal_mission_circle);
+        }
+        else if(alarm.getMission() == 2){
+            holder.ivEnabled.setBackgroundResource(R.drawable.english_mission_circle);
+        }
+        else if(alarm.getMission() == 3){
+            holder.ivEnabled.setBackgroundResource(R.drawable.face_mission_circle);
+        }
+        Log.i("fsdvds", String.valueOf(position)+" "+String.valueOf(alarm.getMission()));
         holder.days.setText(buildSelectedDays(alarm));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +120,14 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
                     DatabaseHelper.getInstance(c).updateAlarm(alarm);
                     AlarmReceiver.setReminderAlarm(c,alarm);
                 }
+
+                Handler handler = new Handler();
+                final Runnable r = new Runnable() {
+                    public void run() {
+                        notifyDataSetChanged();
+                    }
+                };
+                handler.post(r);
             }
         }) ;
 //        holder.enabledSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

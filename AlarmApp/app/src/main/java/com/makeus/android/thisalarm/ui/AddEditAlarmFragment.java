@@ -23,8 +23,8 @@ import java.util.Calendar;
 public final class AddEditAlarmFragment extends Fragment implements View.OnClickListener {
 
     private TimePicker mTimePicker;
-    private Button mBtnSaved;
-    private TextView mTvMon, mTvTue, mTvWen, mTvThu, mTvFri, mTvSat, mTvSun, mTvMission;
+    private Button mBtnSaved, mTvMission;
+    private TextView mTvMon, mTvTue, mTvWen, mTvThu, mTvFri, mTvSat, mTvSun;
     private EditText mLabel;
     private Switch mSwitch;
 
