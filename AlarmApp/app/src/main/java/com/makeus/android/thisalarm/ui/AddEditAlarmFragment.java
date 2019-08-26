@@ -1,13 +1,17 @@
 package com.makeus.android.thisalarm.ui;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -23,10 +27,17 @@ import java.util.Calendar;
 public final class AddEditAlarmFragment extends Fragment implements View.OnClickListener {
 
     private TimePicker mTimePicker;
-    private Button mBtnSaved, mTvMission;
+    private Button mBtnSaved;
+    private static Button mTvMission;
     private TextView mTvMon, mTvTue, mTvWen, mTvThu, mTvFri, mTvSat, mTvSun;
     private EditText mLabel;
     private Switch mSwitch;
+
+
+    private Context mContext;
+    private TextView mTvNone, mTvRead, mTvEmotion;
+    public Dialog mDialog;
+
 
     private ArrayList<Boolean> dayList;
     public static int mission = 0;
@@ -83,8 +94,19 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         setDayCheckboxes(alarm);
         mSwitch.setChecked(alarm.getSound());
         mLabel.setText(alarm.getLabel());
+        setTvMission();
 
         return v;
+    }
+
+    public static void setTvMission() {
+        if(mission==0){
+            mTvMission.setText("미션 없음");
+        }else if(mission==2){
+            mTvMission.setText("영어 단어 읽기");
+        }else if(mission==3){
+            mTvMission.setText("감정 인식");
+        }
     }
     //Init Views and Set value
 
@@ -162,6 +184,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                 break;
         }
     }
+
 
     private Alarm getAlarm() {
         return getArguments().getParcelable(AddEditAlarmActivity.ALARM_EXTRA);
@@ -275,4 +298,5 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         getActivity().finish();
     }
     // Register alarmmanager and update database
+
 }

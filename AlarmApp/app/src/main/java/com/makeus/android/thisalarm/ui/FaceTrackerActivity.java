@@ -405,13 +405,13 @@ public final class FaceTrackerActivity extends AppCompatActivity {
      */
     private class GraphicFaceTracker extends Tracker<Face> {
         private GraphicOverlay mOverlay;
-        private FaceGraphic mFaceGraphic;
+        private MissionSelectActivity.FaceGraphic mFaceGraphic;
 
 
 
         GraphicFaceTracker(GraphicOverlay overlay) {
             mOverlay = overlay;
-            mFaceGraphic = new FaceGraphic(overlay);
+            mFaceGraphic = new MissionSelectActivity.FaceGraphic(overlay);
         }
 
         /**
