@@ -7,17 +7,14 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-
 import com.makeus.android.thisalarm.R;
 import com.makeus.android.thisalarm.data.DatabaseHelper;
 import com.makeus.android.thisalarm.model.Alarm;
 import com.makeus.android.thisalarm.service.LoadAlarmsService;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 public final class AddEditAlarmActivity extends AppCompatActivity {
-
     public static final String ALARM_EXTRA = "alarm_extra";
     public static final String MODE_EXTRA = "mode_extra";
 
@@ -41,6 +38,7 @@ public final class AddEditAlarmActivity extends AppCompatActivity {
                     .add(R.id.edit_alarm_frag_container, AddEditAlarmFragment.newInstance(alarm))
                     .commit();
         }
+        //Set fragment
     }
 
     private Alarm getAlarm() {

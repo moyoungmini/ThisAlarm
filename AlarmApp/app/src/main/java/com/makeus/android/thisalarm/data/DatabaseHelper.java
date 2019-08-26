@@ -4,20 +4,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import com.makeus.android.thisalarm.model.Alarm;
 import com.makeus.android.thisalarm.util.AlarmUtils;
-
 import java.util.ArrayList;
 
 public final class DatabaseHelper extends SQLiteOpenHelper {
-
     private static final String DATABASE_NAME = "alarms.db";
     private static final int SCHEMA = 1;
-
     private static final String TABLE_NAME = "alarms";
-
     public static final String _ID = "_id";
     public static final String COL_TIME = "time";
     public static final String COL_LABEL = "label";
@@ -31,9 +25,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_IS_ENABLED = "is_enabled";
     public static final String COL_MISSION = "mission";
     public static final String COL_SOUND ="sound";
-
-    String[][] engWord;
-
     private static DatabaseHelper sInstance = null;
 
     public static synchronized DatabaseHelper getInstance(Context context) {
@@ -49,9 +40,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
-        Log.i(getClass().getSimpleName(), "Creating database...");
-
         final String CREATE_ALARMS_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_TIME + " INTEGER NOT NULL, " +
@@ -67,11 +55,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 COL_SOUND + " TEXT, " +
                 COL_MISSION + " INTEGER " +
                 ");";
-
         sqLiteDatabase.execSQL(CREATE_ALARMS_TABLE);
     }
-
-
+    //Create database table
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
@@ -85,6 +71,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     long addAlarm(Alarm alarm) {
         return getWritableDatabase().insert(TABLE_NAME, null, AlarmUtils.toContentValues(alarm));
     }
+    //Add alarm
 
     public int updateAlarm(Alarm alarm) {
         final String where = _ID + "=?";
@@ -92,10 +79,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         return getWritableDatabase()
                 .update(TABLE_NAME, AlarmUtils.toContentValues(alarm), where, whereArgs);
     }
-
-    public void updateStateAlarm(int value) {
-        // switch 변경
-    }
+    //Update alarm
 
     public int deleteAlarm(Alarm alarm) {
         return deleteAlarm(alarm.getId());
@@ -106,6 +90,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         final String[] whereArgs = new String[] { Long.toString(id) };
         return getWritableDatabase().delete(TABLE_NAME, where, whereArgs);
     }
+    //Delete Alarm data
 
     public ArrayList<Alarm> getAlarms() {
         Cursor c = null;
@@ -116,4 +101,5 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             if (c != null && !c.isClosed()) c.close();
         }
     }
+    //Get alarm lists
 }

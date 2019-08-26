@@ -40,6 +40,7 @@ public final class AlarmLandingPageActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
             );
         }
+        // Float this activity in Lock Screen code
 
         dayList = new ArrayList<>();
         for(int i=0;i<7;i++){
@@ -49,7 +50,6 @@ public final class AlarmLandingPageActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             if (extras.containsKey("mission")) {
-                Log.i("vdvds",String.valueOf(mission));
                 mission = extras.getInt("mission");
             }
 
@@ -97,6 +97,7 @@ public final class AlarmLandingPageActivity extends AppCompatActivity {
                 dayList.set(6,extras.getBoolean("sun"));
             }
         }
+        // Set received data from pending intent/
 
         AlarmLandingPageActivity = this;
     }
@@ -107,7 +108,7 @@ public final class AlarmLandingPageActivity extends AppCompatActivity {
         return i;
     }
 
-    //*************** HW 버튼 처리 *********************//
+    //*************** HW Button set *********************//
     @Override
     public void onBackPressed() {
     }
@@ -128,7 +129,6 @@ public final class AlarmLandingPageActivity extends AppCompatActivity {
             mIntent.putExtra("enable",enable);
             mIntent.putExtra("label",label);
             mIntent.putExtra("time",time);
-
             mIntent.putExtra("mon",dayList.get(0));
             mIntent.putExtra("tue",dayList.get(1));
             mIntent.putExtra("wen",dayList.get(2));
@@ -136,10 +136,11 @@ public final class AlarmLandingPageActivity extends AppCompatActivity {
             mIntent.putExtra("fri",dayList.get(4));
             mIntent.putExtra("sat",dayList.get(5));
             mIntent.putExtra("sun",dayList.get(6));
+            //Save intent value
             mIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(mIntent);
         }
     }
-    // AlarmLandingPageFragment에서 dismiss 선택을 제외한 Activity 나갈 경우 startActivity 실행
-    //*************** HW 버튼 처리 *********************//
+    // Start startActivity when click button except dismiss in AlarmLandingPageFragment
+    //*************** HW Button set *********************//
 }

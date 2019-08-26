@@ -21,24 +21,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mainActivity =this;
-
-//        NotificationManager notificationManager =
-//                (NotificationManager) this.getSystemService(this.NOTIFICATION_SERVICE);
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-//                && !notificationManager.isNotificationPolicyAccessGranted()) {
-//
-//            Intent intent = new Intent(
-//                    android.provider.Settings
-//                            .ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
-//
-//            startActivity(intent);
-//        }
-//        // 무음 모드 일때 울리는 권한 설정
     }
 
     @Override

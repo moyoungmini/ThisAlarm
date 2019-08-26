@@ -3,40 +3,54 @@
     android:id="@+id/item_all_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginBottom="15dp"
+    android:layout_marginTop="30dp"
     android:foreground="?selectableItemBackground"
-    android:background="@drawable/recycler_item_background"
+    android:background="@drawable/gradation_primary_color"
     android:clickable="true">
-
     <LinearLayout
+        android:id="@+id/ar_transparent_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/ar_enabled_iv"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/oval_img"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_marginTop="10dp"
         android:id="@+id/item_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/gradation_img"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"> <TextView
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="@dimen/recyclerview_margin"
+        android:textSize="15sp"
+        android:textColor="#ffffff"
+        tools:text="오늘아침도 일어나"
+        android:id="@+id/ar_label"
+        android:letterSpacing="0.04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical" />
 
-        <TextView
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="@dimen/recyclerview_margin"
-            android:textSize="22sp"
-            android:textColor="#ffffff"
-            tools:text="오늘아침도 일어나"
-            android:id="@+id/ar_label"
-            android:letterSpacing="0.04"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
-<View
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"></View>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"></View>
         <TextView
             android:layout_marginRight="@dimen/recyclerview_margin"
             android:id="@+id/ar_days"
@@ -48,20 +62,19 @@
             android:layout_height="wrap_content"
             tools:text="월 화 수 목 금 토 일"/>
     </LinearLayout>
-
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_marginLeft="@dimen/recyclerview_margin"
             android:id="@+id/ar_am_pm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:textColor="@color/fontColor"
+            android:textSize="19sp"
+            android:textColor="@color/white"
             android:letterSpacing="0.04"
             android:lineSpacingExtra="0.88sp"
             tools:text="AM"
@@ -71,8 +84,8 @@
             android:id="@+id/ar_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="50sp"
-            android:textColor="@color/fontColor"
+            android:textSize="45sp"
+            android:textColor="@color/white"
             android:letterSpacing="0.04"
             android:lineSpacingExtra="5sp"
             tools:text="7:00"/>
@@ -82,14 +95,9 @@
             android:layout_height="0dp"
             android:layout_weight="1"></View>
 
-        <Switch
-            android:layout_marginRight="@dimen/recyclerview_margin"
-            android:id="@+id/ar_switch"
-            android:layout_width="wrap_content"
-            android:theme="@style/SCBSwitch"
-            android:switchMinWidth="55dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            />
+
+    </LinearLayout>
+    </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

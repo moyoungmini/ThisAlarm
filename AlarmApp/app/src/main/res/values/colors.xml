@@ -22,5 +22,5 @@
     <color name="blackColor">#000000</color>
     <color name="dayMissColor">#E0E6F6</color>
     <color name="fontBlueColor">#7693ff</color>
-
+    <color name="primaryTransparent">#C1FFFFFF</color>
 </resources>

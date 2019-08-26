@@ -55,5 +55,4 @@
             android:name="com.makeus.android.thisalarm.service.AlarmReceiver"
             android:exported="true" />
     </application>
-
 </manifest>

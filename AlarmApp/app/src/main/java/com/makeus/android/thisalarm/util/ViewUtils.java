@@ -4,11 +4,9 @@ import android.annotation.TargetApi;
 import android.content.res.Resources;
 import android.os.Build;
 import android.widget.TimePicker;
-
 import java.util.Calendar;
 
 public final class ViewUtils {
-
     private ViewUtils() { throw new AssertionError(); }
 
     public static float dpToPx(float dp) {
@@ -16,7 +14,6 @@ public final class ViewUtils {
     }
 
     public static void setTimePickerTime(TimePicker picker, long time) {
-
         final Calendar c = Calendar.getInstance();
         c.setTimeInMillis(time);
 
@@ -31,6 +28,7 @@ public final class ViewUtils {
             picker.setCurrentHour(hours);
         }
     }
+    // picker of timepicker set time
 
     @TargetApi(Build.VERSION_CODES.M)
     public static int getTimePickerMinute(TimePicker picker) {

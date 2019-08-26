@@ -64,7 +64,6 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         long[] pattern = {100, 1000, 100, 500, 100, 500, 100, 1000};
         vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(pattern, 0);
-        //vibrator.vibrate(5* 1000);
 
         dayList = new ArrayList<>();
         for(int i=0;i<7;i++){
@@ -74,7 +73,6 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         Bundle extras = getActivity().getIntent().getExtras();
         if(extras != null) {
             if (extras.containsKey("mission")) {
-                Log.i("vdvds",String.valueOf(mission));
                 mission = extras.getInt("mission");
             }
 
@@ -122,6 +120,7 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                 dayList.set(6,extras.getBoolean("sun"));
             }
         }
+        //read HW handling
 
         if(sound) {
             try {
@@ -139,6 +138,12 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         return v;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
     public void setAlarm() {
         final Alarm alarm = new Alarm();
         final Calendar c = Calendar.getInstance();
@@ -150,7 +155,6 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         c.set(Calendar.MINUTE, minutes);
         c.set(Calendar.HOUR_OF_DAY, hours);
         c.set(Calendar.SECOND, 0);
-        //SECOND설정
 
         alarm.setTime(c.getTimeInMillis());
         alarm.setLabel(label);
@@ -168,6 +172,7 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         DatabaseHelper.getInstance(getContext()).updateAlarm(alarm);
         AlarmReceiver.setReminderAlarm(getContext(), alarm);
     }
+    //Reset Alarm
 
     public void reCallAlarm() {
         final Alarm alarm = new Alarm();
@@ -185,11 +190,11 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         else {
             minutes = minutes - 55;
         }
+        //Exception handling minutues
 
         c.set(Calendar.MINUTE, minutes);
         c.set(Calendar.HOUR_OF_DAY, hours);
-        c.set(Calendar.SECOND, second);
-        //SECOND설정
+        c.set(Calendar.SECOND, second+10);
 
         alarm.setTime(c.getTimeInMillis());
         alarm.setLabel(label);
@@ -207,6 +212,7 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         DatabaseHelper.getInstance(getContext()).updateAlarm(alarm);
         AlarmReceiver.setReminderAlarm(getContext(), alarm);
     }
+    //Recall alarm set in 5minutes
 
     private Alarm getAlarm() {
         return getArguments().getParcelable(AddEditAlarmActivity.ALARM_EXTRA);
@@ -216,26 +222,6 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-//            case R.id.load_main_activity_btn:
-//                if(mission == 0){
-//
-//                }else if(mission ==1){
-//                }
-//                else if(mission ==2){
-//                    startActivity(new Intent(getContext(), SpeechActivity.class));
-//                }
-//                else if(mission ==3){
-//                    startActivity(new Intent(getContext(), FaceTrackerActivity.class));
-//                }
-//                // 5분 후 RECALL
-//                AlarmLandingPageActivity.isAlarmFinish = false;
-//                nm = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-//                nm.cancel(0);
-//                mMediaPlayer.stop();
-//                getActivity().finish();
-//                vibrator.cancel();
-
-//                break;
             case R.id.dismiss_btn:
                 AlarmLandingPageActivity.isAlarmFinish = false;
                 nm = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
@@ -244,15 +230,13 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                     mMediaPlayer.stop();
                     mMediaPlayer.release();
                 }
-                getActivity().finish();
                 vibrator.cancel();
-
                 setAlarm();
+                getActivity().finish();
+                // Set function excute one not repeat so necessary that alarm reset
 
-                if(mission == 0){
-
-                }else if(mission ==1){
-                }
+                if(mission == 0){}//None Mission
+                else if(mission ==1){}
                 else if(mission ==2){
                     mIntent = new Intent(AlarmLandingPageActivity.AlarmLandingPageActivity, SpeechActivity.class);
                     mIntent.putExtra("mission", mission);
@@ -260,7 +244,6 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                     mIntent.putExtra("enable",enable);
                     mIntent.putExtra("label",label);
                     mIntent.putExtra("time",time);
-
                     mIntent.putExtra("mon",dayList.get(0));
                     mIntent.putExtra("tue",dayList.get(1));
                     mIntent.putExtra("wen",dayList.get(2));
@@ -270,6 +253,7 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                     mIntent.putExtra("sun",dayList.get(6));
                     startActivity(mIntent);
                 }
+                // Sepeech
                 else if(mission ==3){
                     mIntent = new Intent(AlarmLandingPageActivity.AlarmLandingPageActivity, FaceTrackerActivity.class);
                     mIntent.putExtra("mission", mission);
@@ -277,7 +261,6 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                     mIntent.putExtra("enable",enable);
                     mIntent.putExtra("label",label);
                     mIntent.putExtra("time",time);
-
                     mIntent.putExtra("mon",dayList.get(0));
                     mIntent.putExtra("tue",dayList.get(1));
                     mIntent.putExtra("wen",dayList.get(2));
@@ -287,11 +270,13 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
                     mIntent.putExtra("sun",dayList.get(6));
                     startActivity(mIntent);
                 }
+                //FaceTracker
                 break;
             case R.id.recall_btn:
                 AlarmLandingPageActivity.isAlarmFinish = false;
                 nm = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
                 nm.cancel(0);
+                // Remove Notification id zero(all notification id is zero)
                 if(sound) {
                     mMediaPlayer.stop();
                     mMediaPlayer.release();
@@ -301,16 +286,12 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
 
                 reCallAlarm();
                 break;
+                // Set Recall Alarm
         }
     }
 
     private void startRingtone() throws IOException {
-        //play ringtone
         Uri ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-//        mMediaPlayer = MediaPlayer.create(getContext(), ringtone);
-//        mMediaPlayer.setLooping(true);
-        //mMediaPlayer.createVolumeShaper();
-
         audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
         audioManager.setStreamVolume(AudioManager.STREAM_ALARM, maxVolume, 0);
@@ -322,66 +303,5 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         mMediaPlayer.prepare();
         mMediaPlayer.start();
     }
-
-    public void MuteAudio(){
-        audioManager = (AudioManager) getActivity().getSystemService(getActivity().AUDIO_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            audioManager.adjustStreamVolume(AudioManager.STREAM_NOTIFICATION, AudioManager.ADJUST_MUTE, 0);
-            audioManager.adjustStreamVolume(AudioManager.STREAM_ALARM, AudioManager.ADJUST_MUTE, 0);
-            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
-            audioManager.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_MUTE, 0);
-            audioManager.adjustStreamVolume(AudioManager.STREAM_SYSTEM, AudioManager.ADJUST_MUTE, 0);
-        } else {
-            audioManager.setStreamMute(AudioManager.STREAM_NOTIFICATION, true);
-            audioManager.setStreamMute(AudioManager.STREAM_ALARM, true);
-            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
-            audioManager.setStreamMute(AudioManager.STREAM_RING, true);
-            audioManager.setStreamMute(AudioManager.STREAM_SYSTEM, true);
-        }
-    }
-
-    public void UnMuteAudio(){
-        audioManager = (AudioManager) getActivity().getSystemService(getActivity().AUDIO_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            audioManager.adjustStreamVolume(AudioManager.STREAM_NOTIFICATION, AudioManager.ADJUST_UNMUTE, 0);
-            audioManager.adjustStreamVolume(AudioManager.STREAM_ALARM, AudioManager.ADJUST_UNMUTE, 0);
-            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE,0);
-            audioManager.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_UNMUTE, 0);
-            audioManager.adjustStreamVolume(AudioManager.STREAM_SYSTEM, AudioManager.ADJUST_UNMUTE, 0);
-        } else {
-            audioManager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
-            audioManager.setStreamMute(AudioManager.STREAM_ALARM, false);
-            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
-            audioManager.setStreamMute(AudioManager.STREAM_RING, false);
-            audioManager.setStreamMute(AudioManager.STREAM_SYSTEM, false);
-        }
-    }
-
-
-    public void presentDay() {
-        Calendar cal = Calendar.getInstance();
-
-        int nWeek = cal.get(Calendar.DAY_OF_WEEK);
-        if(nWeek ==1){
-            dayList.set(0,true);
-        }
-        else if (nWeek == 2){
-            dayList.set(1,true);
-        }
-        else if (nWeek == 3){
-            dayList.set(2,true);
-        }
-        else if (nWeek == 4){
-            dayList.set(3,true);
-        }
-        else if (nWeek == 5){
-            dayList.set(4,true);
-        }
-        else if (nWeek == 6){
-            dayList.set(5,true);
-        }
-        else if (nWeek == 7){
-            dayList.set(6,true);
-        }
-    }
+    // Set Audio Player
 }

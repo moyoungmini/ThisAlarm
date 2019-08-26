@@ -14,11 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.makeus.android.thisalarm.R;
 import com.makeus.android.thisalarm.data.DatabaseHelper;
 import com.makeus.android.thisalarm.listener.ItemTouchHelperListener;
@@ -28,14 +27,12 @@ import com.makeus.android.thisalarm.service.LoadAlarmsService;
 import com.makeus.android.thisalarm.ui.AddEditAlarmActivity;
 import com.makeus.android.thisalarm.ui.MainActivity;
 import com.makeus.android.thisalarm.util.AlarmUtils;
-
 import java.util.List;
 
 public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> implements ItemTouchHelperListener {
 
-    private List<Alarm> mAlarms;
-
-    private String[] mDays;
+    private List<Alarm> mAlarms; // Alarm List
+    private String[] mDays; // Day 0:Mon ~ 6:Sun
     private int mAccentColor = -1;
 
     @Override
@@ -47,7 +44,6 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-
         final Context c = holder.itemView.getContext();
 
         if(mAccentColor == -1) {
@@ -77,59 +73,79 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
                 c.startActivity(launchEditAlarmIntent);
             }
         });
+        //Set layout Click event and this event starts addEditAlacmactivity
 
-        holder.enabledSwitch.setOnCheckedChangeListener(null);
-        holder.enabledSwitch.setChecked(alarm.isEnabled());
+        //holder.enabledSwitch.setOnCheckedChangeListener(null);
+        //holder.enabledSwitch.setChecked(alarm.isEnabled());
         if(alarm.isEnabled()) {
-            holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
-            holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
-            holder.layout.setBackgroundResource(R.drawable.gradation_img);
-            holder.allLayout.setBackgroundResource(R.drawable.recycler_item_background);
+            //holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.white));
+            //holder.time.setTextColor(c.getResources().getColorStateList(R.color.white));
+            //holder.layout.setBackgroundResource(R.drawable.gradation_img);
+            holder.layout.setBackgroundResource(R.drawable.gradation_primary_color);
+            //holder.ivEnabled.setBackgroundResource(R.drawable.oval_img);
         }
+        //Alarm enabled status
         else {
-            holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
-            holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
-            holder.layout.setBackgroundResource(R.color.grayColor);
-            holder.allLayout.setBackgroundResource(R.drawable.recycler_item_empty_background);
+            //holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
+            //holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
+            //holder.layout.setBackgroundResource(R.drawable.not_gradation_img);
+            holder.layout.setBackgroundResource(R.color.primaryTransparent);
         }
-        holder.enabledSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
-                    holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
-                    holder.layout.setBackgroundResource(R.drawable.gradation_img);
-                    holder.allLayout.setBackgroundResource(R.drawable.recycler_item_background);
-                    //->
-                    //Alarm 등록
-                    //DB변경 enabled가 true로 변경
-
+        //Alarm disabled status
+        holder.ivEnabled.setOnClickListener(new ImageView.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(alarm.isEnabled()) {
+//                    holder.allLayout.setBackgroundResource(R.drawable.gray_gradation_primary_color);
+                    alarm.setIsEnabled(false);
+                    holder.layout.setBackgroundResource(R.drawable.gradation_primary_color);
+                    DatabaseHelper.getInstance(c).updateAlarm(alarm);
+                    AlarmReceiver.cancelReminderAlarm(c,alarm);
+                }
+                else {
+//                    holder.allLayout.setBackgroundResource(R.drawable.gradation_primary_color);
+                    holder.layout.setBackgroundResource(R.color.primaryTransparent);
                     alarm.setIsEnabled(true);
                     DatabaseHelper.getInstance(c).updateAlarm(alarm);
                     AlarmReceiver.setReminderAlarm(c,alarm);
                 }
-                else {
-                    //<-
-                    //Alarm cancel
-                    // DB 변경 enabled가 false로 변경
-
-                    holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
-                    holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
-                    holder.layout.setBackgroundResource(R.color.grayColor);
-                    holder.allLayout.setBackgroundResource(R.drawable.recycler_item_empty_background);
-                    alarm.setIsEnabled(false);
-                    DatabaseHelper.getInstance(c).updateAlarm(alarm);
-                    AlarmReceiver.cancelReminderAlarm(c,alarm);
-                }
-                Handler handler = new Handler();
-                final Runnable r = new Runnable() {
-                    public void run() {
-                        notifyDataSetChanged();
-                    }
-                };
-                handler.post(r);
             }
-        });
+        }) ;
+//        holder.enabledSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if(isChecked) {
+//                    //holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
+//                    //holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontColor));
+//                    holder.allLayout.setBackgroundResource(R.drawable.gradation_primary_color);
+//                    alarm.setIsEnabled(true);
+//                    DatabaseHelper.getInstance(c).updateAlarm(alarm);
+//                    AlarmReceiver.setReminderAlarm(c,alarm);
+//                }
+//                // if alarm goes enabled status, changes layout and updates database and registers alarm in alarmreceiver
+//                else {
+//                    //Direction : <-
+//                    //holder.amPm.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
+//                    //holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
+//                    holder.allLayout.setBackgroundResource(R.drawable.gray_gradation_primary_color);
+//                    alarm.setIsEnabled(false);
+//                    DatabaseHelper.getInstance(c).updateAlarm(alarm);
+//                    AlarmReceiver.cancelReminderAlarm(c,alarm);
+//                }
+//                // if alarm goes disenabled status, changes layout and updates database and remove alarm in alarmreceiver
+//
+//                Handler handler = new Handler();
+//                final Runnable r = new Runnable() {
+//                    public void run() {
+//                        notifyDataSetChanged();
+//                    }
+//                };
+//                handler.post(r);
+//                //notify data in recyclerview
+//            }
+//        });
+        //Set enabled switch listener
     }
+    //Set item information
 
     @Override
     public int getItemCount() {
@@ -137,7 +153,6 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
     }
 
     private Spannable buildSelectedDays(Alarm alarm) {
-
         final int numDays = 7;
         final SparseBooleanArray days = alarm.getDays();
 
@@ -146,7 +161,6 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
 
         int startIndex, endIndex;
         for (int i = 0; i < numDays; i++) {
-
             startIndex = builder.length();
 
             final String dayText = mDays[i];
@@ -161,51 +175,47 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
                 builder.setSpan(span, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
-
         return builder;
-
     }
+    //Set day
 
     public void setAlarms(List<Alarm> alarms) {
         mAlarms = alarms;
         notifyDataSetChanged();
     }
+    //Set alarm data
 
     @Override
     public void onItemRemove(int position) {
         final Alarm alarm = mAlarms.get(position);
-
-        //Cancel any pending notifications for this alarm
         AlarmReceiver.cancelReminderAlarm(MainActivity.mainActivity, alarm);
-
         final int rowsDeleted = DatabaseHelper.getInstance(MainActivity.mainActivity).deleteAlarm(alarm);
-        int messageId;
         if(rowsDeleted == 1) {
             LoadAlarmsService.launchLoadAlarmsService(MainActivity.mainActivity);
-        } else {
-            messageId = R.string.delete_failed;
-            Toast.makeText(MainActivity.mainActivity, messageId, Toast.LENGTH_SHORT).show();
         }
-        //Delete
     }
+    // Delete Alarm
+
 
     static final class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView time, amPm, label, days;
         Switch enabledSwitch;
-        LinearLayout layout, allLayout;
+        ImageView ivEnabled;
+        LinearLayout allLayout, layout;
 
         ViewHolder(View itemView) {
             super(itemView);
 
-            time = (TextView) itemView.findViewById(R.id.ar_time);
-            amPm = (TextView) itemView.findViewById(R.id.ar_am_pm);
-            label = (TextView) itemView.findViewById(R.id.ar_label);
-            days = (TextView) itemView.findViewById(R.id.ar_days);
-            enabledSwitch = itemView.findViewById(R.id.ar_switch);
-            layout = itemView.findViewById(R.id.item_layout);
+            time = itemView.findViewById(R.id.ar_time);
+            amPm = itemView.findViewById(R.id.ar_am_pm);
+            label = itemView.findViewById(R.id.ar_label);
+            days = itemView.findViewById(R.id.ar_days);
+            layout = itemView.findViewById(R.id.ar_transparent_layout);
+            //enabledSwitch = itemView.findViewById(R.id.ar_switch);
+            ivEnabled = itemView.findViewById(R.id.ar_enabled_iv);
             allLayout = itemView.findViewById(R.id.item_all_layout);
         }
     }
-
+    // Set recyclerview item view
 }

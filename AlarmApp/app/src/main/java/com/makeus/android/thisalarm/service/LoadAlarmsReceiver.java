@@ -7,7 +7,6 @@ import com.makeus.android.thisalarm.model.Alarm;
 import java.util.ArrayList;
 
 public final class LoadAlarmsReceiver extends BroadcastReceiver {
-
     private OnAlarmsLoadedListener mListener;
 
     @SuppressWarnings("unused")

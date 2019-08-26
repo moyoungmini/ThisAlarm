@@ -4,11 +4,8 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
-
 import com.makeus.android.thisalarm.data.DatabaseHelper;
 import com.makeus.android.thisalarm.model.Alarm;
-
 import java.util.ArrayList;
 
 public final class LoadAlarmsService extends IntentService {
@@ -44,9 +41,6 @@ public final class LoadAlarmsService extends IntentService {
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
-        Log.i("onTaskRemoved","sdafsdf");
-        // 여기에 필요한 코드를 추가한다.,
-
         stopSelf();
     }
 

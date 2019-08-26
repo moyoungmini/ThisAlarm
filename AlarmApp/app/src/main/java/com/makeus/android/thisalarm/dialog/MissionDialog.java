@@ -5,14 +5,12 @@ import android.content.Context;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-
 import com.makeus.android.thisalarm.R;
 import com.makeus.android.thisalarm.ui.AddEditAlarmFragment;
 
 public class MissionDialog implements View.OnClickListener{
-
     private Context mContext;
-    private TextView mNoneTv, mReadTv, mEmotionTv;
+    private TextView mTvNone, mTvRead, mTvEmotion;
     public Dialog mDialog;
 
     public MissionDialog(Context context) {
@@ -22,50 +20,51 @@ public class MissionDialog implements View.OnClickListener{
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mDialog.setContentView(R.layout.dialog_mission);
         mDialog.show();
+        //Set dialog information
 
         initViews();
     }
 
     public void initViews(){
-        mNoneTv = mDialog.findViewById(R.id.mission_dialog_none_tv);
-        mReadTv = mDialog.findViewById(R.id.mission_dialog_word_tv);
-        mEmotionTv = mDialog.findViewById(R.id.mission_dialog_emotion_tv);
+        mTvNone = mDialog.findViewById(R.id.mission_dialog_none_tv);
+        mTvRead = mDialog.findViewById(R.id.mission_dialog_word_tv);
+        mTvEmotion = mDialog.findViewById(R.id.mission_dialog_emotion_tv);
 
-        mNoneTv.setOnClickListener(this);
-        mReadTv.setOnClickListener(this);
-        mEmotionTv.setOnClickListener(this);
+        mTvNone.setOnClickListener(this);
+        mTvRead.setOnClickListener(this);
+        mTvEmotion.setOnClickListener(this);
 
         if(AddEditAlarmFragment.mission ==0){
-            mNoneTv.setTextColor(mContext.getResources().getColorStateList(R.color.fontBlueColor));
+            mTvNone.setTextColor(mContext.getResources().getColorStateList(R.color.fontBlueColor));
         }
         else if(AddEditAlarmFragment.mission == 2){
-            mReadTv.setTextColor(mContext.getResources().getColorStateList(R.color.fontBlueColor));
+            mTvRead.setTextColor(mContext.getResources().getColorStateList(R.color.fontBlueColor));
         }
         else if(AddEditAlarmFragment.mission ==3){
-            mEmotionTv.setTextColor(mContext.getResources().getColorStateList(R.color.fontBlueColor));
+            mTvEmotion.setTextColor(mContext.getResources().getColorStateList(R.color.fontBlueColor));
         }
     }
+    //Set init
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mission_dialog_none_tv:
                 AddEditAlarmFragment.mission=0;
-                mNoneTv.setTextColor(mContext.getResources().getColorStateList(R.color.fontBlueColor));
+                mTvNone.setTextColor(mContext.getResources().getColorStateList(R.color.fontBlueColor));
                 mDialog.dismiss();
                 break;
             case R.id.mission_dialog_word_tv:
                 AddEditAlarmFragment.mission =2;
-                mReadTv.setTextColor(mContext.getResources().getColorStateList(R.color.fontBlueColor));
+                mTvRead.setTextColor(mContext.getResources().getColorStateList(R.color.fontBlueColor));
                 mDialog.dismiss();
                 break;
             case R.id.mission_dialog_emotion_tv:
                 AddEditAlarmFragment.mission=3;
-                mEmotionTv.setTextColor(mContext.getResources().getColorStateList(R.color.fontBlueColor));
+                mTvEmotion.setTextColor(mContext.getResources().getColorStateList(R.color.fontBlueColor));
                 mDialog.dismiss();
                 break;
         }
     }
-
-
+    //Set mission click event
 }

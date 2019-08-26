@@ -4,16 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.util.SparseBooleanArray;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 public final class Alarm implements Parcelable{
-
-
-
     private Alarm(Parcel in) {
-
         id = in.readLong();
         time = in.readLong();
         label = in.readString();
@@ -83,6 +78,7 @@ public final class Alarm implements Parcelable{
     private boolean isEnabled;
     private  int mission;
     private boolean sound;
+    // alarm data set
 
     public Alarm() {
         this(NO_ID);
@@ -147,6 +143,7 @@ public final class Alarm implements Parcelable{
         final long id = getId();
         return (int) (id^(id>>>32));
     }
+    // alarm notification id code
 
     @Override
     public String toString() {
@@ -170,9 +167,9 @@ public final class Alarm implements Parcelable{
         }
         return result;
     }
+    // Hash algorithm code
 
     private static SparseBooleanArray buildDaysArray(@Days int... days) {
-
         final SparseBooleanArray array = buildBaseDaysArray();
 
         for (@Days int day : days) {
@@ -180,13 +177,11 @@ public final class Alarm implements Parcelable{
         }
 
         return array;
-
     }
+    //Set day list
 
     private static SparseBooleanArray buildBaseDaysArray() {
-
         final int numDays = 7;
-
         final SparseBooleanArray array = new SparseBooleanArray(numDays);
 
         array.put(MON, false);
@@ -198,7 +193,6 @@ public final class Alarm implements Parcelable{
         array.put(SUN, false);
 
         return array;
-
     }
-
+    //Set day list
 }

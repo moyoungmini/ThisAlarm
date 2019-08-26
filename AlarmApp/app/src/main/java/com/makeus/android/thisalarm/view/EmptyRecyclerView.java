@@ -6,10 +6,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 public class EmptyRecyclerView extends RecyclerView {
-
     private View mEmptyView;
     private final AdapterDataObserver mEmptyObserver = new EmptyRecyclerDataObserver();
-
     private Callback mCallback;
 
     public EmptyRecyclerView(Context context) {
@@ -64,5 +62,5 @@ public class EmptyRecyclerView extends RecyclerView {
     public interface Callback {
         void onEmpty();
     }
-
 }
+// When recyclerview item is empty, show emopty status for textview

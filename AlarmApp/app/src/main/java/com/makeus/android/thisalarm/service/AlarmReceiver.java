@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import com.makeus.android.thisalarm.R;
 import com.makeus.android.thisalarm.model.Alarm;
@@ -28,7 +27,6 @@ import static android.os.Build.VERSION_CODES.O;
 import static com.makeus.android.thisalarm.ui.AlarmLandingPageActivity.launchIntent;
 
 public final class AlarmReceiver extends BroadcastReceiver {
-
     private static final String TAG = AlarmReceiver.class.getSimpleName();
     private static final String CHANNEL_ID = "alarm_channel";
 
@@ -43,19 +41,17 @@ public final class AlarmReceiver extends BroadcastReceiver {
 
         final Alarm alarm = intent.getBundleExtra(BUNDLE_EXTRA).getParcelable(ALARM_KEY);
         if(alarm == null) {
-            Log.e(TAG, "Alarm is null", new NullPointerException());
             return;
         }
-
-        final int id = alarm.notificationId();
+        //Alarm null exception
 
         long [] newVibration = new long[1000];
         for(int i=0;i<newVibration.length;i++){
             newVibration[i]=2000;
         }
+        //Set notification builder vibration pattern
 
-        final NotificationManager manager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         createNotificationChannel(context);
 
@@ -65,7 +61,6 @@ public final class AlarmReceiver extends BroadcastReceiver {
         mIntent.putExtra("enable",alarm.isEnabled());
         mIntent.putExtra("label",alarm.getLabel());
         mIntent.putExtra("time",alarm.getTime());
-
         mIntent.putExtra("mon",alarm.getDay(Alarm.MON));
         mIntent.putExtra("tue",alarm.getDay(Alarm.TUES));
         mIntent.putExtra("wen",alarm.getDay(Alarm.WED));
@@ -73,9 +68,9 @@ public final class AlarmReceiver extends BroadcastReceiver {
         mIntent.putExtra("fri",alarm.getDay(Alarm.FRI));
         mIntent.putExtra("sat",alarm.getDay(Alarm.SAT));
         mIntent.putExtra("sun",alarm.getDay(Alarm.SUN));
-
-
+        //Send data to intent
         pIntent = PendingIntent.getActivity(context, 0,mIntent, FLAG_UPDATE_CURRENT);
+        //Pending intent request code must use 0 because notification can not use more than 2. Overlapping!
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
         builder.setSmallIcon(R.drawable.ic_alarm_white_24dp);
@@ -89,21 +84,19 @@ public final class AlarmReceiver extends BroadcastReceiver {
         builder.setPriority(Notification.PRIORITY_HIGH);
 
         manager.notify(0, builder.build());
-
-        //Reset Alarm manually
+        //Use notify for notification Manager
         setReminderAlarm(context, alarm);
+        //Alarm Set
 
         try {
             AlarmReceiver.pIntent.send();
         } catch (PendingIntent.CanceledException e) {
             e.printStackTrace();
         }
+        // Send AlarmReceiver in alarm time.
     }
 
-    //Convenience method for setting a notification
     public static void setReminderAlarm(Context context, Alarm alarm) {
-
-        //Check whether the alarm is set to run on any days
         if(!AlarmUtils.isAlarmActive(alarm)) {
             //If alarm not set to run on any days, cancel any existing notifications for this alarm
             cancelReminderAlarm(context, alarm);
@@ -123,12 +116,14 @@ public final class AlarmReceiver extends BroadcastReceiver {
                 intent,
                 FLAG_UPDATE_CURRENT
         );
+        // pending intent create. request code is notificationid for parameter alarm
 
         ScheduleAlarm.with(context).schedule(alarm, pIntent);
+        //Set alarm
     }
+    //Alarm set Function
 
     private static Calendar getTimeForNextAlarm(Alarm alarm) {
-
         final Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(alarm.getTime());
 
@@ -151,11 +146,10 @@ public final class AlarmReceiver extends BroadcastReceiver {
         } while(!isAlarmSetForDay && count < 7);
 
         return calendar;
-
     }
+    //return calendar for alarm time
 
     public static void cancelReminderAlarm(Context context, Alarm alarm) {
-
         final Intent intent = new Intent(context, AlarmReceiver.class);
         final PendingIntent pIntent = PendingIntent.getBroadcast(
                 context,
@@ -167,6 +161,7 @@ public final class AlarmReceiver extends BroadcastReceiver {
         final AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         manager.cancel(pIntent);
     }
+    // Remove Alarm for using alarmmanager
 
     private static int getStartIndexFromTime(Calendar c) {
 
@@ -196,10 +191,9 @@ public final class AlarmReceiver extends BroadcastReceiver {
                 startIndex = 6;
                 break;
         }
-
         return startIndex;
-
     }
+    //return index about  DAY_OF_WEEK
 
     private static void createNotificationChannel(Context ctx) {
 
@@ -229,6 +223,7 @@ public final class AlarmReceiver extends BroadcastReceiver {
                 ctx, alarm.notificationId(), launchIntent(ctx), FLAG_UPDATE_CURRENT
         );
     }
+    //Not using code
 
     private static class ScheduleAlarm {
 
@@ -251,16 +246,18 @@ public final class AlarmReceiver extends BroadcastReceiver {
         void schedule(Alarm alarm, PendingIntent pi) {
             if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    //API 19 이상 API 23미만
+                    //19<= o <23
                     am.setExact(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi) ;
                 } else {
-                    //API 19미만
+                    //API < 19
                     am.set(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
                 }
             } else {
-                //API 23 이상
+                // >= API 23
                 am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarm.getTime(), pi);
             }
         }
+        //Set Alarm
     }
+    //Schdule Alarm Class
 }

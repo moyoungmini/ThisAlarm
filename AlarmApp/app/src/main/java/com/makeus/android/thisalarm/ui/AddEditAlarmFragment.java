@@ -17,7 +17,6 @@ import com.makeus.android.thisalarm.dialog.MissionDialog;
 import com.makeus.android.thisalarm.model.Alarm;
 import com.makeus.android.thisalarm.service.AlarmReceiver;
 import com.makeus.android.thisalarm.util.ViewUtils;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -30,7 +29,6 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
     private Switch mSwitch;
 
     private ArrayList<Boolean> dayList;
-
     public static int mission = 0;
 
     public static AddEditAlarmFragment newInstance(Alarm alarm) {
@@ -47,16 +45,13 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         final View v = inflater.inflate(R.layout.fragment_add_edit_alarm, container, false);
-
         setHasOptionsMenu(true);
 
         final Alarm alarm = getAlarm();
 
         mTimePicker = v.findViewById(R.id.alarm_edit_fragment_timepicker);
         ViewUtils.setTimePickerTime(mTimePicker, alarm.getTime());
-
         mBtnSaved = v.findViewById(R.id.alarm_edit_fragment_saved_btn);
         mTvMon = v.findViewById(R.id.alarm_edit_fragment_mon_tv);
         mTvTue = v.findViewById(R.id.alarm_edit_fragment_tue_tv);
@@ -84,7 +79,6 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
             dayList.add(false);
         }
 
-
         AddEditAlarmFragment.mission = alarm.getMission();
         setDayCheckboxes(alarm);
         mSwitch.setChecked(alarm.getSound());
@@ -92,6 +86,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
 
         return v;
     }
+    //Init Views and Set value
 
     @Override
     public void onClick(View v) {
@@ -101,8 +96,6 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                 break;
             case R.id.alarm_set_mission_tv:
                 MissionDialog missionDialog = new MissionDialog(getContext());
-
-                //selectMission();
                 break;
             case R.id.alarm_edit_fragment_mon_tv:
                 if (!dayList.get(0)) {
@@ -254,6 +247,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
             mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
         }
     }
+    // Set days and all value(7) is false -> Set daylist all value is yellow and true
 
     private void save() {
         final Alarm alarm = getAlarm();
@@ -262,7 +256,6 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         time.set(Calendar.MINUTE, ViewUtils.getTimePickerMinute(mTimePicker));
         time.set(Calendar.HOUR_OF_DAY, ViewUtils.getTimePickerHour(mTimePicker));
         time.set(Calendar.SECOND, 0);
-        //SECOND설정
 
         alarm.setTime(time.getTimeInMillis());
         alarm.setLabel(mLabel.getText().toString());
@@ -280,6 +273,6 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         DatabaseHelper.getInstance(getContext()).updateAlarm(alarm);
         AlarmReceiver.setReminderAlarm(getContext(), alarm);
         getActivity().finish();
-
     }
+    // Register alarmmanager and update database
 }
