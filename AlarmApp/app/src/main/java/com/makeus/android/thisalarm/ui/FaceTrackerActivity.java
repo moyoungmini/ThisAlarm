@@ -59,16 +59,16 @@ import java.util.Calendar;
 public final class FaceTrackerActivity extends AppCompatActivity {
     private static final String TAG = "FaceTracker";
     private static final int  EMOTION_MAX = 100;
+    private static final String  EMOTION_MAX_String = Integer.toString(EMOTION_MAX);
     private CameraSource mCameraSource = null;
-    private TextView mTextAction,mTextResult;
+    private TextView mTextAction,mTextResult,mTextMax;
     private ImageView mImageEmoticon;
     public static int randomnumber;
     ProgressBar mProgressBar;
     private CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
 
-    int result;
-
+    private int result;
     private ArrayList<Boolean> dayList;
     private int mission;
     private boolean sound;
@@ -104,9 +104,11 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         mTextAction = (TextView) findViewById(R.id.emotion_action_tv);
         mTextResult = (TextView) findViewById(R.id.emotion_result_tv);
         mImageEmoticon =  (ImageView) findViewById(R.id.emotion_emoticon_iv);
+
         //mImageEmoticon.setBackgroundResource(R.drawable.emotion_default);
         result = 0;
-        mTextResult.setText(result+"/"+EMOTION_MAX);
+        mTextResult.setText(result+" / "+EMOTION_MAX_String);
+       // mTextMax.setText("/"+EMOTION_MAX);
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
         int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
@@ -475,8 +477,9 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         }
     }
     private void getEmotion() {
+
         result++;
-        mTextResult.setText(result+"/"+EMOTION_MAX);
+        mTextResult.setText(result+" / "+EMOTION_MAX_String);
         if(result>=EMOTION_MAX){
             select = false;
             finish();

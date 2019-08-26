@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+
         <com.makeus.android.thisalarm.camera.CameraSourcePreview
             android:id="@+id/preview"
             android:layout_width="match_parent"
@@ -20,11 +21,10 @@
             <com.makeus.android.thisalarm.camera.GraphicOverlay
                 android:id="@+id/faceOverlay"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
+                android:layout_height="wrap_content" />
         </com.makeus.android.thisalarm.camera.CameraSourcePreview>
-
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,8 +34,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="동작을 보여주는 부분 입니다."
+            android:gravity="center_horizontal"
             android:background="@color/colorPrimary"
             android:textSize="30dp"/>
+
         <ProgressBar
             android:id="@+id/emotion_pb"
             android:layout_marginLeft="40dp"
@@ -47,17 +49,27 @@
             android:progressDrawable="@drawable/progressbar_drawable"
             android:layout_width="match_parent"
             android:layout_height="12dp" />
-        <TextView
-            android:id="@+id/emotion_result_tv"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="000/100"
-            android:layout_gravity="right"
-            android:layout_marginRight="40dp"
-            android:textColor="@color/white"
-            android:textSize="30dp"/>
+            android:orientation="horizontal"
+            android:layout_gravity="right">
+
+            <TextView
+                android:id="@+id/emotion_result_tv"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="40dp"
+                android:text="100 / 100"
+                android:background="@android:color/darker_gray"
+                android:textColor="@color/white"
+                android:textSize="30dp"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
     <ImageView
