@@ -8,19 +8,19 @@
     android:layout_height="match_parent"
     android:keepScreenOn="true">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         >
 
         <com.makeus.android.thisalarm.camera.CameraSourcePreview
             android:id="@+id/preview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <com.makeus.android.thisalarm.camera.GraphicOverlay
                 android:id="@+id/faceOverlay"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </com.makeus.android.thisalarm.camera.CameraSourcePreview>
     </LinearLayout>
@@ -33,7 +33,7 @@
             android:id="@+id/emotion_action_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="동작을 보여주는 부분 입니다."
+            android:text="얼굴을 인식하면 시작합니다."
             android:gravity="center_horizontal"
             android:background="@color/colorPrimary"
             android:textSize="30dp"/>
