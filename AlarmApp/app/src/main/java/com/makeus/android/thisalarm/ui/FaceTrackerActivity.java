@@ -30,6 +30,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -63,6 +64,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
     private CameraSource mCameraSource = null;
     private TextView mTextAction,mTextResult,mTextMax;
     private ImageView mImageEmoticon;
+    private Button emotionDismissbtn;
     public static int randomnumber;
     ProgressBar mProgressBar;
     private CameraSourcePreview mPreview;
@@ -104,10 +106,10 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         mTextAction = (TextView) findViewById(R.id.emotion_action_tv);
         mTextResult = (TextView) findViewById(R.id.emotion_result_tv);
         mImageEmoticon =  (ImageView) findViewById(R.id.emotion_emoticon_iv);
-
+        emotionDismissbtn =(Button) findViewById(R.id.emotion_dismiss_btn);
         //mImageEmoticon.setBackgroundResource(R.drawable.emotion_default);
         result = 0;
-        mTextResult.setText(result+" / "+EMOTION_MAX_String);
+        mTextResult.setText(result+" %");
        // mTextMax.setText("/"+EMOTION_MAX);
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
@@ -176,6 +178,13 @@ public final class FaceTrackerActivity extends AppCompatActivity {
                 dayList.set(6,extras.getBoolean("sun"));
             }
         }
+        emotionDismissbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                select = false;
+                finish();
+            }
+        });
 
         handler = new Handler();
         Thread t = new Thread(new Runnable() {
@@ -429,27 +438,26 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         public void onUpdate(FaceDetector.Detections<Face> detectionResults, Face face) {
             mOverlay.add(mFaceGraphic);
             mFaceGraphic.updateFace(face);
-
             if( randomnumber >= 0 && randomnumber<3) {
-                mImageEmoticon.setBackgroundResource(R.drawable.emotion_left_normal_img);
+                mImageEmoticon.setBackgroundResource(R.drawable.emotion_right_smile_img);
                 mTextAction.setText("왼쪽눈을 감고 오른쪽눈을 뜨세요!");
-                if (mFaceGraphic.happiness < 0.2 && mFaceGraphic.lefteye >0.9 &&mFaceGraphic.righteye<0.2){
+                if (mFaceGraphic.happiness > 0.9 && mFaceGraphic.righteye >0.9 &&mFaceGraphic.lefteye<0.2){
                     getEmotion();
                 }
             }else if(randomnumber >= 3 &&randomnumber<6){
-                mImageEmoticon.setBackgroundResource(R.drawable.emotion_smile_img);
+                mImageEmoticon.setBackgroundResource(R.drawable.emotion_left_right_smile_img);
                 mTextAction.setText("양 눈을 뜨고 웃으세요!");
                 if (mFaceGraphic.happiness > 0.9 && mFaceGraphic.lefteye  > 0.9  && mFaceGraphic.righteye  > 0.9 ) {
                     getEmotion();
                 }
             }else if(randomnumber >= 6 && randomnumber<=10){
-                mImageEmoticon.setBackgroundResource(R.drawable.emotion_left_right_normal_img);
+                mImageEmoticon.setBackgroundResource(R.drawable.emotion_smile_img);
                 mTextAction.setText("양쪽눈을 감으고 웃으세요!");
                 if (mFaceGraphic.happiness >0.98 && mFaceGraphic.lefteye <0.2 && mFaceGraphic.righteye <0.2) {
                     getEmotion();
                 }
             }else {
-                mImageEmoticon.setBackgroundResource(R.drawable.emotion_left_right_smile_img);
+                mImageEmoticon.setBackgroundResource(R.drawable.emotion_left_right_normal_img);
                 mTextAction.setText("양쪽 눈을 크게 뜨세요!");
                 if (mFaceGraphic.lefteye >0.98 &&mFaceGraphic.righteye >0.98 ) {
                     getEmotion();
@@ -479,7 +487,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
     private void getEmotion() {
 
         result++;
-        mTextResult.setText(result+" / "+EMOTION_MAX_String);
+        mTextResult.setText(result+" % ");
         if(result>=EMOTION_MAX){
             select = false;
             finish();

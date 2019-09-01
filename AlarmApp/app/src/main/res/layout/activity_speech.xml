@@ -93,18 +93,26 @@
                 />
 
         </LinearLayout>
-        <Button
-            android:id="@+id/speech_speack_btn"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_speak"/>
+            <Button
+                android:id="@+id/speech_speack_btn"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/btn_speak"
+                android:text="SPEAK"
+                android:textColor="@drawable/btn_speech_speak_text_color"
+                android:textSize="19sp"
+                />
+
         <Button
             android:id="@+id/speech_pass_btn"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_pass"/>
+            android:layout_height="48dp"
+            android:background="@drawable/btn_pass"
+            android:text="PASS"
+            android:textColor="@drawable/btn_speech_pass_text_color"
+            android:textSize="19sp"/>
     </LinearLayout>
 
 </RelativeLayout>

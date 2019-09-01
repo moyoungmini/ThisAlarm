@@ -197,6 +197,7 @@ public class SpeechActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         passBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
