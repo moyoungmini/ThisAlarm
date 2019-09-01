@@ -59,17 +59,30 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
 
         holder.time.setText(AlarmUtils.getReadableTime(alarm.getTime()));
         holder.amPm.setText(AlarmUtils.getAmPm(alarm.getTime()));
+        if(alarm.isEnabled()) {
+            if(alarm.getMission() ==0) {
+                holder.ivEnabled.setBackgroundResource(R.drawable.normal_mission_circle);
+            }
+            else if(alarm.getMission() == 2){
+                holder.ivEnabled.setBackgroundResource(R.drawable.english_mission_circle);
+            }
+            else if(alarm.getMission() == 3){
+                holder.ivEnabled.setBackgroundResource(R.drawable.face_mission_circle);
+            }
+        }
+        else {
+            if(alarm.getMission() ==0) {
+                holder.ivEnabled.setBackgroundResource(R.drawable.nomal_sleep);
+            }
+            else if(alarm.getMission() == 2){
+                holder.ivEnabled.setBackgroundResource(R.drawable.abc_sleep);
+            }
+            else if(alarm.getMission() == 3){
+                holder.ivEnabled.setBackgroundResource(R.drawable.motion_sleep);
+            }
+        }
         holder.label.setText(alarm.getLabel());
-        if(alarm.getMission() ==0) {
-            holder.ivEnabled.setBackgroundResource(R.drawable.normal_mission_circle);
-        }
-        else if(alarm.getMission() == 2){
-            holder.ivEnabled.setBackgroundResource(R.drawable.english_mission_circle);
-        }
-        else if(alarm.getMission() == 3){
-            holder.ivEnabled.setBackgroundResource(R.drawable.face_mission_circle);
-        }
-        Log.i("fsdvds", String.valueOf(position)+" "+String.valueOf(alarm.getMission()));
+
         holder.days.setText(buildSelectedDays(alarm));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +106,15 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
             //holder.time.setTextColor(c.getResources().getColorStateList(R.color.white));
             //holder.layout.setBackgroundResource(R.drawable.gradation_img);
             holder.layout.setBackgroundResource(R.drawable.gradation_primary_color);
-            //holder.ivEnabled.setBackgroundResource(R.drawable.oval_img);
+            if(alarm.getMission() ==0){
+                holder.ivEnabled.setBackgroundResource(R.drawable.nomal);
+            }
+            else if(alarm.getMission() == 2){
+                holder.ivEnabled.setBackgroundResource(R.drawable.abc);
+            }
+            else if(alarm.getMission() == 3){
+                holder.ivEnabled.setBackgroundResource(R.drawable.motion);
+            }
         }
         //Alarm enabled status
         else {
@@ -101,6 +122,15 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
             //holder.time.setTextColor(c.getResources().getColorStateList(R.color.fontMissColor));
             //holder.layout.setBackgroundResource(R.drawable.not_gradation_img);
             holder.layout.setBackgroundResource(R.color.primaryTransparent);
+            if(alarm.getMission() ==0){
+                holder.ivEnabled.setBackgroundResource(R.drawable.nomal_sleep);
+            }
+            else if(alarm.getMission() == 2){
+                holder.ivEnabled.setBackgroundResource(R.drawable.abc_sleep);
+            }
+            else if(alarm.getMission() == 3){
+                holder.ivEnabled.setBackgroundResource(R.drawable.motion_sleep);
+            }
         }
         //Alarm disabled status
         holder.ivEnabled.setOnClickListener(new ImageView.OnClickListener() {
@@ -109,13 +139,31 @@ public final class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.View
                 if(alarm.isEnabled()) {
 //                    holder.allLayout.setBackgroundResource(R.drawable.gray_gradation_primary_color);
                     alarm.setIsEnabled(false);
-                    holder.layout.setBackgroundResource(R.drawable.gradation_primary_color);
+                    holder.layout.setBackgroundResource(R.color.primaryTransparent);
+                    if(alarm.getMission() ==0){
+                        holder.ivEnabled.setBackgroundResource(R.drawable.nomal_sleep);
+                    }
+                    else if(alarm.getMission() == 2){
+                        holder.ivEnabled.setBackgroundResource(R.drawable.abc_sleep);
+                    }
+                    else if(alarm.getMission() == 3){
+                        holder.ivEnabled.setBackgroundResource(R.drawable.motion_sleep);
+                    }
                     DatabaseHelper.getInstance(c).updateAlarm(alarm);
                     AlarmReceiver.cancelReminderAlarm(c,alarm);
                 }
                 else {
 //                    holder.allLayout.setBackgroundResource(R.drawable.gradation_primary_color);
-                    holder.layout.setBackgroundResource(R.color.primaryTransparent);
+                    if(alarm.getMission() ==0){
+                        holder.ivEnabled.setBackgroundResource(R.drawable.nomal);
+                    }
+                    else if(alarm.getMission() == 2){
+                        holder.ivEnabled.setBackgroundResource(R.drawable.abc);
+                    }
+                    else if(alarm.getMission() == 3){
+                        holder.ivEnabled.setBackgroundResource(R.drawable.motion);
+                    }
+                    holder.layout.setBackgroundResource(R.drawable.gradation_primary_color);
                     alarm.setIsEnabled(true);
                     DatabaseHelper.getInstance(c).updateAlarm(alarm);
                     AlarmReceiver.setReminderAlarm(c,alarm);

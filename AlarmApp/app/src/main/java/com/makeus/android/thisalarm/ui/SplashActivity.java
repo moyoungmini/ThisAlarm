@@ -9,12 +9,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.makeus.android.thisalarm.R;
 
 public class SplashActivity extends AppCompatActivity {
 
     private Thread splashThread;
+    private ImageView mIvLogo;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -22,11 +26,16 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        mIvLogo = findViewById(R.id.splash_logo_iv);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
+
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_opacity);
+        mIvLogo.startAnimation(animation);
 
         splashThread = new Thread() {
             @Override
