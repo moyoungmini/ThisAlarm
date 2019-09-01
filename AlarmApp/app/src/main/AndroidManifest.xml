@@ -19,9 +19,13 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.makeus.android.thisalarm.ui.MainActivity"></activity>
-        <activity android:name="com.makeus.android.thisalarm.ui.FaceTrackerActivity" />
-        <activity android:name="com.makeus.android.thisalarm.ui.SpeechActivity" />
+        <activity
+            android:name=".ui.SettingActivity"
+            android:label="@string/title_activity_setting"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.FaceTrackerActivity" />
+        <activity android:name=".ui.SpeechActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -30,29 +34,30 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="face" />
 
-        <activity android:name="com.makeus.android.thisalarm.ui.SplashActivity">
+        <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.makeus.android.thisalarm.ui.AddEditAlarmActivity" />
-        <activity android:name="com.makeus.android.thisalarm.ui.MissionSelectActivity" />
+        <activity android:name=".ui.AddEditAlarmActivity" />
+        <activity android:name=".ui.MissionSelectActivity" />
         <activity
-            android:name="com.makeus.android.thisalarm.ui.AlarmLandingPageActivity"
+            android:name=".ui.AlarmLandingPageActivity"
             android:launchMode="singleTask"
             android:theme="@style/AlertLandingPageTheme" />
 
         <service
-            android:name="com.makeus.android.thisalarm.service.LoadAlarmsService"
+            android:name=".service.LoadAlarmsService"
             android:stopWithTask="false" />
 
         <receiver
-            android:name="com.makeus.android.thisalarm.service.LoadAlarmsReceiver"
+            android:name=".service.LoadAlarmsReceiver"
             android:exported="true" />
         <receiver
-            android:name="com.makeus.android.thisalarm.service.AlarmReceiver"
+            android:name=".service.AlarmReceiver"
             android:exported="true" />
     </application>
+
 </manifest>

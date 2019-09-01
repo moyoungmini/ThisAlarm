@@ -412,7 +412,7 @@ public class SpeechActivity extends AppCompatActivity {
             String excelload_mean = sheet.getCell(2, randomnumber).getContents();
 
             textEngWord.setText(excelload);
-            textEngMean.setText(excelload_mean);
+            textEngMean.setText(": "+excelload_mean);
             Log.i("가져온 단어", String.valueOf(excelload));
 
 

@@ -10,4 +10,5 @@
     <dimen name="recyclerview_margin">10dp</dimen>
     <dimen name="edit_day_margin">15dp</dimen>
     <dimen name="radius_size">30dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

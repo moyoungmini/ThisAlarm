@@ -1,5 +1,6 @@
 package com.makeus.android.thisalarm.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,15 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import com.makeus.android.thisalarm.R;
 import com.makeus.android.thisalarm.data.DatabaseHelper;
-import com.makeus.android.thisalarm.dialog.MissionDialog;
 import com.makeus.android.thisalarm.model.Alarm;
 import com.makeus.android.thisalarm.service.AlarmReceiver;
 import com.makeus.android.thisalarm.util.ViewUtils;
@@ -28,19 +31,20 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
 
     private TimePicker mTimePicker;
     private Button mBtnSaved;
-    private static Button mTvMission;
+    private static Button mBtnMission;
     private TextView mTvMon, mTvTue, mTvWen, mTvThu, mTvFri, mTvSat, mTvSun;
     private EditText mLabel;
     private Switch mSwitch;
-
 
     private Context mContext;
     private TextView mTvNone, mTvRead, mTvEmotion;
     public Dialog mDialog;
 
-
     private ArrayList<Boolean> dayList;
     public static int mission = 0;
+
+    private LinearLayout mMissionLayout;
+    private Animation slideDown, slideUp;
 
     public static AddEditAlarmFragment newInstance(Alarm alarm) {
 
@@ -71,12 +75,16 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         mTvFri = v.findViewById(R.id.alarm_edit_fragment_fri_tv);
         mTvSat = v.findViewById(R.id.alarm_edit_fragment_sat_tv);
         mTvSun = v.findViewById(R.id.alarm_edit_fragment_sun_tv);
+        mMissionLayout = v.findViewById(R.id.edit_alarm_frag_expanding_layout);
         mLabel = v.findViewById(R.id.alarm_set_label_et);
-        mTvMission = v.findViewById(R.id.alarm_set_mission_tv);
+        mBtnMission = v.findViewById(R.id.alarm_set_mission_tv);
         mSwitch = v.findViewById(R.id.alarm_edit_fragment_switch);
+        mTvNone = v.findViewById(R.id.edit_alarm_frag_non_mission_tv);
+        mTvRead = v.findViewById(R.id.edit_alarm_read_tv);
+        mTvEmotion = v.findViewById(R.id.edit_alarm_frag_face_tv);
 
         mBtnSaved.setOnClickListener(this);
-        mTvMission.setOnClickListener(this);
+        mBtnMission.setOnClickListener(this);
         mTvMon.setOnClickListener(this);
         mTvTue.setOnClickListener(this);
         mTvWen.setOnClickListener(this);
@@ -84,6 +92,10 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         mTvFri.setOnClickListener(this);
         mTvSat.setOnClickListener(this);
         mTvSun.setOnClickListener(this);
+        mMissionLayout.setOnClickListener(this);
+        mTvNone.setOnClickListener(this);
+        mTvRead.setOnClickListener(this);
+        mTvEmotion.setOnClickListener(this);
 
         dayList = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
@@ -96,35 +108,99 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
         mLabel.setText(alarm.getLabel());
         setTvMission();
 
+        mMissionLayout.bringToFront();
+        mMissionLayout.setVisibility(View.INVISIBLE);
+
+        slideDown = AnimationUtils.loadAnimation(getContext(), R.anim.anim_silide_down);
+        slideUp = AnimationUtils.loadAnimation(getContext(), R.anim.anim_silide_up);
         return v;
     }
 
-    public static void setTvMission() {
+    public void setTvMission() {
         if(mission==0){
-            mTvMission.setText("미션 없음");
+            mTvNone.setBackgroundResource(R.color.yellow);
+            mTvNone.setTextColor(getContext().getResources().getColorStateList(R.color.white));
+            mBtnMission.setText("미션 없음");
         }else if(mission==2){
-            mTvMission.setText("영어 단어 읽기");
+            mTvRead.setBackgroundResource(R.color.yellow);
+            mTvRead.setTextColor(getContext().getResources().getColorStateList(R.color.white));
+            mBtnMission.setText("영어 단어 읽기");
         }else if(mission==3){
-            mTvMission.setText("감정 인식");
+            mTvEmotion.setBackgroundResource(R.drawable.btn_mission_up_press_radius);
+            mTvEmotion.setTextColor(getContext().getResources().getColorStateList(R.color.white));
+            mBtnMission.setText("감정 인식");
         }
     }
     //Init Views and Set value
 
+    @SuppressLint("ResourceType")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.edit_alarm_frag_non_mission_tv:
+                AddEditAlarmFragment.mission=0;
+                mMissionLayout.startAnimation(slideUp);
+                mMissionLayout.setVisibility(View.INVISIBLE);
+                mBtnMission.setVisibility(View.VISIBLE);
+                mBtnMission.bringToFront();
+
+                mTvNone.setBackgroundResource(R.color.yellow);
+                mTvNone.setTextColor(getContext().getResources().getColorStateList(R.color.white));
+                mTvEmotion.setBackgroundResource(R.drawable.btn_mission_up_background);
+                mTvEmotion.setTextColor(getContext().getResources().getColorStateList(R.drawable.mission_text_set));
+                mTvRead.setBackgroundResource(R.drawable.btn_mission_background);
+                mTvRead.setTextColor(getContext().getResources().getColorStateList(R.drawable.mission_text_set));
+
+                mBtnMission.setText("미션 없음");
+                break;
+            case R.id.edit_alarm_frag_face_tv:
+                AddEditAlarmFragment.mission=3;
+                mMissionLayout.startAnimation(slideUp);
+                mMissionLayout.setVisibility(View.INVISIBLE);
+                mBtnMission.setVisibility(View.VISIBLE);
+                mBtnMission.bringToFront();
+
+                mTvEmotion.setBackgroundResource(R.drawable.btn_mission_up_press_radius);
+                mTvEmotion.setTextColor(getContext().getResources().getColorStateList(R.color.white));
+                mTvNone.setBackgroundResource(R.drawable.btn_mission_background);
+                mTvNone.setTextColor(getContext().getResources().getColorStateList(R.drawable.mission_text_set));
+                mTvRead.setBackgroundResource(R.drawable.btn_mission_background);
+                mTvRead.setTextColor(getContext().getResources().getColorStateList(R.drawable.mission_text_set));
+
+                mBtnMission.setText("감정 인식");
+                break;
+            case R.id.edit_alarm_read_tv:
+                AddEditAlarmFragment.mission =2;
+                mMissionLayout.startAnimation(slideUp);
+                mMissionLayout.setVisibility(View.INVISIBLE);
+                mBtnMission.setVisibility(View.VISIBLE);
+                mBtnMission.bringToFront();
+
+                mTvRead.setBackgroundResource(R.color.yellow);
+                mTvRead.setTextColor(getContext().getResources().getColorStateList(R.color.white));
+                mTvNone.setBackgroundResource(R.drawable.btn_mission_background);
+                mTvNone.setTextColor(getContext().getResources().getColorStateList(R.drawable.mission_text_set));
+                mTvEmotion.setBackgroundResource(R.drawable.btn_mission_up_background);
+                mTvEmotion.setTextColor(getContext().getResources().getColorStateList(R.drawable.mission_text_set));
+
+                mBtnMission.setText("영단어 읽기");
+                break;
             case R.id.alarm_edit_fragment_saved_btn:
                 save();
                 break;
             case R.id.alarm_set_mission_tv:
-                MissionDialog missionDialog = new MissionDialog(getContext());
+                mMissionLayout.setVisibility(View.VISIBLE);
+                mBtnMission.setVisibility(View.INVISIBLE);
+                mMissionLayout.bringToFront();
+                mMissionLayout.startAnimation(slideDown);
+                //MissionDialog missionDialog = new MissionDialog(getContext());
                 break;
             case R.id.alarm_edit_fragment_mon_tv:
                 if (!dayList.get(0)) {
                     mTvMon.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(0, true);
                 } else {
-                    mTvMon.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
+                    mTvMon.setTextColor(this.getResources().getColorStateList(R.color.fontBlue));
                     dayList.set(0, false);
                 }
                 break;
@@ -133,7 +209,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvTue.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(1, true);
                 } else {
-                    mTvTue.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
+                    mTvTue.setTextColor(this.getResources().getColorStateList(R.color.fontBlue));
                     dayList.set(1, false);
                 }
                 break;
@@ -142,7 +218,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvWen.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(2, true);
                 } else {
-                    mTvWen.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
+                    mTvWen.setTextColor(this.getResources().getColorStateList(R.color.fontBlue));
                     dayList.set(2, false);
                 }
                 break;
@@ -151,7 +227,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvThu.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(3, true);
                 } else {
-                    mTvThu.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
+                    mTvThu.setTextColor(this.getResources().getColorStateList(R.color.fontBlue));
                     dayList.set(3, false);
                 }
                 break;
@@ -160,7 +236,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvFri.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(4, true);
                 } else {
-                    mTvFri.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
+                    mTvFri.setTextColor(this.getResources().getColorStateList(R.color.fontBlue));
                     dayList.set(4, false);
                 }
                 break;
@@ -169,7 +245,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvSat.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(5, true);
                 } else {
-                    mTvSat.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
+                    mTvSat.setTextColor(this.getResources().getColorStateList(R.color.fontBlue));
                     dayList.set(5, false);
                 }
                 break;
@@ -178,7 +254,7 @@ public final class AddEditAlarmFragment extends Fragment implements View.OnClick
                     mTvSun.setTextColor(this.getResources().getColorStateList(R.color.yellow));
                     dayList.set(6, true);
                 } else {
-                    mTvSun.setTextColor(this.getResources().getColorStateList(R.color.fontMissColor));
+                    mTvSun.setTextColor(this.getResources().getColorStateList(R.color.fontBlue));
                     dayList.set(6, false);
                 }
                 break;

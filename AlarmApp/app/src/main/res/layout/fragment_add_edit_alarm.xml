@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="45dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradation_primary_non_radiuscolor"
-    android:orientation="vertical">
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="30dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
+    android:background="@drawable/gradation_primary_non_radiuscolor">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
     <Button
         android:id="@+id/alarm_set_mission_tv"
         android:layout_marginTop="15dp"
@@ -26,11 +21,72 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:textColor="@drawable/misstion_text_set"
-        android:background="@drawable/recycler_item_background"
+        android:background="@drawable/save_background"
         android:letterSpacing="0.12"
         android:text="미션 선택"
         />
+    <LinearLayout
+        android:id="@+id/edit_alarm_frag_expanding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/save_background"
+        android:layout_marginRight="15dp"
+        android:paddingBottom="50dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/edit_alarm_frag_face_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="19sp"
+            android:textColor="@drawable/mission_text_set"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:letterSpacing="0.53"
+            android:background="@drawable/btn_mission_up_background"
+            android:text="감정 인식"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/edit_alarm_read_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="19sp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="@drawable/btn_mission_background"
+            android:textAlignment="center"
+            android:textColor="@drawable/mission_text_set"
+            android:letterSpacing="0.53"
+            android:text="영단어 읽기"
+            />
+        <TextView
+            android:id="@+id/edit_alarm_frag_non_mission_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="19sp"
+            android:textAlignment="center"
+            android:background="@drawable/btn_mission_background"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:textColor="@drawable/mission_text_set"
+            android:letterSpacing="0.53"
+            android:text="미션 없음"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
 
@@ -40,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="100dp"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
         android:background="@drawable/recycler_item_background"
@@ -105,7 +161,7 @@
                 android:layout_marginTop="@dimen/edit_day_margin"
                 android:layout_marginBottom="@dimen/edit_day_margin"
                 android:fontFamily="@font/nanumsquaredrfont"
-                android:textColor="@color/fontColor"
+                android:textColor="@color/fontBlue"
                 android:layout_gravity="center_vertical"
                 android:text="월"
                 />
@@ -119,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:fontFamily="@font/nanumsquaredrfont"
-                android:textColor="@color/fontColor"
+                android:textColor="@color/fontBlue"
                 android:layout_marginTop="@dimen/edit_day_margin"
                 android:layout_marginBottom="@dimen/edit_day_margin"
                 android:layout_gravity="center_vertical"
@@ -138,7 +194,7 @@
                 android:fontFamily="@font/nanumsquaredrfont"
                 android:layout_marginBottom="@dimen/edit_day_margin"
                 android:textSize="20sp"
-                android:textColor="@color/fontColor"
+                android:textColor="@color/fontBlue"
                 android:layout_gravity="center_vertical"
                 android:text="수"
                 android:layout_marginLeft="5dp"
@@ -152,7 +208,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="@color/fontColor"
+                android:textColor="@color/fontBlue"
                 android:fontFamily="@font/nanumsquaredrfont"
                 android:layout_marginTop="@dimen/edit_day_margin"
                 android:layout_marginBottom="@dimen/edit_day_margin"
@@ -172,7 +228,7 @@
                 android:layout_marginTop="@dimen/edit_day_margin"
                 android:fontFamily="@font/nanumsquaredrfont"
                 android:layout_marginBottom="@dimen/edit_day_margin"
-                android:textColor="@color/fontColor"
+                android:textColor="@color/fontBlue"
                 android:layout_gravity="center_vertical"
                 android:text="금"
                 android:layout_marginLeft="5dp"
@@ -189,7 +245,7 @@
                 android:textSize="20sp"
                 android:layout_marginTop="@dimen/edit_day_margin"
                 android:layout_marginBottom="@dimen/edit_day_margin"
-                android:textColor="@color/fontColor"
+                android:textColor="@color/fontBlue"
                 android:layout_gravity="center_vertical"
                 android:text="토"
                 android:layout_marginLeft="5dp"
@@ -204,7 +260,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:fontFamily="@font/nanumsquaredrfont"
-                android:textColor="@color/fontColor"
+                android:textColor="@color/fontBlue"
                 android:layout_marginTop="@dimen/edit_day_margin"
                 android:layout_marginBottom="@dimen/edit_day_margin"
                 android:layout_gravity="center_vertical"
@@ -254,8 +310,6 @@
     </LinearLayout>
 
 
-
-
     <Button
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -272,5 +326,6 @@
         android:textColor="@drawable/save_text_set"
         />
         </LinearLayout>
-    </ScrollView>
 </LinearLayout>
+</FrameLayout>
+</ScrollView>

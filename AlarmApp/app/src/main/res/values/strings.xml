@@ -42,5 +42,6 @@
     <string name="permission_camera_rationale" />
     <string name="ok" />
     <string name="no_camera_permission" />
+    <string name="title_activity_setting">SettingActivity</string>
 
 </resources>
