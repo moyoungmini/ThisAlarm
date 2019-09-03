@@ -39,10 +39,12 @@
             android:background="@drawable/tv_emotion_action_background">
             <TextView
                 android:id="@+id/emotion_action_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="17dp"
+
+                android:layout_marginRight="17dp"
                 android:text="얼굴을 인식하면 시작합니다."
 
                 android:textColor="@color/white"
@@ -74,15 +76,29 @@
         android:background="@drawable/emotion_default_img"
         android:layout_centerInParent="true"/>
 
+        <TextView
+    android:id="@+id/emotion_result_tv"
+    android:layout_width="80dp"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="100"
+            android:layout_centerInParent="true"
+    android:layout_below="@id/emotion_emoticon_iv"
+    android:textColor="@color/white"
+    android:textSize="30dp"/>
     <TextView
-        android:id="@+id/emotion_result_tv"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="100 %"
+        android:text="%"
+        android:layout_toRightOf="@id/emotion_result_tv"
+
         android:layout_below="@id/emotion_emoticon_iv"
         android:textColor="@color/white"
         android:textSize="30dp"/>
+
+
+
     <Button
         android:id="@+id/emotion_dismiss_btn"
         android:layout_marginTop="20dp"

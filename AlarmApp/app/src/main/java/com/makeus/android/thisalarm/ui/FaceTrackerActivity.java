@@ -66,6 +66,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
     private ImageView mImageEmoticon;
     private Button emotionDismissbtn;
     public static int randomnumber;
+    public static int SW=0;
     ProgressBar mProgressBar;
     private CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
@@ -109,7 +110,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         emotionDismissbtn =(Button) findViewById(R.id.emotion_dismiss_btn);
         //mImageEmoticon.setBackgroundResource(R.drawable.emotion_default);
         result = 0;
-        mTextResult.setText(result+" %");
+        mTextResult.setText(Integer.toString(result));
        // mTextMax.setText("/"+EMOTION_MAX);
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
@@ -438,28 +439,23 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         public void onUpdate(FaceDetector.Detections<Face> detectionResults, Face face) {
             mOverlay.add(mFaceGraphic);
             mFaceGraphic.updateFace(face);
-            if( randomnumber >= 0 && randomnumber<3) {
-                mImageEmoticon.setBackgroundResource(R.drawable.emotion_right_smile_img);
-                mTextAction.setText("왼쪽눈을 감고 오른쪽눈을 뜨세요!");
+            if(result==0){
+                setFaceEmotionBackground();
+            }
+            if(randomnumber<3) {
                 if (mFaceGraphic.happiness > 0.9 && mFaceGraphic.righteye >0.9 &&mFaceGraphic.lefteye<0.2){
                     getEmotion();
                 }
-            }else if(randomnumber >= 3 &&randomnumber<6){
-                mImageEmoticon.setBackgroundResource(R.drawable.emotion_left_right_smile_img);
-                mTextAction.setText("양 눈을 뜨고 웃으세요!");
+            }else if(randomnumber<5){
                 if (mFaceGraphic.happiness > 0.9 && mFaceGraphic.lefteye  > 0.9  && mFaceGraphic.righteye  > 0.9 ) {
                     getEmotion();
                 }
-            }else if(randomnumber >= 6 && randomnumber<=10){
-                mImageEmoticon.setBackgroundResource(R.drawable.emotion_smile_img);
-                mTextAction.setText("양쪽눈을 감으고 웃으세요!");
+            }else if(randomnumber<=7){
                 if (mFaceGraphic.happiness >0.98 && mFaceGraphic.lefteye <0.2 && mFaceGraphic.righteye <0.2) {
                     getEmotion();
                 }
             }else {
-                mImageEmoticon.setBackgroundResource(R.drawable.emotion_left_right_normal_img);
-                mTextAction.setText("양쪽 눈을 크게 뜨세요!");
-                if (mFaceGraphic.lefteye >0.98 &&mFaceGraphic.righteye >0.98 ) {
+                if (mFaceGraphic.lefteye >0.98 && mFaceGraphic.righteye >0.98 ) {
                     getEmotion();
                 }
             }
@@ -484,10 +480,25 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             mOverlay.remove(mFaceGraphic);
         }
     }
+    private void setFaceEmotionBackground() {
+        if(randomnumber<3) {
+            mImageEmoticon.setBackgroundResource(R.drawable.emotion_right_smile_img);
+            mTextAction.setText("오른쪽눈을 감고 왼쪽눈을 뜨고 웃으세요! ");
+        }else if(randomnumber<5){
+            mImageEmoticon.setBackgroundResource(R.drawable.emotion_left_right_smile_img);
+            mTextAction.setText("양 눈을 뜨고 웃으세요!");
+        }else if(randomnumber<=7){
+            mImageEmoticon.setBackgroundResource(R.drawable.emotion_smile_img);
+            mTextAction.setText("양쪽눈을 감으고 웃으세요!");
+        }else {
+            mImageEmoticon.setBackgroundResource(R.drawable.emotion_left_right_normal_img);
+            mTextAction.setText("양쪽 눈을 크게 뜨세요!");
+        }
+    }
     private void getEmotion() {
 
         result++;
-        mTextResult.setText(result+" % ");
+        mTextResult.setText(Integer.toString(result));
         if(result>=EMOTION_MAX){
             select = false;
             finish();
