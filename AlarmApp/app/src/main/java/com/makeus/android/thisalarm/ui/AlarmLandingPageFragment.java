@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.makeus.android.thisalarm.R;
 import com.makeus.android.thisalarm.data.DatabaseHelper;
@@ -31,12 +33,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public final class AlarmLandingPageFragment extends Fragment implements View.OnClickListener {
     private Vibrator vibrator;
     private MediaPlayer mMediaPlayer;
     private AudioManager audioManager;
     private int mIntId;
     private  Button mBtnRecall;
+    private RelativeLayout mLayout;
 
 
     private NotificationManager nm;
@@ -60,6 +65,7 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         final View v = inflater.inflate(R.layout.fragment_alarm_landing_page, container, false);
         final ImageView dismiss =  v.findViewById(R.id.dismiss_btn);
         mBtnRecall = v.findViewById(R.id.recall_btn);
+        mLayout =v.findViewById(R.id.landing_page_fragment_layout);
 
         long[] pattern = {100, 1000, 100, 500, 100, 500, 100, 1000};
         vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
@@ -69,6 +75,8 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         for(int i=0;i<7;i++){
             dayList.add(false);
         }
+
+
 
         Bundle extras = getActivity().getIntent().getExtras();
         if(extras != null) {
@@ -134,6 +142,19 @@ public final class AlarmLandingPageFragment extends Fragment implements View.OnC
         mBtnRecall.setOnClickListener(this);
 
         mIntId = 0;
+
+        SharedPreferences pref = getActivity().getSharedPreferences("pref", MODE_PRIVATE);
+        SettingActivity.sIntAppBackground = pref.getInt("primaryColor",0);
+
+        if(SettingActivity.sIntAppBackground ==0){
+
+        }
+        else if(SettingActivity.sIntAppBackground ==1){
+
+        }
+        else if(SettingActivity.sIntAppBackground ==2){
+
+        }
 
         return v;
     }

@@ -18,11 +18,11 @@
 
         <TextView
             android:id="@+id/speech_rest_tv"
+            android:fontFamily="@font/nanum_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:letterSpacing="0.43"
             android:text="남은 갯수"
-            android:fontFamily="@font/nanumsquaredbfont"
             android:textColor="#ffffff"
             android:textSize="25sp" />
 
@@ -76,8 +76,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="41sp"
-                android:fontFamily="@font/nanumsquaredbfont"
                 android:textColor="#ffffff"
+                android:fontFamily="@font/nanum_bold"
                 android:letterSpacing="0.43"
                 android:layout_marginBottom="5dp"
                 android:text="apple"
@@ -88,10 +88,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/nanum_bold"
                 android:textColor="#ffffff"
                 android:letterSpacing="0.25"
                 android:text=":사과"
-                android:fontFamily="@font/nanumsquaredbfont"
                 />
 
         </LinearLayout>
@@ -100,6 +100,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:fontFamily="@font/nanum_extra_bold"
                 android:background="@drawable/btn_speak"
                 android:text="SPEAK"
                 android:textColor="@drawable/btn_speech_speak_text_color"
@@ -109,6 +110,7 @@
         <Button
             android:id="@+id/speech_pass_btn"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/nanum_extra_bold"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/btn_pass"

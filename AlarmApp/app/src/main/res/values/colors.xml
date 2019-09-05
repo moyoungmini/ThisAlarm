@@ -27,4 +27,22 @@
     <color name="fontBlue">#8ba2f7</color>
     <color name="primaryTransparent">#C1FFFFFF</color>
     <color name="grayTransparent">#C4E7E7E7</color>
+    <color name="settingBackground">#b3ffffff</color>
+    <color name="yellowBackgroundTest">#ffcc3f</color>
+    <color name="pinkBackground">#ffe100</color>
+    <color name="pinkOval">#ffe000</color>
+    <color name="blueBackgound">#7dc6e3</color>
+    <color name="blueOval">#00abff</color>
+
+    <color name="primaryColor">#8ba2f7</color>
+    <color name="primaryBackground">#ffcc3f</color>
+    <color name="primaryBackgroundPress">#f7b500</color>
+    <color name="blueColor">#00abff</color>
+    <color name="blueBackground">#7dc6e3</color>
+    <color name="blueBackgroundPress">#00abff</color>
+    <color name="pinkColor">#eda2a2</color>
+    <color name="pinkBackground2">#ffee73</color>
+    <color name="pinkBackgroundPress">#ffe000</color>
+
+    <color name="blueFontMiss">#b8b8b8</color>
 </resources>

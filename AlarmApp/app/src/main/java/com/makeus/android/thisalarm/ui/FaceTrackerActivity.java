@@ -21,6 +21,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -80,6 +81,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
     private boolean enable;
 
     public static int value = 100;
+    private int valueTime;
     private boolean select;
 
     private static final int RC_HANDLE_GMS = 9001;
@@ -123,6 +125,11 @@ public final class FaceTrackerActivity extends AppCompatActivity {
 
         select = true;
         value =100;
+
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SettingActivity.sIntEmotionTime = pref.getInt("emotionTime", 50);
+
+        valueTime = SettingActivity.sIntEmotionTime * 10;
         dayList = new ArrayList<>();
         for(int i=0;i<7;i++){
             dayList.add(false);
@@ -209,7 +216,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
                     });
 
                     try {
-                        Thread.sleep(600); // 시간지연
+                        Thread.sleep(valueTime); // 시간지연
                     } catch (InterruptedException e) {    }
                 } // end of while
             }
@@ -480,6 +487,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             mOverlay.remove(mFaceGraphic);
         }
     }
+
     private void setFaceEmotionBackground() {
         if(randomnumber<3) {
             mImageEmoticon.setBackgroundResource(R.drawable.emotion_right_smile_img);
@@ -495,6 +503,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             mTextAction.setText("양쪽 눈을 크게 뜨세요!");
         }
     }
+
     private void getEmotion() {
 
         result++;

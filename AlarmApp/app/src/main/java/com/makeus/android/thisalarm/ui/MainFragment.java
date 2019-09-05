@@ -2,6 +2,7 @@ package com.makeus.android.thisalarm.ui;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,11 +30,14 @@ import com.makeus.android.thisalarm.view.EmptyRecyclerView;
 
 import java.util.ArrayList;
 
-public final class MainFragment extends Fragment
-        implements LoadAlarmsReceiver.OnAlarmsLoadedListener {
+import static android.content.Context.MODE_PRIVATE;
+
+public final class MainFragment extends Fragment implements LoadAlarmsReceiver.OnAlarmsLoadedListener {
 
     private LoadAlarmsReceiver mReceiver;
     private AlarmsAdapter mAdapter;
+    private View v;
+    ImageView btnPlus;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,11 +45,9 @@ public final class MainFragment extends Fragment
         mReceiver = new LoadAlarmsReceiver(this);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        final View v = inflater.inflate(R.layout.fragment_main, container, false);
+    public void onResume() {
+        super.onResume();
 
         final EmptyRecyclerView rv = (EmptyRecyclerView) v.findViewById(R.id.main_fragment_rv);
         final Button btnUser =  v.findViewById(R.id.main_fragment_user_iv);
@@ -59,7 +61,7 @@ public final class MainFragment extends Fragment
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         //Recyclerview set
 
-        final ImageView btnPlus = (ImageView) v.findViewById(R.id.main_fragment_plus_iv);
+        btnPlus = (ImageView) v.findViewById(R.id.main_fragment_plus_iv);
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +82,44 @@ public final class MainFragment extends Fragment
                 startActivity(intent);
             }
         });
+
+        final ImageView ivSetting = (ImageView) v.findViewById(R.id.main_fragment_setting_iv);
+        ivSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), SettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        SharedPreferences pref= getActivity().getSharedPreferences("pref", MODE_PRIVATE);
+        SettingActivity.sIntAppBackground = pref.getInt("primaryColor",0);
+        SettingActivity.sIntEngTime = pref.getInt("engNum",0);
+        if(SettingActivity.sIntAppBackground ==0){
+            btnPlus.setBackgroundResource(R.drawable.primary_saved_background);
+            btnUser.setBackgroundResource(R.drawable.btn_primary);
+            btnUser.setTextColor(getContext().getResources().getColorStateList(R.drawable.pirmary_text_color));
+        }
+        else if(SettingActivity.sIntAppBackground ==1){
+            btnPlus.setBackgroundResource(R.drawable.pink_saved_background);
+            btnUser.setBackgroundResource(R.drawable.btn_pink);
+            btnUser.setTextColor(getContext().getResources().getColorStateList(R.drawable.pink_text_color));
+        }
+        else if(SettingActivity.sIntAppBackground ==2){
+            btnPlus.setBackgroundResource(R.drawable.blue_saved_background);
+            btnUser.setBackgroundResource(R.drawable.btn_blue);
+            btnUser.setTextColor(getContext().getResources().getColorStateList(R.drawable.blue_text_color));
+        }
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        v = inflater.inflate(R.layout.fragment_main, container, false);
+
 
 
         return v;

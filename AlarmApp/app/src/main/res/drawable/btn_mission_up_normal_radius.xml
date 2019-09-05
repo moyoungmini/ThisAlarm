@@ -9,7 +9,8 @@
 
 <item android:bottom="-2dp">
     <shape>
-        <stroke android:color="@color/yellow" android:width="2dp" />
+        <stroke android:color="@color/primaryBackgroundPress" android:width="2dp" />
+        <solid android:color="@color/grayTransparent"></solid>
         <corners
             android:topLeftRadius="15dp"
             android:topRightRadius="15dp"/>

@@ -3,6 +3,7 @@ package com.makeus.android.thisalarm.ui;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -66,6 +67,8 @@ public class SpeechActivity extends AppCompatActivity {
     public static int value = 100;
     private boolean select;
 
+    private int valueTime;
+
     Handler handler;
     @Override
     protected void
@@ -83,6 +86,11 @@ public class SpeechActivity extends AppCompatActivity {
 
         select = true;
         value =100;
+
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SettingActivity.sIntEngTime = pref.getInt("engTime", 50);
+
+        valueTime = SettingActivity.sIntEngTime *10;
         dayList = new ArrayList<>();
         for(int i=0;i<7;i++){
             dayList.add(false);
@@ -233,7 +241,7 @@ public class SpeechActivity extends AppCompatActivity {
                     });
 
                     try {
-                        Thread.sleep(600); // 시간지연
+                        Thread.sleep(valueTime); // 시간지연
                     } catch (InterruptedException e) {    }
                 } // end of while
             }
@@ -386,8 +394,6 @@ public class SpeechActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(activity, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog_speech);
-        TextView text = (TextView) dialog.findViewById(R.id.text_dialog_1);
         RelativeLayout relativeLayout = (RelativeLayout) dialog.findViewById(R.id.relative_rayout);
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override

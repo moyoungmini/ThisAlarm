@@ -36,6 +36,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="@dimen/recyclerview_margin"
+        android:fontFamily="@font/nanum_bold"
         android:textSize="15sp"
         android:textColor="#ffffff"
         tools:text="오늘아침도 일어나"
@@ -55,8 +56,9 @@
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:letterSpacing="0.12"
+            android:fontFamily="@font/nanum_bold"
             android:textSize="12sp"
-            android:textColor="@color/dayMissColor"
+            android:textColor="@color/blueFontMiss"
             android:layout_height="wrap_content"
             tools:text="월 화 수 목 금 토 일"/>
     </LinearLayout>
@@ -69,6 +71,7 @@
         <TextView
             android:layout_marginLeft="@dimen/recyclerview_margin"
             android:id="@+id/ar_am_pm"
+            android:fontFamily="@font/nanum_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="19sp"
@@ -83,6 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="45sp"
+            android:fontFamily="@font/nanum_bold"
             android:textColor="@color/white"
             android:letterSpacing="0.04"
             android:lineSpacingExtra="5sp"
