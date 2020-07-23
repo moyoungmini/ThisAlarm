@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_edit_fragment_sv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradation_primary_non_radiuscolor"
+    android:paddingTop="45dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/alarm_set_mission_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/btn_save"
+            android:gravity="center"
+            android:letterSpacing="0.12"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:fontFamily="@font/nanum_extra_bold"
+            android:text="미션 선택"
+            android:textColor="@drawable/misstion_text_set"
+            android:textSize="20sp" />
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/edit_fragment_expandablelayiout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp">
+        <LinearLayout
+            android:id="@+id/edit_alarm_frag_expanding_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/save_background"
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
+
+            <TextView
+                android:id="@+id/edit_alarm_frag_face_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_mission_up_background"
+                android:letterSpacing="0.53"
+                android:paddingTop="15dp"
+                android:fontFamily="@font/nanum_extra_bold"
+                android:paddingBottom="15dp"
+                android:text="감정 인식"
+                android:textAlignment="center"
+                android:textColor="@drawable/mission_text_set"
+                android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/edit_alarm_read_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_mission_background"
+                android:letterSpacing="0.53"
+                android:paddingTop="15dp"
+                android:fontFamily="@font/nanum_extra_bold"
+                android:paddingBottom="15dp"
+                android:text="영단어 읽기"
+                android:textAlignment="center"
+                android:textColor="@drawable/mission_text_set"
+                android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/edit_alarm_frag_non_mission_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_mission_background"
+                android:letterSpacing="0.53"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="미션 없음"
+                android:fontFamily="@font/nanum_extra_bold"
+                android:textAlignment="center"
+                android:textColor="@drawable/mission_text_set"
+                android:textSize="19sp" />
+        </LinearLayout>
+        </net.cachapa.expandablelayout.ExpandableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TimePicker
+                    android:id="@+id/alarm_edit_fragment_timepicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/recycler_item_background"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:timePickerMode="spinner"></TimePicker>
+
+                <LinearLayout
+                    android:id="@+id/add_edit_fragment_name_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/recycler_item_background">
+
+                    <TextView
+                        android:id="@+id/add_edit_fragment_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:fontFamily="@font/nanum_bold"
+                        android:letterSpacing="-0.01"
+                        android:text="알람 이름"
+                        android:textColor="@color/fontBlueColor"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/alarm_set_label_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@null"
+                        android:fontFamily="@font/nanum_bold"
+                        android:hint="이곳에 제목을 입력하세요"
+                        android:textColorHint="#D8D8D8"
+                        android:inputType="text"
+                        android:textColor="#878787"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/add_edit_fragment_day_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/recycler_item_background"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/alarm_edit_fragment_mon_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/edit_day_margin"
+                            android:layout_marginBottom="@dimen/edit_day_margin"
+                            android:fontFamily="@font/nanum_extra_bold"
+                            android:text="월"
+                            android:textColor="@color/fontBlue"
+                            android:textSize="20sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"></View>
+
+                        <TextView
+                            android:id="@+id/alarm_edit_fragment_tue_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="@dimen/edit_day_margin"
+                            android:layout_marginBottom="@dimen/edit_day_margin"
+                            android:fontFamily="@font/nanum_extra_bold"
+                            android:text="화"
+                            android:textColor="@color/fontBlue"
+                            android:textSize="20sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"></View>
+
+                        <TextView
+                            android:id="@+id/alarm_edit_fragment_wen_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="@dimen/edit_day_margin"
+                            android:layout_marginBottom="@dimen/edit_day_margin"
+                            android:fontFamily="@font/nanum_extra_bold"
+                            android:text="수"
+                            android:textColor="@color/fontBlue"
+                            android:textSize="20sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"></View>
+
+                        <TextView
+                            android:id="@+id/alarm_edit_fragment_thu_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="@dimen/edit_day_margin"
+                            android:layout_marginBottom="@dimen/edit_day_margin"
+                            android:fontFamily="@font/nanum_extra_bold"
+                            android:text="목"
+                            android:textColor="@color/fontBlue"
+                            android:textSize="20sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"></View>
+
+                        <TextView
+                            android:id="@+id/alarm_edit_fragment_fri_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="@dimen/edit_day_margin"
+                            android:layout_marginBottom="@dimen/edit_day_margin"
+                            android:fontFamily="@font/nanum_extra_bold"
+                            android:text="금"
+                            android:textColor="@color/fontBlue"
+                            android:textSize="20sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"></View>
+
+                        <TextView
+                            android:id="@+id/alarm_edit_fragment_sat_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="@dimen/edit_day_margin"
+                            android:layout_marginBottom="@dimen/edit_day_margin"
+                            android:fontFamily="@font/nanum_extra_bold"
+                            android:text="토"
+                            android:textColor="@color/fontBlue"
+                            android:textSize="20sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"></View>
+
+                        <TextView
+                            android:id="@+id/alarm_edit_fragment_sun_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="@dimen/edit_day_margin"
+                            android:layout_marginBottom="@dimen/edit_day_margin"
+                            android:fontFamily="@font/nanum_extra_bold"
+                            android:text="일"
+                            android:textColor="@color/fontBlue"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/add_edit_fragment_sound_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/recycler_item_background"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/add_edit_fragment_sound_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:fontFamily="@font/nanum_bold"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="4sp"
+                        android:text="소리"
+                        android:textColor="@color/fontBlueColor"
+                        android:textSize="20sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"></View>
+
+                    <Switch
+                        android:id="@+id/alarm_edit_fragment_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginBottom="15dp"
+                        android:switchMinWidth="55dp"
+                        android:theme="@style/SCBSwitch" />
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/alarm_edit_fragment_saved_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_save"
+                    android:fontFamily="@font/nanum_extra_bold"
+                    android:letterSpacing="0.7"
+                    android:lineSpacingExtra="6sp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:text="알람 저장"
+                    android:textColor="@drawable/save_text_set"
+                    android:textSize="22sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</ScrollView>
